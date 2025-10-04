@@ -1673,14 +1673,15 @@ margin: 10px auto;
             z-index: 1000;
             justify-content: center;
             align-items: center;
+                overflow: auto; /* Allow scrolling/zooming within modal */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         }
 
         .image-preview-content {
-                overflow: auto;
-    -webkit-overflow-scrolling: touch;
             max-width: 90%;
             max-height: 90%;
             position: relative;
+                margin: 20px; /* Space for close button */
         }
 
         .image-preview-content img {
@@ -1691,21 +1692,33 @@ margin: 10px auto;
         }
 
         .close-preview {
-            position: fixed;
-            top: -15px;
-            right: -15px;
- background: #ff4444;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: #ff4444;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px; /* Make it larger for mobile */
+    width: 40px;
     height: 40px;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     font-weight: bold;
-    z-index: 1001; /* Ensure it's above everything */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Add shadow for visibility */
-        }
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+
+/* Allow zooming within the image/content */
+.image-preview-content img,
+.image-preview-content video,
+#preview-container {
+    max-width: 100%;
+    max-height: 100%;
+    /* These properties allow pinch-to-zoom */
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
 
         /* Info content sections ||||||||||| ||||||||||||||||||||| |||||||||||||||||||||||||||||||*/
         #info-section .info-content {
@@ -3149,18 +3162,13 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
-    const viewport = document.querySelector('meta[name="viewport"]');
-    
     // --- START: Turn the lock ON ---
     document.documentElement.classList.add('modal-open');
     document.body.classList.add('modal-open');
-    // Allow zoom but prevent background scrolling
-    if (viewport) {
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=yes');
-    }
+    // REMOVE viewport modification entirely - let the modal handle its own zoom
     // --- END: Turn the lock ON ---
 
-    // The rest of your function stays exactly the same...
+    // Rest of your function remains exactly the same...
     const modal = document.getElementById('image-preview-modal');
     const imageElement = document.getElementById('preview-image');
     const container = document.getElementById('preview-container');
@@ -3217,15 +3225,10 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-    const viewport = document.querySelector('meta[name="viewport"]');
-
     // --- START: Turn the lock OFF ---
     document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
-    // Restore original viewport settings
-    if (viewport) {
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-    }
+    // No viewport changes needed
     // --- END: Turn the lock OFF ---
 
     document.getElementById('image-preview-modal').style.display = 'none';
