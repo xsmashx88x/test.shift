@@ -64,11 +64,6 @@
     <div class="container">
     <style>
         
-/* This is the lock. It freezes the entire page. */
-html.modal-open,
-body.modal-open {
-    overflow: hidden;
-}
 
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap');
         
@@ -1696,7 +1691,7 @@ margin: 10px auto;
         }
 
         .close-preview {
-            position: fixed;
+            position: absolute;
             top: -15px;
             right: -15px;
             background: #ff4444;
@@ -2312,18 +2307,18 @@ margin: 10px auto;
 .twitter-btn { background: linear-gradient(to bottom, #1DA1F2, #0c85d0); border: 2px solid #1DA1F2; }
 .facebook-btn { background: linear-gradient(to bottom, #1877F2, #1056ad); border: 2px solid #1877F2; }
 
-/* Mobile zoom back to normal css */
+/* This is the lock. It freezes the entire page. */
+html.modal-open,
 body.modal-open {
-    position: fixed;
     overflow: hidden;
-    width: 100%;
 }
 
     </style>
 </head>
+<!-- REVERT TO THIS ORIGINAL HTML STRUCTURE -->
 <div id="image-preview-modal" class="image-preview-modal">
-    <button class="close-preview" onclick="closeImagePreview()">×</button>
     <div class="image-preview-content">
+        <button class="close-preview" onclick="closeImagePreview()">×</button>
         <div id="preview-container" style="display: none;">
         </div>
         <img id="preview-image" src="" alt="Preview" style="display: none;">
@@ -3152,11 +3147,18 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
-        // --- Turn the lock ON ---
+        const viewport = document.querySelector('meta[name="viewport"]');
+        
+        // --- START: Turn the lock ON ---
         document.documentElement.classList.add('modal-open');
         document.body.classList.add('modal-open');
+        // This is the powerful lock that prevents background zoom
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
+        // --- END: Turn the lock ON ---
 
-        // The rest of your code is perfect
+        // The rest of your function is perfect
         const modal = document.getElementById('image-preview-modal');
         const imageElement = document.getElementById('preview-image');
         const container = document.getElementById('preview-container');
@@ -3214,32 +3216,21 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-            // 1. Hide the modal.
-            document.getElementById('image-preview-modal').style.display = 'none';
+        const viewport = document.querySelector('meta[name="viewport"]');
 
-            // 2. Find the viewport meta tag. This is the control panel for page zoom.
-            const viewport = document.querySelector('meta[name="viewport"]');
-
-            // 3. Safety Check: If there is no viewport tag, stop safely.
-            // This is critical to prevent your page from breaking.
-            if (!viewport) {
-                return;
-            }
-
-            // 4. Store the original settings that allow zooming.
-            const originalContent = viewport.getAttribute('content');
-
-            // 5. THE COMMAND: Forcefully apply a strict, non-scalable viewport.
-            // This is a direct order to the browser: "RESET ZOOM TO 100% NOW."
-            // It does NOT include "width=device-width" so it will not break your desktop layout.
-            viewport.setAttribute('content', 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-
-            // 6. THE RESET: After a tiny, imperceptible delay, this puts your original settings back.
-            // This returns the page to its normal state after the snap-back.
-            setTimeout(function() {
-                viewport.setAttribute('content', originalContent);
-            }, 100); // 100ms is instant for the user but gives the browser time to process the command.
+        // --- START: Turn the lock OFF ---
+        document.documentElement.classList.remove('modal-open');
+        document.body.classList.remove('modal-open');
+        // This restores the ability to zoom on your main page
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
         }
+        // --- END: Turn the lock OFF ---
+
+        document.getElementById('image-preview-modal').style.display = 'none';
+    }
+
+    /* end of close image preview */
 
         function toggleInfo(sectionId) {
             const section = document.getElementById(sectionId);
