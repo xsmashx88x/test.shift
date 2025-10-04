@@ -64,7 +64,9 @@
     <div class="container">
     <style>
         
-        .body-locked {
+/* This is the lock. It freezes the entire page. */
+html.modal-open,
+body.modal-open {
     overflow: hidden;
 }
 
@@ -3150,32 +3152,36 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
-            // 1. Lock the body to prevent background scrolling.
-            document.body.classList.add('body-locked');
-            
-            // The rest of your function is perfect and does not need to change.
-            const modal = document.getElementById('image-preview-modal');
-            const imageElement = document.getElementById('preview-image');
-            const container = document.getElementById('preview-container');
-            
-            imageElement.style.display = 'none';
-            container.style.display = 'none';
-            
-            if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-                imageElement.src = url;
-                imageElement.style.display = 'block';
-                imageElement.alt = "Preview";
-            } 
-            else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-                container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"><source src="${url}" type="video/webm"><source src="${url}" type="video/ogg">Your browser does not support the video tag.</video>`;
-                container.style.display = 'block';
-            } else {
-                container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
-                container.style.display = 'block';
-            }
-            
-            modal.style.display = 'flex';
+        const viewport = document.querySelector('meta[name="viewport"]');
+        // --- START: Turn the lock ON ---
+        document.documentElement.classList.add('modal-open'); // Lock the <html> tag
+        document.body.classList.add('modal-open'); // Lock the <body> tag
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
+        // --- END: Turn the lock ON ---
+
+        const modal = document.getElementById('image-preview-modal');
+        const imageElement = document.getElementById('preview-image');
+        const container = document.getElementById('preview-container');
+        
+        imageElement.style.display = 'none';
+        container.style.display = 'none';
+        
+        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) {
+            imageElement.src = url;
+            imageElement.style.display = 'block';
+            imageElement.alt = "Preview";
+        } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
+            container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh;"><source src="${url}" type="video/mp4"></video>`;
+            container.style.display = 'block';
+        } else {
+            container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh;"></iframe>`;
+            container.style.display = 'block';
+        }
+        
+        modal.style.display = 'flex';
+    }
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -3213,30 +3219,18 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-            // 1. Hide the modal.
-            document.getElementById('image-preview-modal').style.display = 'none';
-
-            // 2. Find the viewport meta tag. This is the control panel for page zoom.
-            const viewport = document.querySelector('meta[name="viewport"]');
-
-            // 3. Safety Check: If there is no viewport tag, stop safely.
-            if (!viewport) {
-                return;
-            }
-
-            // 4. Store the original settings that allow zooming.
-            const originalContent = viewport.getAttribute('content');
-
-            // 5. THE COMMAND: Forcefully apply a strict, non-scalable viewport.
-            // This is a direct order to the browser: "RESET ZOOM TO 100% NOW."
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-
-            // 6. THE RESET: After a tiny delay, this puts your original settings back.
-            // This returns the page to its normal, zoomable state after the snap-back.
-            setTimeout(function() {
-                viewport.setAttribute('content', originalContent);
-            }, 100); // 100ms is instant for the user.
+        const viewport = document.querySelector('meta[name="viewport"]');
+        // --- START: Turn the lock OFF ---
+        document.documentElement.classList.remove('modal-open'); // Unlock the <html> tag
+        document.body.classList.remove('modal-open'); // Unlock the <body> tag
+        if (viewport) {
+            // IMPORTANT: Restore the original viewport that allows zooming on your main page
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
         }
+        // --- END: Turn the lock OFF ---
+
+        document.getElementById('image-preview-modal').style.display = 'none';
+    }
 
         function toggleInfo(sectionId) {
             const section = document.getElementById(sectionId);
