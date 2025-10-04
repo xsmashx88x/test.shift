@@ -3197,13 +3197,23 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
+    const viewport = document.querySelector('meta[name="viewport"]');
+    
+    // --- START: Save current viewport state ---
+    const originalViewport = viewport ? viewport.getAttribute('content') : '';
+    localStorage.setItem('originalViewport', originalViewport);
+    // --- END: Save current viewport state ---
+    
     // --- START: Turn the lock ON ---
     document.documentElement.classList.add('modal-open');
     document.body.classList.add('modal-open');
-    // REMOVE viewport modification entirely - let the modal handle its own zoom
+    // Prevent zoom on background but allow modal content
+    if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    }
     // --- END: Turn the lock ON ---
 
-    // Rest of your function remains exactly the same...
+    // Rest of your function remains the same...
     const modal = document.getElementById('image-preview-modal');
     const imageElement = document.getElementById('preview-image');
     const container = document.getElementById('preview-container');
@@ -3224,6 +3234,7 @@ function openImagePreview(url) {
     
     modal.style.display = 'flex';
 }
+
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
     openImagePreview(ROADMAP_CONFIG.imageUrl);
@@ -3260,13 +3271,31 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
+    const viewport = document.querySelector('meta[name="viewport"]');
+
+    // --- START: Restore original viewport state ---
+    const originalViewport = localStorage.getItem('originalViewport');
+    if (viewport && originalViewport) {
+        viewport.setAttribute('content', originalViewport);
+    } else if (viewport) {
+        // Fallback to default
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+    }
+    localStorage.removeItem('originalViewport');
+    // --- END: Restore original viewport state ---
+
     // --- START: Turn the lock OFF ---
     document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
-    // No viewport changes needed
     // --- END: Turn the lock OFF ---
 
     document.getElementById('image-preview-modal').style.display = 'none';
+    
+    // Force page refresh to reset any zoom state
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.body.style.zoom = "reset";
+    }, 100);
 }
 
     /* end of close image preview */
