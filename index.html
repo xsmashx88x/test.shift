@@ -1668,7 +1668,7 @@ margin: 10px auto;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
         }
@@ -2369,6 +2369,29 @@ margin: 10px auto;
     box-shadow: 0 0 8px #FF5757;
 }
 /* --- END: Image Preview Modal Controls & Zoom --- */
+
+/* ADD THIS SNIPPET AT THE END OF YOUR CSS */
+
+/* --- START: Mobile Fix for Image Preview Controls --- */
+@media (max-width: 768px) {
+    #image-preview-controls {
+        /* Move the bar from the bottom to the top */
+        bottom: auto;
+        top: 15px;
+
+        /* Make it slightly smaller to feel more natural at the top */
+        padding: 6px;
+        gap: 8px;
+    }
+
+    .control-btn {
+        /* Make the buttons a bit smaller on mobile */
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
+/* --- END: Mobile Fix for Image Preview Controls --- */
 
     </style>
 </head>
