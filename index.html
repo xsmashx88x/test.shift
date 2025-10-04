@@ -3273,29 +3273,34 @@ function openEventsImage() {
 function closeImagePreview() {
     const viewport = document.querySelector('meta[name="viewport"]');
 
-    // --- START: Restore original viewport state ---
-    const originalViewport = localStorage.getItem('originalViewport');
-    if (viewport && originalViewport) {
-        viewport.setAttribute('content', originalViewport);
-    } else if (viewport) {
-        // Fallback to default
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-    }
-    localStorage.removeItem('originalViewport');
-    // --- END: Restore original viewport state ---
-
-    // --- START: Turn the lock OFF ---
+    // --- START: Nuclear zoom reset ---
     document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
-    // --- END: Turn the lock OFF ---
-
-    document.getElementById('image-preview-modal').style.display = 'none';
     
-    // Force page refresh to reset any zoom state
+    // Force reset by temporarily removing and re-adding viewport tag
+    if (viewport) {
+        const originalContent = viewport.getAttribute('content');
+        viewport.remove();
+        
+        const newViewport = document.createElement('meta');
+        newViewport.name = 'viewport';
+        newViewport.content = originalContent;
+        document.head.appendChild(newViewport);
+    }
+    
+    // Additional zoom reset techniques
     setTimeout(() => {
         window.scrollTo(0, 0);
-        document.body.style.zoom = "reset";
-    }, 100);
+        document.body.style.transform = 'scale(1)';
+        document.body.style.zoom = '1';
+        document.documentElement.style.zoom = '1';
+        
+        // Force a reflow
+        document.body.offsetHeight;
+    }, 10);
+    // --- END: Nuclear zoom reset ---
+
+    document.getElementById('image-preview-modal').style.display = 'none';
 }
 
     /* end of close image preview */
