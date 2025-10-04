@@ -2329,6 +2329,8 @@ margin: 10px auto;
     'floating-chat.donateButton.text-color': '#fff'
   });
 </script> 
+
+
     <div class="noise"></div>
     <div class="scanlines"></div>
     
@@ -2536,7 +2538,9 @@ margin: 10px auto;
     <script>
 
 /* mobile image zoom fix maybe */
-        
+function preventGesture(event) {
+            event.preventDefault();
+        }    
 
 // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
 const shareFab = document.querySelector('.share-fab');
@@ -3142,45 +3146,44 @@ function updateVendorTimer() {
 
         let originalViewportContent = '';
 function openImagePreview(url) {
-    const modal = document.getElementById('image-preview-modal');
-    const imageElement = document.getElementById('preview-image');
-    const container = document.getElementById('preview-container');
-    
-    // Hide both first
-    imageElement.style.display = 'none';
-    container.style.display = 'none';
-    
-    // Image formats
-    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-        // It's an image - use the existing image element
-        imageElement.src = url;
-        imageElement.style.display = 'block';
-        imageElement.alt = "Preview";
-    } 
-    // Video formats
-    else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-        // It's a video - use the container with video element
-        container.innerHTML = `
-            <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
-                <source src="${url}" type="video/mp4">
-                <source src="${url}" type="video/webm">
-                <source src="${url}" type="video/ogg">
-                Your browser does not support the video tag.
-            </video>
-        `;
-        container.style.display = 'block';
-    } else {
-        // It's a website - use the container with iframe
-        container.innerHTML = `
-            <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
-                    onerror="showPreviewFallback('${url}')">
-            </iframe>
-        `;
-        container.style.display = 'block';
-    }
-    
-    modal.style.display = 'flex';
-}
+            // --- START: Lock the page ---
+            document.body.classList.add('body-locked');
+            window.addEventListener('touchmove', preventGesture, { passive: false });
+            // --- END: Lock the page ---
+
+            const modal = document.getElementById('image-preview-modal');
+            const imageElement = document.getElementById('preview-image');
+            const container = document.getElementById('preview-container');
+            
+            imageElement.style.display = 'none';
+            container.style.display = 'none';
+            
+            if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+                imageElement.src = url;
+                imageElement.style.display = 'block';
+                imageElement.alt = "Preview";
+            } 
+            else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
+                container.innerHTML = `
+                    <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
+                        <source src="${url}" type="video/mp4">
+                        <source src="${url}" type="video/webm">
+                        <source src="${url}" type="video/ogg">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+                container.style.display = 'block';
+            } else {
+                container.innerHTML = `
+                    <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
+                            onerror="showPreviewFallback('${url}')">
+                    </iframe>
+                `;
+                container.style.display = 'block';
+            }
+            
+            modal.style.display = 'flex';
+        }
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -3218,30 +3221,12 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-            // 1. Hide the modal immediately for instant user feedback.
+            // --- START: Unlock the page ---
+            document.body.classList.remove('body-locked');
+            window.removeEventListener('touchmove', preventGesture, { passive: false });
+            // --- END: Unlock the page ---
+
             document.getElementById('image-preview-modal').style.display = 'none';
-
-            // 2. Safety Check: Exit if no viewport tag exists. This prevents any possibility of crashing your site.
-            const viewport = document.querySelector('meta[name="viewport"]');
-            if (viewport && originalViewportContent) {
-                return;
-            }
-
-            // 3. Store the original, zoomable viewport settings.
-            const originalContent = viewport.getAttribute('content');
-
-            // 4. Forcefully apply the strict, non-scalable viewport to command a zoom reset.
-                viewport.setAttribute('content', originalViewportContent);
-
-            // 5. Use the browser's rendering cycle to reliably restore the viewport.
-            // This is the key: we wait for the browser to paint the "un-zoomed" state
-            // before we give the user back their ability to zoom.
-            requestAnimationFrame(() => {
-                // By nesting a second frame, we ensure we wait for the next available paint cycle.
-                requestAnimationFrame(() => {
-                    viewport.setAttribute('content', originalContent);
-                });
-            });
         }
 
         function toggleInfo(sectionId) {
