@@ -1696,7 +1696,7 @@ margin: 10px auto;
         }
 
         .close-preview {
-            position: absolute;
+            position: fixed;
             top: -15px;
             right: -15px;
             background: #ff4444;
@@ -2322,10 +2322,10 @@ body.modal-open {
     </style>
 </head>
 <div id="image-preview-modal" class="image-preview-modal">
+    <button class="close-preview" onclick="closeImagePreview()">×</button>
     <div class="image-preview-content">
-        <button class="close-preview" onclick="closeImagePreview()">×</button>
         <div id="preview-container" style="display: none;">
-    </div>
+        </div>
         <img id="preview-image" src="" alt="Preview" style="display: none;">
     </div>
 </div>
@@ -3152,15 +3152,11 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
-        const viewport = document.querySelector('meta[name="viewport"]');
-        // --- START: Turn the lock ON ---
-        document.documentElement.classList.add('modal-open'); // Lock the <html> tag
-        document.body.classList.add('modal-open'); // Lock the <body> tag
-        if (viewport) {
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-        }
-        // --- END: Turn the lock ON ---
+        // --- Turn the lock ON ---
+        document.documentElement.classList.add('modal-open');
+        document.body.classList.add('modal-open');
 
+        // The rest of your code is perfect
         const modal = document.getElementById('image-preview-modal');
         const imageElement = document.getElementById('preview-image');
         const container = document.getElementById('preview-container');
@@ -3171,12 +3167,11 @@ function openImagePreview(url) {
         if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) {
             imageElement.src = url;
             imageElement.style.display = 'block';
-            imageElement.alt = "Preview";
         } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
-            container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh;"><source src="${url}" type="video/mp4"></video>`;
+            container.innerHTML = `<video controls autoplay style="width: 100%; height: 100%;"><source src="${url}" type="video/mp4"></video>`;
             container.style.display = 'block';
         } else {
-            container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh;"></iframe>`;
+            container.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100%;"></iframe>`;
             container.style.display = 'block';
         }
         
@@ -3219,16 +3214,11 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-        const viewport = document.querySelector('meta[name="viewport"]');
-        // --- START: Turn the lock OFF ---
-        document.documentElement.classList.remove('modal-open'); // Unlock the <html> tag
-        document.body.classList.remove('modal-open'); // Unlock the <body> tag
-        if (viewport) {
-            // IMPORTANT: Restore the original viewport that allows zooming on your main page
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-        }
-        // --- END: Turn the lock OFF ---
-
+        // --- Turn the lock OFF ---
+        document.documentElement.classList.remove('modal-open');
+        document.body.classList.remove('modal-open');
+        
+        // Hide the modal
         document.getElementById('image-preview-modal').style.display = 'none';
     }
 
