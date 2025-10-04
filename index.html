@@ -2325,42 +2325,29 @@ margin: 10px auto;
 /* This is the lock. It freezes the entire page. */
 /* Prevent background zoom when modal is open */
 /* Completely lock the background when modal is open */
-html.modal-open,
-body.modal-open {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    /* Prevent any text size adjustment */
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+.zoom-controls {
+    position: absolute;
+    top: -50px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 1002;
 }
 
-/* Allow zooming only in the modal */
-.image-preview-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    /* Allow zooming in the modal container */
-    touch-action: pan-x pan-y pinch-zoom;
+.zoom-btn {
+    background: #333;
+    color: white;
+    border: 1px solid #666;
+    border-radius: 3px;
+    width: 40px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.image-preview-content {
-    position: relative;
-    max-width: 95%;
-    max-height: 95%;
-    margin: 20px;
-    /* Ensure zooming works on content */
-    transform-origin: center center;
+.zoom-btn:hover {
+    background: #555;
 }
 
     </style>
@@ -2369,8 +2356,13 @@ body.modal-open {
 <div id="image-preview-modal" class="image-preview-modal">
     <div class="image-preview-content">
         <button class="close-preview" onclick="closeImagePreview()">×</button>
-        <div id="preview-container" style="display: none;">
+        <!-- Add zoom controls -->
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomImage(1.2)">+</button>
+            <button class="zoom-btn" onclick="zoomImage(1)">Reset</button>
+            <button class="zoom-btn" onclick="zoomImage(0.8)">-</button>
         </div>
+        <div id="preview-container" style="display: none;"></div>
         <img id="preview-image" src="" alt="Preview" style="display: none;">
     </div>
 </div>
@@ -2592,7 +2584,18 @@ body.modal-open {
     <script>
 
 /* mobile image zoom fix maybe */
-        
+function zoomImage(scale) {
+    const image = document.getElementById('preview-image');
+    const container = document.getElementById('preview-container');
+    
+    if (image.style.display !== 'none') {
+        image.style.transform = `scale(${scale})`;
+        image.style.transformOrigin = 'center center';
+    } else if (container.style.display !== 'none') {
+        container.style.transform = `scale(${scale})`;
+        container.style.transformOrigin = 'center center';
+    }
+}        
 
 // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
 const shareFab = document.querySelector('.share-fab');
@@ -3199,19 +3202,13 @@ function updateVendorTimer() {
 function openImagePreview(url) {
     const viewport = document.querySelector('meta[name="viewport"]');
     
-    // --- START: Save current viewport state ---
-    const originalViewport = viewport ? viewport.getAttribute('content') : '';
-    localStorage.setItem('originalViewport', originalViewport);
-    // --- END: Save current viewport state ---
-    
-    // --- START: Turn the lock ON ---
+    // --- START: Completely prevent zoom ---
     document.documentElement.classList.add('modal-open');
     document.body.classList.add('modal-open');
-    // Prevent zoom on background but allow modal content
     if (viewport) {
         viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
     }
-    // --- END: Turn the lock ON ---
+    // --- END: Completely prevent zoom ---
 
     // Rest of your function remains the same...
     const modal = document.getElementById('image-preview-modal');
@@ -3273,32 +3270,13 @@ function openEventsImage() {
 function closeImagePreview() {
     const viewport = document.querySelector('meta[name="viewport"]');
 
-    // --- START: Nuclear zoom reset ---
+    // --- START: Simple restore ---
     document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
-    
-    // Force reset by temporarily removing and re-adding viewport tag
     if (viewport) {
-        const originalContent = viewport.getAttribute('content');
-        viewport.remove();
-        
-        const newViewport = document.createElement('meta');
-        newViewport.name = 'viewport';
-        newViewport.content = originalContent;
-        document.head.appendChild(newViewport);
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
     }
-    
-    // Additional zoom reset techniques
-    setTimeout(() => {
-        window.scrollTo(0, 0);
-        document.body.style.transform = 'scale(1)';
-        document.body.style.zoom = '1';
-        document.documentElement.style.zoom = '1';
-        
-        // Force a reflow
-        document.body.offsetHeight;
-    }, 10);
-    // --- END: Nuclear zoom reset ---
+    // --- END: Simple restore ---
 
     document.getElementById('image-preview-modal').style.display = 'none';
 }
