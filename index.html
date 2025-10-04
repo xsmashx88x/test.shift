@@ -3223,26 +3223,25 @@ function closeImagePreview() {
             // 1. Hide the modal immediately.
             document.getElementById('image-preview-modal').style.display = 'none';
 
-            // 2. Find the viewport meta tag. This is the control panel for page zoom.
+            // 2. Find the viewport meta tag.
             const viewport = document.querySelector('meta[name="viewport"]');
-
-            // 3. Safety Check: If there is no viewport tag, stop safely.
             if (!viewport) {
-                return;
+                return; // Exit safely if no viewport tag exists.
             }
 
-            // 4. Store the original, good settings that allow zooming.
+            // 3. Store the original, good viewport settings.
             const originalContent = viewport.getAttribute('content');
 
-            // 5. THE COMMAND: Forcefully apply a strict, non-scalable viewport.
-            // This is a direct order to the browser: "RESET ZOOM TO 100% NOW."
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            // 4. THE CRITICAL CHANGE: Apply a temporary setting that ONLY affects zoom.
+            // Notice this does NOT include "width=device-width". This is the key to
+            // preventing your page from switching to the mobile layout.
+            viewport.setAttribute('content', 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 
-            // 6. THE RESET: After a tiny, imperceptible delay (to allow the browser to obey the command),
-            //    this puts your original, good settings back. This returns the page to normal.
+            // 5. After a tiny, imperceptible delay, restore the original settings completely.
+            // This returns the page to its normal state, allowing zoom again.
             setTimeout(function() {
                 viewport.setAttribute('content', originalContent);
-            }, 50); // A 50ms delay is instant for the user.
+            }, 50); // 50ms is instant for the user.
         }
 
 
