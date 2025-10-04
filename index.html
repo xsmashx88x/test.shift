@@ -3149,37 +3149,38 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
-        // --- START: Turn the lock ON ---
-        document.documentElement.classList.add('modal-open');
-        document.body.classList.add('modal-open');
-        // This is the powerful lock that prevents background zoom
-        if (viewport) {
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-        }
-        // --- END: Turn the lock ON ---
-
-        // The rest of your function is perfect
-        const modal = document.getElementById('image-preview-modal');
-        const imageElement = document.getElementById('preview-image');
-        const container = document.getElementById('preview-container');
-        
-        imageElement.style.display = 'none';
-        container.style.display = 'none';
-        
-        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) {
-            imageElement.src = url;
-            imageElement.style.display = 'block';
-        } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
-            container.innerHTML = `<video controls autoplay style="width: 100%; height: 100%;"><source src="${url}" type="video/mp4"></video>`;
-            container.style.display = 'block';
-        } else {
-            container.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100%;"></iframe>`;
-            container.style.display = 'block';
-        }
-        
-        modal.style.display = 'flex';
+    const viewport = document.querySelector('meta[name="viewport"]');
+    
+    // --- START: Turn the lock ON ---
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
+    // Allow zoom but prevent background scrolling
+    if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=yes');
     }
+    // --- END: Turn the lock ON ---
 
+    // The rest of your function stays exactly the same...
+    const modal = document.getElementById('image-preview-modal');
+    const imageElement = document.getElementById('preview-image');
+    const container = document.getElementById('preview-container');
+    
+    imageElement.style.display = 'none';
+    container.style.display = 'none';
+    
+    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) {
+        imageElement.src = url;
+        imageElement.style.display = 'block';
+    } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
+        container.innerHTML = `<video controls autoplay style="width: 100%; height: 100%;"><source src="${url}" type="video/mp4"></video>`;
+        container.style.display = 'block';
+    } else {
+        container.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100%;"></iframe>`;
+        container.style.display = 'block';
+    }
+    
+    modal.style.display = 'flex';
+}
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
     openImagePreview(ROADMAP_CONFIG.imageUrl);
@@ -3216,17 +3217,19 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-        // --- START: Turn the lock OFF ---
-        document.documentElement.classList.remove('modal-open');
-        document.body.classList.remove('modal-open');
-        // This restores the ability to zoom on your main page
-        if (viewport) {
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-        }
-        // --- END: Turn the lock OFF ---
+    const viewport = document.querySelector('meta[name="viewport"]');
 
-        document.getElementById('image-preview-modal').style.display = 'none';
+    // --- START: Turn the lock OFF ---
+    document.documentElement.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
+    // Restore original viewport settings
+    if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
     }
+    // --- END: Turn the lock OFF ---
+
+    document.getElementById('image-preview-modal').style.display = 'none';
+}
 
     /* end of close image preview */
 
