@@ -2304,8 +2304,10 @@ margin: 10px auto;
 .facebook-btn { background: linear-gradient(to bottom, #1877F2, #1056ad); border: 2px solid #1877F2; }
 
 /* Mobile zoom back to normal css */
-.body-locked {
-    overflow: hidden !important;
+body.modal-open {
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
 }
 
     </style>
@@ -2329,8 +2331,6 @@ margin: 10px auto;
     'floating-chat.donateButton.text-color': '#fff'
   });
 </script> 
-
-
     <div class="noise"></div>
     <div class="scanlines"></div>
     
@@ -2536,12 +2536,9 @@ margin: 10px auto;
     </div>
 
     <script>
-        let preventBodyTouch;
 
 /* mobile image zoom fix maybe */
-function preventGesture(event) {
-            event.preventDefault();
-        }    
+        
 
 // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
 const shareFab = document.querySelector('.share-fab');
@@ -3145,52 +3142,47 @@ function updateVendorTimer() {
         // Make sure to call updateVendorTimer regularly (e.g., every second)
         setInterval(updateVendorTimer, 1000);
 
+        let scrollYPosition = 0;
 function openImagePreview(url) {
-            const modal = document.getElementById('image-preview-modal');
-            const modalContent = modal.querySelector('.image-preview-content');
-
-            // --- START: The Correct Modal Locking Procedure ---
-
-            // This function PREVENTS page zoom/scroll
-            const blockEvent = (e) => e.preventDefault();
-            // This function STOPS the block from happening if the user is touching the image
-            const allowEvent = (e) => e.stopPropagation();
-
-            // 1. Lock the body from scrolling.
-            document.body.classList.add('body-locked');
-
-            // 2. Add a listener to the modal's semi-transparent background.
-            //    If a user tries to zoom here, the blockEvent will fire and prevent it.
-            modal.addEventListener('touchmove', blockEvent, { passive: false });
-
-            // 3. Add a listener to the image container.
-            //    If a user touches here, allowEvent fires first, stopping the event
-            //    from ever reaching the background. This ALLOWS zoom on the image.
-            modalContent.addEventListener('touchmove', allowEvent, { passive: false });
-
-            // --- END: The Correct Modal Locking Procedure ---
-
-            const imageElement = document.getElementById('preview-image');
-            const container = document.getElementById('preview-container');
-            
-            imageElement.style.display = 'none';
-            container.style.display = 'none';
-            
-            if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-                imageElement.src = url;
-                imageElement.style.display = 'block';
-                imageElement.alt = "Preview";
-            } 
-            else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-                container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"><source src="${url}" type="video/webm"><source src="${url}" type="video/ogg">Your browser does not support the video tag.</video>`;
-                container.style.display = 'block';
-            } else {
-                container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
-                container.style.display = 'block';
-            }
-            
-            modal.style.display = 'flex';
-        }
+    const modal = document.getElementById('image-preview-modal');
+    const imageElement = document.getElementById('preview-image');
+    const container = document.getElementById('preview-container');
+    
+    // Hide both first
+    imageElement.style.display = 'none';
+    container.style.display = 'none';
+    
+    // Image formats
+    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+        // It's an image - use the existing image element
+        imageElement.src = url;
+        imageElement.style.display = 'block';
+        imageElement.alt = "Preview";
+    } 
+    // Video formats
+    else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
+        // It's a video - use the container with video element
+        container.innerHTML = `
+            <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
+                <source src="${url}" type="video/mp4">
+                <source src="${url}" type="video/webm">
+                <source src="${url}" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+        `;
+        container.style.display = 'block';
+    } else {
+        // It's a website - use the container with iframe
+        container.innerHTML = `
+            <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
+                    onerror="showPreviewFallback('${url}')">
+            </iframe>
+        `;
+        container.style.display = 'block';
+    }
+    
+    modal.style.display = 'flex';
+}
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -3228,26 +3220,38 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-            const modal = document.getElementById('image-preview-modal');
-            const modalContent = modal.querySelector('.image-preview-content');
-            
-            // Re-define these here to ensure they can be removed correctly
-            const blockEvent = (e) => e.preventDefault();
-            const allowEvent = (e) => e.stopPropagation();
+            // 1. Hide the modal immediately.
+            document.getElementById('image-preview-modal').style.display = 'none';
 
-            // --- START: The Correct Unlocking Procedure ---
+            // 2. Find the viewport meta tag. This is the control panel for page zoom.
+            const viewport = document.querySelector('meta[name="viewport"]');
 
-            // 1. Unlock the body.
-            document.body.classList.remove('body-locked');
+            // 3. Safety Check: If there is no viewport tag, stop safely.
+            if (!viewport) {
+                return;
+            }
 
-            // 2. IMPORTANT: Remove the exact same listeners to prevent memory leaks and bugs.
-            modal.removeEventListener('touchmove', blockEvent, { passive: false });
-            modalContent.removeEventListener('touchmove', allowEvent, { passive: false });
+            // 4. Store the original, good settings that allow zooming.
+            const originalContent = viewport.getAttribute('content');
 
-            // --- END: The Correct Unlocking Procedure ---
+            // 5. THE COMMAND: Forcefully apply a strict, non-scalable viewport.
+            // This is a direct order to the browser: "RESET ZOOM TO 100% NOW."
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
 
-            modal.style.display = 'none';
+            // 6. THE RESET: After a tiny, imperceptible delay (to allow the browser to obey the command),
+            //    this puts your original, good settings back. This returns the page to normal.
+            setTimeout(function() {
+                viewport.setAttribute('content', originalContent);
+            }, 50); // A 50ms delay is instant for the user.
         }
+
+
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'image-preview-modal') {
+                closeImagePreview();
+            }
+        });
 
         function toggleInfo(sectionId) {
             const section = document.getElementById(sectionId);
