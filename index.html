@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="https://xsmashx88x.github.io/Shift-Codes/smashfavicon.png">
     <link rel="icon" type="image/png" href="https://xsmashx88x.github.io/Shift-Codes/smashfavicon.png">
     <meta charset="UTF-8">
@@ -16,6 +15,7 @@
     <!-- Twitter Card tags -->
     <meta name="twitter:title" content="Borderlands SHiFT Codes - Tracker + More">
     <meta name="twitter:description" content="Track and manage Borderlands SHiFT codes + More">
+        <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <body>
 
     <!-- === START: FINAL FLOATING INFO PANEL === -->
@@ -2454,90 +2454,8 @@ margin: 10px auto;
 <!-- END of the replacement block -->
 
 <body>
-// ADD THIS ENTIRE NEW BLOCK AT THE TOP OF YOUR <script> TAG
 
-// --- START: Panzoom Integration with Buttons ---
 
-// This variable will hold our active Panzoom instance.
-let panzoomInstance = null;
-
-// NEW button functions that control the Panzoom library
-function zoomIn() {
-    if (panzoomInstance) {
-        panzoomInstance.zoomIn();
-    }
-}
-
-function zoomOut() {
-    if (panzoomInstance) {
-        panzoomInstance.zoomOut();
-    }
-}
-
-function resetZoom() {
-    if (panzoomInstance) {
-        panzoomInstance.reset();
-    }
-}
-
-// REPLACE your existing `openImagePreview` function with this one.
-function openImagePreview(url) {
-    const modal = document.getElementById('image-preview-modal');
-    const imageElement = document.getElementById('preview-image');
-    const container = document.getElementById('preview-container');
-    
-    // Reset the library's state for the new image
-    if (panzoomInstance) panzoomInstance.reset();
-    
-    imageElement.style.display = 'none';
-    container.style.display = 'none';
-
-    scrollYPosition = window.scrollY;
-    document.body.style.top = `-${scrollYPosition}px`;
-    document.body.classList.add('modal-open');
-    
-    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-        imageElement.src = url;
-        imageElement.style.display = 'block';
-
-        // Initialize Panzoom on the image
-        panzoomInstance = Panzoom(imageElement, {
-            maxScale: 4,
-            minScale: 0.5,
-            canvas: true,
-        });
-        // Allow zooming with the mouse wheel
-        modal.addEventListener('wheel', panzoomInstance.zoomWithWheel);
-
-    } else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-        container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"></video>`;
-        container.style.display = 'block';
-    } else {
-        container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
-        container.style.display = 'block';
-    }
-    
-    modal.style.display = 'flex';
-}
-
-// REPLACE your existing `closeImagePreview` function with this one.
-function closeImagePreview() {
-    if (panzoomInstance) {
-        // Important: clean up the instance when closing the modal
-        panzoomInstance.destroy();
-        panzoomInstance = null;
-    }
-
-    const modal = document.getElementById('image-preview-modal');
-    modal.style.display = 'none';
-
-    document.body.classList.remove('modal-open');
-    document.body.style.top = '';
-    window.scrollTo(0, scrollYPosition);
-}
-
-// --- END: Panzoom Integration with Buttons ---
-    
    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 <script>
   kofiWidgetOverlay.draw('xsmashx88x', {
@@ -2765,31 +2683,28 @@ function zoomIn() {
 // --- END: Image Preview Zoom ---
 
 // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
-const shareFab = document.querySelector('.share-fab');
-const shareMenu = document.getElementById('shareMenu');
+        /* mobile image zoom fix maybe */
+        // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
+        const shareFab = document.querySelector('.share-fab');
+        const shareMenu = document.getElementById('shareMenu');
 
-// This function handles opening and closing the menu
-function toggleShareMenu(event) {
-    // This stops the click from immediately being caught by the 'window' listener
-    event.stopPropagation(); 
-    shareMenu.classList.toggle('active');
-}
+        function toggleShareMenu(event) {
+            event.stopPropagation(); 
+            shareMenu.classList.toggle('active');
+        }
 
 // Add the click listener directly to the button
-shareFab.addEventListener('click', toggleShareMenu);
+        shareFab.addEventListener('click', toggleShareMenu);
 
-// This listener closes the menu if you click anywhere else
-window.addEventListener('click', function(event) {
-    // If the menu is active and the click was NOT inside the menu itself
-    if (shareMenu.classList.contains('active') && !shareMenu.contains(event.target)) {
-        shareMenu.classList.remove('active');
-    }
-});
+        window.addEventListener('click', function(event) {
+            if (shareMenu.classList.contains('active') && !shareMenu.contains(event.target)) {
+                shareMenu.classList.remove('active');
+            }
+        });
 
 // --- ADD THIS FUNCTION for the new floating panel refresh and thanks ---
 
         function toggleThankYouPanel(linkElement) {
-            // Finds the main container (.floating-info-panel) and adds/removes the 'is-open' class
             const panel = linkElement.closest('.floating-info-panel');
             if (panel) {
                 panel.classList.toggle('is-open');
@@ -2798,32 +2713,25 @@ window.addEventListener('click', function(event) {
 
 // ==================== 12-HOUR FORMAT HELPER ====================
 // This function correctly handles 12-hour AM/PM and 1-indexed months (1=Jan, 12=Dec).
-function createDate(year, month, day, hour, minute, second, isPM) {
-    // Convert 12-hour format to 24-hour format
-    let hour24 = hour;
-    if (isPM && hour < 12) {
-        hour24 = hour + 12;
-    } else if (!isPM && hour === 12) {
-        hour24 = 0; // 12 AM = 0 hours
-    }
-    // Month is 0-indexed in JavaScript (0=January, 11=December)
-    return new Date(year, month - 1, day, hour24, minute, second);
-}
+        function createDate(year, month, day, hour, minute, second, isPM) {
+            let hour24 = hour;
+            if (isPM && hour < 12) {
+                hour24 = hour + 12;
+            } else if (!isPM && hour === 12) {
+                hour24 = 0;
+            }
+            return new Date(year, month - 1, day, hour24, minute, second);
+        }
 
 //** Hide Redeem shift button **///
-function toggleRewardsLink(isChecked) {
-  // Find the div with the id 'rewards-container'
-  const rewardsDiv = document.getElementById('rewards-container');
-
-  // If the checkbox is checked (isChecked is true)
-  if (isChecked) {
-    // Hide the div
-    rewardsDiv.style.display = 'none';
-  } else {
-    // Otherwise, show the div
-    rewardsDiv.style.display = 'block';
-  }
-}
+        function toggleRewardsLink(isChecked) {
+          const rewardsDiv = document.getElementById('rewards-container');
+          if (isChecked) {
+            rewardsDiv.style.display = 'none';
+          } else {
+            rewardsDiv.style.display = 'block';
+          }
+        }
 
 // ==================== CONFIGURATION ====================
 const ALL_CODES_CONFIG = [
@@ -3371,48 +3279,69 @@ function updateVendorTimer() {
         // Make sure to call updateVendorTimer regularly (e.g., every second)
         setInterval(updateVendorTimer, 1000);
 
-        let scrollYPosition = 0;
+
+
+
+        // --- START: Panzoom Integration with Buttons ---
+        // This variable will hold our active Panzoom instance.
+        let panzoomInstance = null;
+
+        // NEW button functions that control the Panzoom library
+        function zoomIn() {
+            if (panzoomInstance) {
+                panzoomInstance.zoomIn();
+            }
+        }
+
+        function zoomOut() {
+            if (panzoomInstance) {
+                panzoomInstance.zoomOut();
+            }
+        }
+
+        function resetZoom() {
+            if (panzoomInstance) {
+                panzoomInstance.reset();
+            }
+        }
+
 function openImagePreview(url) {
-        resetZoom(); // <-- ADD THIS LINE to reset the view for each new image
-    const modal = document.getElementById('image-preview-modal');
-    const imageElement = document.getElementById('preview-image');
-    const container = document.getElementById('preview-container');
-    
-    // Hide both first
-    imageElement.style.display = 'none';
-    container.style.display = 'none';
-    
-    // Image formats
-    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-        // It's an image - use the existing image element
-        imageElement.src = url;
-        imageElement.style.display = 'block';
-        imageElement.alt = "Preview";
-    } 
-    // Video formats
-    else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-        // It's a video - use the container with video element
-        container.innerHTML = `
-            <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
-                <source src="${url}" type="video/mp4">
-                <source src="${url}" type="video/webm">
-                <source src="${url}" type="video/ogg">
-                Your browser does not support the video tag.
-            </video>
-        `;
-        container.style.display = 'block';
-    } else {
-        // It's a website - use the container with iframe
-        container.innerHTML = `
-            <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
-                    onerror="showPreviewFallback('${url}')">
-            </iframe>
-        `;
-        container.style.display = 'block';
-    }
-    
-    modal.style.display = 'flex';
-}
+            const modal = document.getElementById('image-preview-modal');
+            const imageElement = document.getElementById('preview-image');
+            const container = document.getElementById('preview-container');
+
+            // Reset any previous instance
+            if (panzoomInstance) panzoomInstance.reset();
+            
+            imageElement.style.display = 'none';
+            container.style.display = 'none';
+
+            // Body scroll lock
+            scrollYPosition = window.scrollY;
+            document.body.style.top = `-${scrollYPosition}px`;
+            document.body.classList.add('modal-open');
+            
+            if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+                imageElement.src = url;
+                imageElement.style.display = 'block';
+
+                panzoomInstance = Panzoom(imageElement, {
+                    maxScale: 4,
+                    minScale: 0.5,
+                    canvas: true,
+                });
+                modal.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+
+            } else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
+                container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"></video>`;
+                container.style.display = 'block';
+            } else {
+                container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
+                container.style.display = 'block';
+            }
+            
+            modal.style.display = 'flex';
+        }
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -3450,14 +3379,17 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-            // --- START: Unlock Body Scroll and Reset View ---
-            const modal = document.getElementById('image-preview-modal');
-            modal.style.display = 'none'; // Hide the modal
+            if (panzoomInstance) {
+                panzoomInstance.destroy();
+                panzoomInstance = null;
+            }
 
-            document.body.classList.remove('modal-open'); // Remove the locking class
-            document.body.style.top = ''; // Clear the inline style
-            window.scrollTo(0, scrollYPosition); // IMPORTANT: Restore original scroll position
-            // --- END: Unlock Body Scroll and Reset View ---
+            const modal = document.getElementById('image-preview-modal');
+            modal.style.display = 'none';
+
+            document.body.classList.remove('modal-open');
+            document.body.style.top = '';
+            window.scrollTo(0, scrollYPosition);
         }
 
 
@@ -4080,20 +4012,40 @@ function initializePage() {
     applyDisplayPreferences();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+  let scrollYPosition = 0; // Defining this globally for the lock function
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Run version check, if codes changed, page will reload.
+            if (!checkCodesVersion()) {
+                initializePage(); // THIS IS THE FUNCTION THAT DRAWS YOUR CODES
+            }
     // ... (your existing code like checkCodesVersion)
 
     // Connect the buttons to the NEW Panzoom control functions
-    const zoomInButton = document.getElementById('zoom-in-btn');
-    const zoomOutButton = document.getElementById('zoom-out-btn');
-    const resetZoomButton = document.getElementById('reset-zoom-btn');
-    const closeButton = document.getElementById('close-preview-btn');
+            const zoomInButton = document.getElementById('zoom-in-btn');
+            const zoomOutButton = document.getElementById('zoom-out-btn');
+            const resetZoomButton = document.getElementById('reset-zoom-btn');
+            const closeButton = document.getElementById('close-preview-btn');
 
-    if (zoomInButton) zoomInButton.addEventListener('click', zoomIn);
-    if (zoomOutButton) zoomOutButton.addEventListener('click', zoomOut);
-    if (resetZoomButton) resetZoomButton.addEventListener('click', resetZoom);
-    if (closeButton) closeButton.addEventListener('click', closeImagePreview);
-});
+            if (zoomInButton) zoomInButton.addEventListener('click', zoomIn);
+            if (zoomOutButton) zoomOutButton.addEventListener('click', zoomOut);
+            if (resetZoomButton) resetZoomButton.addEventListener('click', resetZoom);
+
+            // This button's ID was different in my example, let's use the correct one from your HTML.
+            // Assuming the close button in the control bar is the main one now.
+            const newCloseButton = document.getElementById('close-preview-btn');
+            if (newCloseButton) newCloseButton.addEventListener('click', closeImagePreview);
+            
+             // Close when clicking outside on the modal background
+            const modal = document.getElementById('image-preview-modal');
+            if(modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target.id === 'image-preview-modal') {
+                        closeImagePreview();
+                    }
+                });
+            }
+        });
 
         // --- NEW: Functions for User Display Preferences ---
         function saveDisplayPreference(elementId, isHidden) {
