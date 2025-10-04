@@ -63,6 +63,11 @@
     
     <div class="container">
     <style>
+        
+        .body-locked {
+    overflow: hidden;
+}
+
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap');
         
         * {
@@ -1674,6 +1679,8 @@ margin: 10px auto;
         }
 
         .image-preview-content {
+                overflow: auto;
+    -webkit-overflow-scrolling: touch;
             max-width: 90%;
             max-height: 90%;
             position: relative;
@@ -2304,19 +2311,10 @@ margin: 10px auto;
 .facebook-btn { background: linear-gradient(to bottom, #1877F2, #1056ad); border: 2px solid #1877F2; }
 
 /* Mobile zoom back to normal css */
-.body-locked {
-    overflow: hidden !important;
-}
-
-.image-preview-content {
-    /* Add these two lines to your existing rule */
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-
-    /* Keep the rest of your existing styles for this class */
-    max-width: 90%;
-    max-height: 90%;
-    position: relative;
+body.modal-open {
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
 }
 
     </style>
@@ -2545,9 +2543,7 @@ margin: 10px auto;
     </div>
 
     <script>
-    const blockGesture = (event) => {
-        event.preventDefault();
-    };
+
 /* mobile image zoom fix maybe */
         
 
@@ -3154,36 +3150,32 @@ function updateVendorTimer() {
         setInterval(updateVendorTimer, 1000);
 
 function openImagePreview(url) {
-        const modal = document.getElementById('image-preview-modal');
-        const modalContent = modal.querySelector('.image-preview-content');
-
-        // --- START: Lock the page correctly ---
-        document.body.classList.add('body-locked'); // Freezes the background
-        modal.addEventListener('touchmove', blockGesture, { passive: false }); // Blocks zoom on the background
-        modalContent.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false }); // Allows zoom on the image
-        // --- END: Lock the page correctly ---
-
-        const imageElement = document.getElementById('preview-image');
-        const container = document.getElementById('preview-container');
-        
-        imageElement.style.display = 'none';
-        container.style.display = 'none';
-        
-        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-            imageElement.src = url;
-            imageElement.style.display = 'block';
-            imageElement.alt = "Preview";
-        } 
-        else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-            container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"><source src="${url}" type="video/webm"><source src="${url}" type="video/ogg">Your browser does not support the video tag.</video>`;
-            container.style.display = 'block';
-        } else {
-            container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
-            container.style.display = 'block';
+            // 1. Lock the body to prevent background scrolling.
+            document.body.classList.add('body-locked');
+            
+            // The rest of your function is perfect and does not need to change.
+            const modal = document.getElementById('image-preview-modal');
+            const imageElement = document.getElementById('preview-image');
+            const container = document.getElementById('preview-container');
+            
+            imageElement.style.display = 'none';
+            container.style.display = 'none';
+            
+            if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+                imageElement.src = url;
+                imageElement.style.display = 'block';
+                imageElement.alt = "Preview";
+            } 
+            else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
+                container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"><source src="${url}" type="video/webm"><source src="${url}" type="video/ogg">Your browser does not support the video tag.</video>`;
+                container.style.display = 'block';
+            } else {
+                container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
+                container.style.display = 'block';
+            }
+            
+            modal.style.display = 'flex';
         }
-        
-        modal.style.display = 'flex';
-    }
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -3221,17 +3213,12 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-        const modal = document.getElementById('image-preview-modal');
-        const modalContent = modal.querySelector('.image-preview-content');
+            // 1. Unlock the body to return it to normal.
+            document.body.classList.remove('body-locked');
 
-        // --- START: Unlock the page correctly ---
-        document.body.classList.remove('body-locked'); // Un-freezes the background
-        modal.removeEventListener('touchmove', blockGesture, { passive: false }); // Cleans up the listeners
-        modalContent.removeEventListener('touchmove', (e) => e.stopPropagation(), { passive: false }); // Cleans up the listeners
-        // --- END: Unlock the page correctly ---
-
-        modal.style.display = 'none';
-    }
+            // 2. Hide the modal.
+            document.getElementById('image-preview-modal').style.display = 'none';
+        }
 
 
         // Close when clicking outside
