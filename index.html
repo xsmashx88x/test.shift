@@ -2446,6 +2446,15 @@ margin: 10px auto;
 }
 /* --- END: Mobile Full-Screen Image Preview --- */
 
+/* hide kofi when preview is open */
+
+/* When the preview modal is open (body has class 'modal-open')... */
+body.modal-open iframe[id^="kofi"], /* ...Find the Ko-fi widget iframe... */
+body.modal-open .floating-share-container { /* ...and the Share button container... */
+    /* ...and hide them completely. */
+    display: none !important; 
+}
+
     </style>
 </head>
 <!-- REPLACE the existing image-preview-modal div with this one -->
