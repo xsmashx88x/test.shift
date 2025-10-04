@@ -2304,10 +2304,8 @@ margin: 10px auto;
 .facebook-btn { background: linear-gradient(to bottom, #1877F2, #1056ad); border: 2px solid #1877F2; }
 
 /* Mobile zoom back to normal css */
-body.modal-open {
-    position: fixed;
+.body-locked {
     overflow: hidden;
-    width: 100%;
 }
 
     </style>
@@ -3142,7 +3140,7 @@ function updateVendorTimer() {
         // Make sure to call updateVendorTimer regularly (e.g., every second)
         setInterval(updateVendorTimer, 1000);
 
-        let scrollYPosition = 0;
+        let originalViewportContent = '';
 function openImagePreview(url) {
     const modal = document.getElementById('image-preview-modal');
     const imageElement = document.getElementById('preview-image');
@@ -3225,7 +3223,7 @@ function closeImagePreview() {
 
             // 2. Safety Check: Exit if no viewport tag exists. This prevents any possibility of crashing your site.
             const viewport = document.querySelector('meta[name="viewport"]');
-            if (!viewport) {
+            if (viewport && originalViewportContent) {
                 return;
             }
 
@@ -3233,7 +3231,7 @@ function closeImagePreview() {
             const originalContent = viewport.getAttribute('content');
 
             // 4. Forcefully apply the strict, non-scalable viewport to command a zoom reset.
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                viewport.setAttribute('content', originalViewportContent);
 
             // 5. Use the browser's rendering cycle to reliably restore the viewport.
             // This is the key: we wait for the browser to paint the "un-zoomed" state
