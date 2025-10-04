@@ -63,8 +63,6 @@
     
     <div class="container">
     <style>
-        
-
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap');
         
         * {
@@ -1673,15 +1671,12 @@ margin: 10px auto;
             z-index: 1000;
             justify-content: center;
             align-items: center;
-                overflow: auto; /* Allow scrolling/zooming within modal */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         }
 
         .image-preview-content {
             max-width: 90%;
             max-height: 90%;
             position: relative;
-                margin: 20px; /* Space for close button */
         }
 
         .image-preview-content img {
@@ -1692,33 +1687,19 @@ margin: 10px auto;
         }
 
         .close-preview {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    background: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    z-index: 1001;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.7);
-}
-
-/* Allow zooming within the image/content */
-.image-preview-content img,
-.image-preview-content video,
-#preview-container {
-    max-width: 100%;
-    max-height: 100%;
-    /* These properties allow pinch-to-zoom */
-    touch-action: manipulation;
-    -webkit-user-select: none;
-    user-select: none;
-}
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
         /* Info content sections ||||||||||| ||||||||||||||||||||| |||||||||||||||||||||||||||||||*/
         #info-section .info-content {
@@ -2322,50 +2303,92 @@ margin: 10px auto;
 .twitter-btn { background: linear-gradient(to bottom, #1DA1F2, #0c85d0); border: 2px solid #1DA1F2; }
 .facebook-btn { background: linear-gradient(to bottom, #1877F2, #1056ad); border: 2px solid #1877F2; }
 
-/* This is the lock. It freezes the entire page. */
-/* Prevent background zoom when modal is open */
-/* Completely lock the background when modal is open */
-.zoom-controls {
-    position: absolute;
-    top: -50px;
-    right: 10px;
+/* Mobile zoom back to normal css */
+/* ADD THIS CSS to your main <style> tag */
+
+/* --- START: Image Preview Modal Controls & Zoom --- */
+.image-preview-content {
+    /* Allows scrolling with a mouse/trackpad when the image is zoomed in */
+    overflow: auto;
+}
+
+#preview-image {
+    /* Adds a smooth animation to the zoom effect */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* This is the container for the new control buttons */
+#image-preview-controls {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(5px);
+    border-radius: 50px;
+    padding: 8px;
     display: flex;
-    gap: 5px;
-    z-index: 1002;
+    gap: 10px;
+    border: 1px solid #ffc600;
+    box-shadow: 0 0 15px rgba(255, 198, 0, 0.5);
 }
 
-.zoom-btn {
-    background: #333;
-    color: white;
-    border: 1px solid #666;
-    border-radius: 3px;
-    width: 40px;
-    height: 30px;
-    font-size: 16px;
-    font-weight: bold;
+/* Styling for the individual buttons (Zoom In, Out, Reset, Close) */
+.control-btn {
+    background: linear-gradient(to bottom, #ff7c00, #e56a00);
+    border: 1px solid #ffc600;
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 1px 1px 0 #000;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4px; /* Helps visually center some characters */
 }
 
-.zoom-btn:hover {
-    background: #555;
+.control-btn:hover {
+    background: linear-gradient(to bottom, #ff8c00, #ff6a00);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px #ffc600;
 }
+
+/* Specific styling for the new close button */
+#close-preview-btn {
+    background: linear-gradient(to bottom, #EE2222, #DF2525);
+    border-color: #FF5757;
+}
+
+#close-preview-btn:hover {
+    box-shadow: 0 0 8px #FF5757;
+}
+/* --- END: Image Preview Modal Controls & Zoom --- */
 
     </style>
 </head>
-<!-- REVERT TO THIS ORIGINAL HTML STRUCTURE -->
+<!-- REPLACE the existing image-preview-modal div with this one -->
 <div id="image-preview-modal" class="image-preview-modal">
     <div class="image-preview-content">
-        <button class="close-preview" onclick="closeImagePreview()">×</button>
-        <!-- Add zoom controls -->
-        <div class="zoom-controls">
-            <button class="zoom-btn" onclick="zoomImage(1.2)">+</button>
-            <button class="zoom-btn" onclick="zoomImage(1)">Reset</button>
-            <button class="zoom-btn" onclick="zoomImage(0.8)">-</button>
+        <div id="preview-container" style="display: none;">
+            <!-- Iframe or video will be injected here by JavaScript -->
         </div>
-        <div id="preview-container" style="display: none;"></div>
         <img id="preview-image" src="" alt="Preview" style="display: none;">
     </div>
+    <!-- These are the new controls for zooming and closing -->
+    <div id="image-preview-controls">
+        <button class="control-btn" id="zoom-in-btn" title="Zoom In">+</button>
+        <button class="control-btn" id="zoom-out-btn" title="Zoom Out">-</button>
+        <button class="control-btn" id="reset-zoom-btn" title="Reset Zoom">⟲</button>
+        <button class="control-btn" id="close-preview-btn" title="Close">×</button>
+    </div>
 </div>
+<!-- END of the replacement block -->
 
 <body>
    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
@@ -2553,7 +2576,7 @@ margin: 10px auto;
 
 <h1>👍 Active BL4 SHiFT Codes (New At Top) 🗝️ <br> <small style="font-size: 0.6em; opacity: 0.9; "> ⬇ Gold Keys Only ⬇ | ⬆ Drops Button For Skins + Others ⬆</small> 
     <br>
-    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/3/2025!</small>
+    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/4/2025!</small>
     
     <!-- === NEW BUTTONS CONTAINER === -->
     <div class="key-info-buttons-container">
@@ -2584,18 +2607,46 @@ margin: 10px auto;
     <script>
 
 /* mobile image zoom fix maybe */
-function zoomImage(scale) {
+// ADD THIS code block at the top of your <script> tag
+
+// --- START: Image Preview Zoom ---
+let currentZoom = 1;
+const minZoom = 0.2;
+const maxZoom = 4;
+const zoomStep = 0.2;
+
+function applyZoom() {
     const image = document.getElementById('preview-image');
-    const container = document.getElementById('preview-container');
-    
-    if (image.style.display !== 'none') {
-        image.style.transform = `scale(${scale})`;
-        image.style.transformOrigin = 'center center';
-    } else if (container.style.display !== 'none') {
-        container.style.transform = `scale(${scale})`;
-        container.style.transformOrigin = 'center center';
+    if (image) {
+        image.style.transform = `scale(${currentZoom})`;
     }
-}        
+}
+
+function zoomIn() {
+    if (currentZoom < maxZoom) {
+        currentZoom += zoomStep;
+        applyZoom();
+    }
+}
+
+function zoomOut() {
+    if (currentZoom > minZoom) {
+        currentZoom -= zoomStep;
+        applyZoom();
+    }
+}
+
+function resetZoom() {
+    currentZoom = 1;
+    applyZoom();
+    // Also reset the scroll position of the container
+    const container = document.querySelector('.image-preview-content');
+    if(container) {
+        container.scrollTop = 0;
+        container.scrollLeft = 0;
+    }
+}
+// --- END: Image Preview Zoom ---
 
 // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
 const shareFab = document.querySelector('.share-fab');
@@ -2686,7 +2737,8 @@ const ALL_CODES_CONFIG = [
     },
                 {
         code: "TZFT3-K9Z33-5FT3W-BJ33T-WZ5X5",
-            expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
@@ -2694,7 +2746,8 @@ const ALL_CODES_CONFIG = [
     },
             {
         code: "J9RT3-RBJ5T-WRTBK-JB3J3-5TB3R",
-        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
@@ -2702,7 +2755,8 @@ const ALL_CODES_CONFIG = [
     },
             {
         code: "TH6BJ-WJTC3-W6B3C-3TTBT-5HTTH",
-        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
@@ -2718,7 +2772,8 @@ const ALL_CODES_CONFIG = [
     },
            {
         code: "BH6TJ-Z993B-5RJBK-JT3B3-RXT3Z",
-        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200020347428912" target="_blank">Via Twit</a>',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
@@ -2726,7 +2781,8 @@ const ALL_CODES_CONFIG = [
     },
         {
         code: "3S6TT-RSHJ3-WFJ3K-BBJB3-W5ZKS",
-        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200020347428912" target="_blank">Via Twit</a>',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
@@ -3199,33 +3255,43 @@ function updateVendorTimer() {
         // Make sure to call updateVendorTimer regularly (e.g., every second)
         setInterval(updateVendorTimer, 1000);
 
+        let scrollYPosition = 0;
 function openImagePreview(url) {
-    const viewport = document.querySelector('meta[name="viewport"]');
-    
-    // --- START: Completely prevent zoom ---
-    document.documentElement.classList.add('modal-open');
-    document.body.classList.add('modal-open');
-    if (viewport) {
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-    }
-    // --- END: Completely prevent zoom ---
-
-    // Rest of your function remains the same...
+        resetZoom(); // <-- ADD THIS LINE to reset the view for each new image
     const modal = document.getElementById('image-preview-modal');
     const imageElement = document.getElementById('preview-image');
     const container = document.getElementById('preview-container');
     
+    // Hide both first
     imageElement.style.display = 'none';
     container.style.display = 'none';
     
-    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) {
+    // Image formats
+    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+        // It's an image - use the existing image element
         imageElement.src = url;
         imageElement.style.display = 'block';
-    } else if (url.match(/\.(mp4|webm|ogg)$/i)) {
-        container.innerHTML = `<video controls autoplay style="width: 100%; height: 100%;"><source src="${url}" type="video/mp4"></video>`;
+        imageElement.alt = "Preview";
+    } 
+    // Video formats
+    else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
+        // It's a video - use the container with video element
+        container.innerHTML = `
+            <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
+                <source src="${url}" type="video/mp4">
+                <source src="${url}" type="video/webm">
+                <source src="${url}" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+        `;
         container.style.display = 'block';
     } else {
-        container.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100%;"></iframe>`;
+        // It's a website - use the container with iframe
+        container.innerHTML = `
+            <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
+                    onerror="showPreviewFallback('${url}')">
+            </iframe>
+        `;
         container.style.display = 'block';
     }
     
@@ -3268,20 +3334,23 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-    const viewport = document.querySelector('meta[name="viewport"]');
+            // --- START: Unlock Body Scroll and Reset View ---
+            const modal = document.getElementById('image-preview-modal');
+            modal.style.display = 'none'; // Hide the modal
 
-    // --- START: Simple restore ---
-    document.documentElement.classList.remove('modal-open');
-    document.body.classList.remove('modal-open');
-    if (viewport) {
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-    }
-    // --- END: Simple restore ---
+            document.body.classList.remove('modal-open'); // Remove the locking class
+            document.body.style.top = ''; // Clear the inline style
+            window.scrollTo(0, scrollYPosition); // IMPORTANT: Restore original scroll position
+            // --- END: Unlock Body Scroll and Reset View ---
+        }
 
-    document.getElementById('image-preview-modal').style.display = 'none';
-}
 
-    /* end of close image preview */
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'image-preview-modal') {
+                closeImagePreview();
+            }
+        });
 
         function toggleInfo(sectionId) {
             const section = document.getElementById(sectionId);
@@ -3424,7 +3493,7 @@ function createIconHtml(icon, isPermanent = false, iconType = null) {
 
         // --- MODIFIED organizeCodes function for robust date comparison and error handling ---
         // --- MODIFIED organizeCodes function for robust date comparison and error handling ---
-        function organizeCodes() {
+       function organizeCodes() {
             const now = new Date();
             const nowTimestamp = now.getTime(); // Get timestamp once for consistent comparison
             const regularActiveCodes = [];
@@ -3434,6 +3503,12 @@ function createIconHtml(icon, isPermanent = false, iconType = null) {
             // Process ALL_CODES_CONFIG (regular codes)
             ALL_CODES_CONFIG.forEach(codeData => {
                 
+                // NEW: Handle Unknown Expire Date (UED)
+                if (codeData.expires === "UED") {
+                    regularActiveCodes.push(codeData);
+                    return; // Classify as active and move to the next code
+                }
+
                 // --- FIX STARTS HERE ---
                 // First, check if the 'expires' property even exists.
                 // If it doesn't, we know it's a permanent active code.
@@ -3468,6 +3543,12 @@ function createIconHtml(icon, isPermanent = false, iconType = null) {
 
             // Process PERMANENT_CODES (This part remains the same)
             PERMANENT_CODES.forEach(codeData => {
+                // NEW: Handle Unknown Expire Date (UED) for permanent codes
+                if (codeData.expires === "UED") {
+                    permanentActiveCodes.push(codeData);
+                    return;
+                }
+
                 let expiresDate = null;
                 if (codeData.expires) {
                     try {
@@ -3520,7 +3601,7 @@ function createIconHtml(icon, isPermanent = false, iconType = null) {
             return `${userLocalTime} (Your Timezone: ${userTimezone})`; 
         }
 
-        function createPermanentCodeBox(codeData, index) {
+function createPermanentCodeBox(codeData, index) {
             const hasCopyButton = codeData.showCopyButton !== false;
             const hasPreviewButton = codeData.showPreviewButton;
             const isRedeemed = getRedemptionStatus(codeData.code);
@@ -3534,11 +3615,27 @@ function createIconHtml(icon, isPermanent = false, iconType = null) {
             const dateAddedHtml = formattedDate ? `<div class="date-added">Added Here On : ${formattedDate}</div>` : '';
             // --- END OF SIMPLIFIED LOGIC ---
 
-            let countdownHtml = '';
-            let expiresDate = null;
-            if (codeData.expires) {
-                // ... (rest of expiration logic is unchanged)
-                try { expiresDate = (codeData.expires instanceof Date) ? codeData.expires : new Date(codeData.expires); if (!isNaN(expiresDate.getTime())) { const timeLeft = expiresDate.getTime() - new Date().getTime(); if (timeLeft > 0) { const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24)); const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); countdownHtml = `<div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`; } } } catch (e) { console.error("Error parsing expires date:", e); }
+            let expirationHtml = '';
+            if (codeData.expires === "UED") {
+                expirationHtml = `<div class="expire-date">Expires: Unknown</div>`;
+            } else if (codeData.expires) {
+                let expiresDate;
+                try {
+                    expiresDate = (codeData.expires instanceof Date) ? codeData.expires : new Date(codeData.expires);
+                    if (!isNaN(expiresDate.getTime())) {
+                        const timeLeft = expiresDate.getTime() - new Date().getTime();
+                        let countdownHtml = '';
+                        if (timeLeft > 0) {
+                            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                            countdownHtml = `<div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`;
+                        }
+                        expirationHtml = `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div>${countdownHtml}`;
+                    }
+                } catch (e) {
+                    console.error("Error parsing expires date:", e);
+                }
             }
             
             let copyButtonHtml = ''; if (hasCopyButton) { copyButtonHtml = `<button class="permanent-copy-btn" onclick="copyToClipboard('${codeData.code}', ${index}, 'permanent')">COPY</button><span id="copied-permanent-${index}" class="permanent-copied-message">✓ Copied!</span>`; }
@@ -3550,8 +3647,7 @@ function createIconHtml(icon, isPermanent = false, iconType = null) {
                     ${dateAddedHtml}
                     <div class="permanent-title-container">${codeData.title}</div>
                     ${descriptionHtml}
-                    ${expiresDate ? `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div>` : ''}
-                    ${countdownHtml}
+                    ${expirationHtml}
                     <div class="permanent-code-footer">
                         <div class="permredeem-checkbox"><input type="checkbox" id="permanent-redeemed-${index}" ${isRedeemed ? 'checked' : ''} onchange="handlePermanentRedemptionChange('${codeData.code}', this, document.getElementById('permanent-${index}'))"><label for="permanent-redeemed-${index}">🎁</label></div>
                         ${copyButtonHtml}${previewButtonHtml}
@@ -3575,7 +3671,9 @@ const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
             // --- END OF SIMPLIFIED LOGIC ---
 
             let expirationDetailsHtml = '';
-            if (codeData.expires) {
+            if (codeData.expires === "UED") {
+                expirationDetailsHtml = `<div class="expire-date">Expires: Unknown</div>`;
+            } else if (codeData.expires) {
                 // ... (rest of expiration logic is unchanged)
                 let expiresDate; try { expiresDate = (codeData.expires instanceof Date) ? codeData.expires : new Date(codeData.expires); if (!isNaN(expiresDate.getTime())) { const timeLeft = expiresDate.getTime() - new Date().getTime(); if (timeLeft > 0) { const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24)); const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); expirationDetailsHtml = `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div><div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`; } } } catch (e) { console.error("Error parsing expires date:", e); }
             } else {
@@ -3688,8 +3786,8 @@ const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
                 // Find the correct code data from ALL_CODES_CONFIG (excluding the vendor for this loop)
                 const codeData = ALL_CODES_CONFIG.find(code => code.code === codeText);
                 
-                // Skip if no codeData or expires found
-                if (!codeData || !codeData.expires) {
+                // NEW: Skip if no codeData, no expires property, or if expires is "UED"
+                if (!codeData || !codeData.expires || codeData.expires === "UED") {
                     return;
                 }
                 
@@ -3738,8 +3836,8 @@ const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
                 const codeText = codeTextElement.textContent;
                 const codeData = PERMANENT_CODES.find(code => code.code === codeText);
                 
-                if (!codeData || !codeData.expires) {
-                    // If permanent code has no expiration or it's not found, clear countdown if present
+                // NEW: Skip if no codeData, no expires property, or if expires is "UED"
+                if (!codeData || !codeData.expires || codeData.expires === "UED") {
                     if (countdownElement) countdownElement.textContent = ''; 
                     return;
                 }
@@ -3875,6 +3973,18 @@ function initializePage() {
             // Start countdowns and vendor timer once, they manage their own intervals.
             // updateCountdowns is called by initializePage.
             // updateVendorTimer has its own setInterval.
+
+            // --- START: Event Listeners for Modal Controls ---
+const zoomInButton = document.getElementById('zoom-in-btn');
+const zoomOutButton = document.getElementById('zoom-out-btn');
+const resetZoomButton = document.getElementById('reset-zoom-btn');
+const closeButton = document.getElementById('close-preview-btn');
+
+if (zoomInButton) zoomInButton.addEventListener('click', zoomIn);
+if (zoomOutButton) zoomOutButton.addEventListener('click', zoomOut);
+if (resetZoomButton) resetZoomButton.addEventListener('click', resetZoom);
+if (closeButton) closeButton.addEventListener('click', closeImagePreview);
+// --- END: Event Listeners for Modal Controls ---
         });
 
         // --- NEW: Functions for User Display Preferences ---
