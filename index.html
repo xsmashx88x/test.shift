@@ -2324,40 +2324,43 @@ margin: 10px auto;
 
 /* This is the lock. It freezes the entire page. */
 /* Prevent background zoom when modal is open */
-html.modal-open {
+/* Completely lock the background when modal is open */
+html.modal-open,
+body.modal-open {
     position: fixed;
     width: 100%;
     height: 100%;
     overflow: hidden;
+    /* Prevent any text size adjustment */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
-/* Allow zooming only within the modal content */
+/* Allow zooming only in the modal */
+.image-preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Allow zooming in the modal container */
+    touch-action: pan-x pan-y pinch-zoom;
+}
+
 .image-preview-content {
     position: relative;
     max-width: 95%;
     max-height: 95%;
     margin: 20px;
-    /* Enable zooming on this element only */
-    touch-action: pan-x pan-y pinch-zoom;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
-}
-
-.image-preview-content img,
-.image-preview-content video,
-#preview-container {
-    max-width: 100%;
-    max-height: 100%;
-    /* Explicitly allow zooming */
-    touch-action: pan-x pan-y pinch-zoom;
-}
-
-/* Reset the page when modal closes */
-html:not(.modal-open) {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
+    /* Ensure zooming works on content */
+    transform-origin: center center;
 }
 
     </style>
