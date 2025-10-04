@@ -2314,13 +2314,23 @@ margin: 10px auto;
 
 /* --- START: Image Preview Modal Controls & Zoom --- */
 .image-preview-content {
-    /* Allows scrolling with a mouse/trackpad when the image is zoomed in */
-    overflow: auto;
+    max-width: 90%;
+    max-height: 90%;
+    position: relative;
+    /* This allows scrolling inside the frame if the image is zoomed */
+    overflow: auto; 
 }
 
-#preview-image {
-    /* Adds a smooth animation to the zoom effect */
-    transition: transform 0.2s ease-in-out;
+.image-preview-content img {
+    /* Image should not be wider than its container */
+    max-width: 100%; 
+    /* Or taller than 90% of the screen height */
+    max-height: 90vh; 
+    /* The border and rounded corners for the PC view */
+    border: 3px solid #ffc600;
+    border-radius: 5px;
+    /* Ensures the image scales down without stretching */
+    object-fit: contain; 
 }
 
 /* This is the container for the new control buttons */
@@ -2424,25 +2434,20 @@ margin: 10px auto;
 }
 /* ADD THIS SNIPPET AT THE END OF YOUR CSS */
 
-/* --- START: Mobile Full-Screen Image Preview --- */
+/* Step 2: Override styles ONLY for mobile (the edge-to-edge view) */
 @media (max-width: 768px) {
     .image-preview-content,
     .image-preview-content img {
-        /* Make the image and its container fill the entire screen */
+        /* On mobile, allow the container and image to fill the screen */
         max-width: 100%;
         max-height: 100%;
-        width: 100%;
-        height: 100%;
         
-        /* Remove the border and rounded corners for a seamless look */
+        /* Remove the border and corners for the seamless mobile view */
         border: none;
         border-radius: 0;
-
-        /* Ensure the image scales nicely within the container */
-        object-fit: contain;
     }
 }
-/* --- END: Mobile Full-Screen Image Preview --- */
+/* --- END: Corrected Image Preview Styles --- */
 
 /* hide kofi when preview is open */
 
