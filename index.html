@@ -3329,6 +3329,7 @@ function openImagePreview(url) {
                     maxScale: 4,
                     minScale: 0.5,
                     canvas: true,
+                    disableDblclick: true, // <-- ADD THIS LINE
                 });
                 modal.addEventListener('wheel', panzoomInstance.zoomWithWheel);
 
