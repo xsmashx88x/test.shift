@@ -2536,6 +2536,7 @@ margin: 10px auto;
     </div>
 
     <script>
+        let preventBodyTouch;
 
 /* mobile image zoom fix maybe */
 function preventGesture(event) {
@@ -3146,24 +3147,30 @@ function updateVendorTimer() {
 
         let originalViewportContent = '';
 function openImagePreview(url) {
-            // Get the modal elements
             const modal = document.getElementById('image-preview-modal');
             const modalContent = modal.querySelector('.image-preview-content');
 
-            // This function PREVENTS the default zoom/scroll behavior
-            const preventDefault = (e) => e.preventDefault();
-            // This function ALLOWS the default zoom/scroll by stopping the block
-            const allowDefault = (e) => e.stopPropagation();
+            // --- START: The Correct Locking Procedure ---
 
-            // --- START: Lock the page correctly ---
+            // 1. Lock the body from scrolling.
             document.body.classList.add('body-locked');
-            // 1. Block zoom/scroll on the semi-transparent background (the modal itself)
-            modal.addEventListener('touchmove', preventDefault, { passive: false });
-            // 2. Allow zoom/scroll on the image and its container
-            modalContent.addEventListener('touchmove', allowDefault, { passive: false });
-            // --- END: Lock the page correctly ---
 
-            // The rest of your function remains the same
+            // 2. Define the listener function.
+            preventBodyTouch = (event) => {
+                // This is the key: if the touch is happening inside the image container,
+                // do nothing and allow it.
+                if (modalContent.contains(event.target)) {
+                    return;
+                }
+                // Otherwise, if the touch is on the background, prevent the zoom/scroll.
+                event.preventDefault();
+            };
+
+            // 3. Add the listener to the whole window.
+            window.addEventListener('touchmove', preventBodyTouch, { passive: false });
+
+            // --- END: The Correct Locking Procedure ---
+
             const imageElement = document.getElementById('preview-image');
             const container = document.getElementById('preview-container');
             
@@ -3176,21 +3183,10 @@ function openImagePreview(url) {
                 imageElement.alt = "Preview";
             } 
             else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-                container.innerHTML = `
-                    <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
-                        <source src="${url}" type="video/mp4">
-                        <source src="${url}" type="video/webm">
-                        <source src="${url}" type="video/ogg">
-                        Your browser does not support the video tag.
-                    </video>
-                `;
+                container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"><source src="${url}" type="video/webm"><source src="${url}" type="video/ogg">Your browser does not support the video tag.</video>`;
                 container.style.display = 'block';
             } else {
-                container.innerHTML = `
-                    <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
-                            onerror="showPreviewFallback('${url}')">
-                    </iframe>
-                `;
+                container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
                 container.style.display = 'block';
             }
             
@@ -3232,21 +3228,18 @@ function openEventsImage() {
             `;
         }
 
-function closeImagePreview() {
-            const modal = document.getElementById('image-preview-modal');
-            const modalContent = modal.querySelector('.image-preview-content');
-            
-            const preventDefault = (e) => e.preventDefault();
-            const allowDefault = (e) => e.stopPropagation();
+        function closeImagePreview() {
+            // --- START: The Correct Unlocking Procedure ---
 
-            // --- START: Unlock the page correctly ---
+            // 1. Unlock the body.
             document.body.classList.remove('body-locked');
-            // IMPORTANT: Clean up the listeners to prevent issues
-            modal.removeEventListener('touchmove', preventDefault, { passive: false });
-            modalContent.removeEventListener('touchmove', allowDefault, { passive: false });
-            // --- END: Unlock the page correctly ---
 
-            modal.style.display = 'none';
+            // 2. IMPORTANT: Remove the exact same listener to clean up.
+            window.removeEventListener('touchmove', preventBodyTouch, { passive: false });
+
+            // --- END: The Correct Unlocking Procedure ---
+
+            document.getElementById('image-preview-modal').style.display = 'none';
         }
 
         function toggleInfo(sectionId) {
