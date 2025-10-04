@@ -2305,7 +2305,7 @@ margin: 10px auto;
 
 /* Mobile zoom back to normal css */
 .body-locked {
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
     </style>
@@ -3145,31 +3145,30 @@ function updateVendorTimer() {
         // Make sure to call updateVendorTimer regularly (e.g., every second)
         setInterval(updateVendorTimer, 1000);
 
-        let originalViewportContent = '';
 function openImagePreview(url) {
             const modal = document.getElementById('image-preview-modal');
             const modalContent = modal.querySelector('.image-preview-content');
 
-            // --- START: The Correct Locking Procedure ---
+            // --- START: The Correct Modal Locking Procedure ---
+
+            // This function PREVENTS page zoom/scroll
+            const blockEvent = (e) => e.preventDefault();
+            // This function STOPS the block from happening if the user is touching the image
+            const allowEvent = (e) => e.stopPropagation();
 
             // 1. Lock the body from scrolling.
             document.body.classList.add('body-locked');
 
-            // 2. Define the listener function.
-            preventBodyTouch = (event) => {
-                // This is the key: if the touch is happening inside the image container,
-                // do nothing and allow it.
-                if (modalContent.contains(event.target)) {
-                    return;
-                }
-                // Otherwise, if the touch is on the background, prevent the zoom/scroll.
-                event.preventDefault();
-            };
+            // 2. Add a listener to the modal's semi-transparent background.
+            //    If a user tries to zoom here, the blockEvent will fire and prevent it.
+            modal.addEventListener('touchmove', blockEvent, { passive: false });
 
-            // 3. Add the listener to the whole window.
-            window.addEventListener('touchmove', preventBodyTouch, { passive: false });
+            // 3. Add a listener to the image container.
+            //    If a user touches here, allowEvent fires first, stopping the event
+            //    from ever reaching the background. This ALLOWS zoom on the image.
+            modalContent.addEventListener('touchmove', allowEvent, { passive: false });
 
-            // --- END: The Correct Locking Procedure ---
+            // --- END: The Correct Modal Locking Procedure ---
 
             const imageElement = document.getElementById('preview-image');
             const container = document.getElementById('preview-container');
@@ -3228,18 +3227,26 @@ function openEventsImage() {
             `;
         }
 
-        function closeImagePreview() {
+function closeImagePreview() {
+            const modal = document.getElementById('image-preview-modal');
+            const modalContent = modal.querySelector('.image-preview-content');
+            
+            // Re-define these here to ensure they can be removed correctly
+            const blockEvent = (e) => e.preventDefault();
+            const allowEvent = (e) => e.stopPropagation();
+
             // --- START: The Correct Unlocking Procedure ---
 
             // 1. Unlock the body.
             document.body.classList.remove('body-locked');
 
-            // 2. IMPORTANT: Remove the exact same listener to clean up.
-            window.removeEventListener('touchmove', preventBodyTouch, { passive: false });
+            // 2. IMPORTANT: Remove the exact same listeners to prevent memory leaks and bugs.
+            modal.removeEventListener('touchmove', blockEvent, { passive: false });
+            modalContent.removeEventListener('touchmove', allowEvent, { passive: false });
 
             // --- END: The Correct Unlocking Procedure ---
 
-            document.getElementById('image-preview-modal').style.display = 'none';
+            modal.style.display = 'none';
         }
 
         function toggleInfo(sectionId) {
