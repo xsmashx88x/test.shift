@@ -2304,10 +2304,19 @@ margin: 10px auto;
 .facebook-btn { background: linear-gradient(to bottom, #1877F2, #1056ad); border: 2px solid #1877F2; }
 
 /* Mobile zoom back to normal css */
-body.modal-open {
-    position: fixed;
-    overflow: hidden;
-    width: 100%;
+.body-locked {
+    overflow: hidden !important;
+}
+
+.image-preview-content {
+    /* Add these two lines to your existing rule */
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    /* Keep the rest of your existing styles for this class */
+    max-width: 90%;
+    max-height: 90%;
+    position: relative;
 }
 
     </style>
@@ -2536,7 +2545,9 @@ body.modal-open {
     </div>
 
     <script>
-
+    const blockGesture = (event) => {
+        event.preventDefault();
+    };
 /* mobile image zoom fix maybe */
         
 
@@ -3142,47 +3153,37 @@ function updateVendorTimer() {
         // Make sure to call updateVendorTimer regularly (e.g., every second)
         setInterval(updateVendorTimer, 1000);
 
-        let scrollYPosition = 0;
 function openImagePreview(url) {
-    const modal = document.getElementById('image-preview-modal');
-    const imageElement = document.getElementById('preview-image');
-    const container = document.getElementById('preview-container');
-    
-    // Hide both first
-    imageElement.style.display = 'none';
-    container.style.display = 'none';
-    
-    // Image formats
-    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-        // It's an image - use the existing image element
-        imageElement.src = url;
-        imageElement.style.display = 'block';
-        imageElement.alt = "Preview";
-    } 
-    // Video formats
-    else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-        // It's a video - use the container with video element
-        container.innerHTML = `
-            <video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;">
-                <source src="${url}" type="video/mp4">
-                <source src="${url}" type="video/webm">
-                <source src="${url}" type="video/ogg">
-                Your browser does not support the video tag.
-            </video>
-        `;
-        container.style.display = 'block';
-    } else {
-        // It's a website - use the container with iframe
-        container.innerHTML = `
-            <iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" 
-                    onerror="showPreviewFallback('${url}')">
-            </iframe>
-        `;
-        container.style.display = 'block';
+        const modal = document.getElementById('image-preview-modal');
+        const modalContent = modal.querySelector('.image-preview-content');
+
+        // --- START: Lock the page correctly ---
+        document.body.classList.add('body-locked'); // Freezes the background
+        modal.addEventListener('touchmove', blockGesture, { passive: false }); // Blocks zoom on the background
+        modalContent.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false }); // Allows zoom on the image
+        // --- END: Lock the page correctly ---
+
+        const imageElement = document.getElementById('preview-image');
+        const container = document.getElementById('preview-container');
+        
+        imageElement.style.display = 'none';
+        container.style.display = 'none';
+        
+        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+            imageElement.src = url;
+            imageElement.style.display = 'block';
+            imageElement.alt = "Preview";
+        } 
+        else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
+            container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"><source src="${url}" type="video/webm"><source src="${url}" type="video/ogg">Your browser does not support the video tag.</video>`;
+            container.style.display = 'block';
+        } else {
+            container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
+            container.style.display = 'block';
+        }
+        
+        modal.style.display = 'flex';
     }
-    
-    modal.style.display = 'flex';
-}
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -3220,29 +3221,17 @@ function openEventsImage() {
         }
 
 function closeImagePreview() {
-            // 1. Hide the modal immediately.
-            document.getElementById('image-preview-modal').style.display = 'none';
+        const modal = document.getElementById('image-preview-modal');
+        const modalContent = modal.querySelector('.image-preview-content');
 
-            // 2. Find the viewport meta tag.
-            const viewport = document.querySelector('meta[name="viewport"]');
-            if (!viewport) {
-                return; // Exit safely if no viewport tag exists.
-            }
+        // --- START: Unlock the page correctly ---
+        document.body.classList.remove('body-locked'); // Un-freezes the background
+        modal.removeEventListener('touchmove', blockGesture, { passive: false }); // Cleans up the listeners
+        modalContent.removeEventListener('touchmove', (e) => e.stopPropagation(), { passive: false }); // Cleans up the listeners
+        // --- END: Unlock the page correctly ---
 
-            // 3. Store the original, good viewport settings.
-            const originalContent = viewport.getAttribute('content');
-
-            // 4. THE CRITICAL CHANGE: Apply a temporary setting that ONLY affects zoom.
-            // Notice this does NOT include "width=device-width". This is the key to
-            // preventing your page from switching to the mobile layout.
-            viewport.setAttribute('content', 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-
-            // 5. After a tiny, imperceptible delay, restore the original settings completely.
-            // This returns the page to its normal state, allowing zoom again.
-            setTimeout(function() {
-                viewport.setAttribute('content', originalContent);
-            }, 50); // 50ms is instant for the user.
-        }
+        modal.style.display = 'none';
+    }
 
 
         // Close when clicking outside
