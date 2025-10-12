@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="shortcut icon" type="image/png" href="https://xsmashx88x.github.io/Shift-Codes/smashfavicon.png">
-    <link rel="icon" type="image/png" href="https://xsmashx88x.github.io/Shift-Codes/smashfavicon.png">
+    <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHiFT Codes - Tracker + More</title>
@@ -18,47 +18,8 @@
         <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <body>
 
-    <!-- === START: FINAL FLOATING INFO PANEL === -->
-    <div class="floating-info-panel">
-        
-        <!-- This part is always visible -->
-        <div class="visible-reminder-text">
-            • FAV & CHECK DAILY • REFRESH OFTEN • 
-            
-            <!-- This is the smaller, clickable link that triggers the dropdown -->
-            <a class="thank-you-link" onclick="toggleThankYouPanel(this)">
-                • Supporters & Special Thanks | 10/4/2025 • <br> <small style="font-size: 0.7em;">Click To Open/Close list</small>
-            </a>
-        </div>
-        
-        <!-- This is the content that is hidden by default -->
-        <div class="thank-you-content">
-            <h4>A huge thank you to: (newest at top)</h4>
-            <ul>
-                <li>Sticky, For being a legend | 🫂</li>                
-                <li>The amazing [/r/Borderlands] Community! | 🫂</li>
-                <li>---------------------------------------------</li>
-                <li>zeod! | Holy Thanks 🫂 🍵</li>
-                <li>badvogonpoet! | Thanks 🫂 🍵</li>
-                <li>Craig! | Thanks 🫂 🍵</li>
-                <li>Dean! | 🍵</li>
-                <li>LazrPanther! | 🍵</li>
-                <li>Snowblindtiger! | 🍵</li>
-                <li>Daniel! | 🍵</li>
-                <li>LSandman24! | 🍵</li>
-                <li>Primel91! | 🍵</li>
-                <li>Playawhile! | 🍵</li>
-                <li>Kura! | 🍵</li>
-                <li>mDaro! | 🍵</li>
-                <li>needlead! | 🍵</li>
-                <li>Dan*** E****** (Wont Post Full Info)! | 🍵</li>
-                <li>Kakkazan! | 🍵</li>
-                <li>reddragun3! | 🍵</li>
-                <!-- Add more names here -->
-            </ul>
-        </div>
 
-    </div>
+
     <div class="noise"></div>
     <div class="scanlines"></div>
     
@@ -66,6 +27,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap');
         
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -93,7 +55,6 @@
             box-shadow: 0 0 15px rgba(255, 198, 0, 0.4);
             border: 2px solid #ffc600;
             position: relative;
-            overflow: hidden;
         }
         
         .container:before {
@@ -106,7 +67,131 @@
             background: linear-gradient(90deg, #ffc600, #ff7c00, #ffc600);
             box-shadow: 0 0 10px #ffc600;
         }
+/* button for feedback |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
+/* START: Thin Line Tally Button */
+/* START: Corrected Thin Line Tally Button Styles */
 
+/* START: Solid Thin Line Tally Button */
+
+/* This is the wrapper DIV that you see. */
+.tally-button-wrapper {
+    position: fixed;
+    bottom: 75px; 
+    left: 20px;
+    z-index: 1004;
+    background: linear-gradient(to bottom, #0056A8, #003B75); /* The new solid background */
+    border: 2px solid #007BFF;
+    color: #fff; /* Text is now white for contrast */
+    border-radius: 6px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+    transition: all 0.2s ease-in-out;
+    padding: 8px 20px;
+}
+.tally-button-wrapper:hover {
+    background: linear-gradient(to bottom, #007BFF, #0056A8); /* Brighter on hover */
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.9);
+}
+
+/* This targets the Tally button INSIDE and makes its text white. */
+.tally-button-wrapper .floating-tally-btn {
+    all: unset;
+    display: block;
+    cursor: pointer;
+    color: #fff; /* Ensure inner text is also white */
+    font-size: 16px;
+    font-weight: bold;
+}
+/* END: Solid Thin Line Tally Button */
+
+
+/* === START: NEW STYLE FOR LAST COPIED ITEM === */
+.code-box.last-copied,
+.permanent-code-box.last-copied,
+.expired-code-box.last-copied,
+.black-market-code-box.last-copied {
+    border: 2px solid #00ffff !important; /* A bright cyan border */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6) !important; /* A matching cyan glow */
+}
+/* === END: NEW STYLE === */
+
+/* === START: FINAL CORRECTED & FORCED POLL STYLES === */
+.floating-poll-btn {
+    position: fixed;
+    bottom: 125px;
+    left: 20px;
+    z-index: 1003;
+    background-color: #8A2BE2; /* Purple */
+    color: white;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease-in-out;
+}
+
+.floating-poll-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #8A2BE2;
+}
+
+.poll-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 2500;
+    justify-content: center;
+    align-items: center;
+}
+
+/* This container now FORCES the size and shape */
+.poll-modal-content {
+    position: relative;
+    width: 800px !important;  /* Force width */
+    height: 380px !important; /* Force height */
+    border: 3px solid #8A2BE2;
+    border-radius: 8px;
+    overflow: hidden; /* Crucial for rounding iframe corners */
+    display: flex;
+}
+
+.close-poll-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+    z-index: 2501;
+}
+
+/* These rules force the poll content to fill the container */
+.poll-modal-content .strawpoll-embed,
+.poll-modal-content .strawpoll-embed iframe {
+    width: 100% !important;
+    height: 100% !important;
+    display: block; /* Removes extra spacing */
+}
+/* === END: FINAL CORRECTED & FORCED POLL STYLES === */
 /* ===== FAINT BACKGROUND IMAGE FOR ACTIVE CODES ===== */
 
 /* 1. Prepare the main code box to contain a background layer */
@@ -209,21 +294,6 @@
     z-index: 1;
 }
 
-/* =================================================== */
-/*    MOBILE-SPECIFIC BACKGROUND IMAGE ADJUSTMENT      */
-/* =================================================== */
-/* When the screen is 768px wide or less, this code will run */
-@media (max-width: 768px) {
-
-  /* Target all the background image layers and change the size to 'contain' */
-  .code-box::before,
-  .expired-code-box::before,
-  .black-market-code-box::before,
-  .permanent-code-box::before {
-    background-size: contain !important; /* Use 'contain' on mobile to ensure the whole image is visible */
-  }
-
-}
 
 /* =================================================== */
 /*        FINAL: INTERACTIVE FLOATING INFO PANEL       */
@@ -232,12 +302,10 @@
 /* --- 1. The Main Container --- */
 /* This is the element that floats and contains everything */
 .floating-info-panel {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1001;
-    width: 330px; /* A fixed width often works well */
+    /* REMOVED: position, top, left, transform, z-index */
+    position: relative; /* This makes it a normal block element */
+    width: 100%;      /* Make it span the full width of the container */
+    margin-bottom: 0px; /* Add space between it and the "Connect/Contact" button below */
     
     background: rgba(20, 15, 25, 0.9);
     backdrop-filter: blur(5px);
@@ -282,7 +350,7 @@
 
 /* --- 4. The Hidden Content (Default State) --- */
 .thank-you-content {
-    color: #ffcc88;
+    color: #f7f4f0;
     font-size: 14px;
     line-height: 1.6;
     text-align: left;
@@ -319,12 +387,7 @@
     transform: rotate(180deg); /* Flips arrow up */
 }
 
-/* --- 7. Mobile Responsiveness --- */
-@media (max-width: 768px) {
-    .floating-info-panel {
-        width: 90%;
-    }
-}
+
 /*|||||||||||||||||||||||||||||||||||||||||||||||||||||*/
 
  /* Title section text ish        ||||||||||||||||||||| ||||||||||||||||||||| ||||||||||||||||||||| |||||||||||||||||||||*/
@@ -374,7 +437,7 @@
 .contact-me-section {
     border: 2px solid #00ffff;
     padding: 20px 15px;
-    margin: 30px 0;
+    margin: 10px 0;
     background: rgba(17, 26, 34, 0.6);
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
     text-align: center;
@@ -401,36 +464,58 @@
 }
 
 /* =================================================== */
-/*           THE SLIDE-DOWN EFFECT LOGIC               */
+/*           THE SLIDE-DOWN EFFECT LOGIC (CORRECTED)   */
 /* =================================================== */
 
-/* --- 1. The Button Container (Default HIDDEN State) --- */
+/* 1. This new wrapper now handles the slide-down animation */
+.slide-down-content {
+    /* --- HIDING & ANIMATION LOGIC --- */
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    transition: max-height 0.4s ease-in-out, margin-top 0.4s ease-in-out;
+}
+
+/* 2. The hover effect now targets the new wrapper to reveal everything */
+.contact-me-section:hover .slide-down-content {
+    max-height: 200px; /* Adjust if content gets taller */
+    margin-top: 20px;
+}
+
+/* --- REPLACE THE OLD .info-text RULE WITH THIS --- */
+.info-text {
+    /* Copied from your .social-links a style */
+    color: #00ffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+    border-radius: 0;
+    background: #111a22;
+    border: 2px solid #00ffff;
+    text-shadow: 0 0 2px rgba(0, 255, 255, 0.7);
+    box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.3);
+
+    /* Properties to make it center and wrap nicely */
+    display: block;           /* Make it a block element */
+    width: fit-content;       /* Size the "button" to the text inside it */
+    margin: 0 auto 15px auto; /* Center it horizontally and add space below */
+}
+
+/* 4. Your original .social-links rule, now ONLY for button layout */
 .social-links {
     display: flex;
     justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
-    
-    /* --- CHANGES FOR HIDING --- */
-    /* Set max-height to 0 to collapse the container */
-    max-height: 0;
-    /* Hide the content that overflows the 0-height container */
-    overflow: hidden;
-    /* Remove any margin when hidden */
-    margin: 0;
-    /* Add a smooth transition for the slide effect */
-    transition: max-height 0.4s ease-in-out, margin-top 0.4s ease-in-out;
 }
 
-/* --- 2. The Button Container (Expanded :hover State) --- */
-.contact-me-section:hover .social-links {
-    /* Set a max-height large enough to fit the content */
-    max-height: 200px; /* Adjust if your buttons wrap to more lines */
-    /* Add back the margin to create space between title and buttons */
-    margin-top: 20px;
-}
-
-/* --- The Individual Buttons (No changes needed here) --- */
+/* 5. YOUR ORIGINAL BUTTON STYLES - UNCHANGED AND PERFECT */
 .social-links a {
     color: #00ffff;
     text-decoration: none;
@@ -796,112 +881,40 @@
             order: 3;
         }
         /* redeem button orange go to shift site ///////////////////*/        
-        .rewards-link {
-            display: block;
-            width: fit-content;            
-            background: linear-gradient(to bottom, #ff7c00, #e56a00);
-            color: white;
-            padding: 2px 24px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin: 10px auto 15px auto;
-            font-weight: bold;
-            transition: all 0.3s;
-            font-size: 14px;
-            text-transform: uppercase;
-            border: 2px solid #ffc600;
-            text-shadow: 1px 1px 0 #000;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-            font-family: 'Chakra Petch', sans-serif;
-        }
-        
-        .rewards-link:hover {
-            background: linear-gradient(to bottom, #ff8c00, #ff6a00);
-            transform: scale(1.05);
-            box-shadow: 0 0 10px #ffc600;
-        }
-        
-        /* BUTTONS SIDE BY SIDE */
-        .info-button {
-            background: linear-gradient(to bottom, #4a4a4a, #2a2a2a);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 4px;
-            margin: 0;
-            font-weight: bold;
-            transition: all 0.3s;
-            font-size: 14px;
-            text-transform: uppercase;
-            border: 2px solid #888;
-            text-shadow: 1px 1px 0 #000;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-            font-family: 'Chakra Petch', sans-serif;
-            cursor: pointer;
-            display: inline-block;
-            width: auto;
-            flex: 1;
-            min-width: 0;
-        }
+/* This is the NEW button style */
+.rewards-link {
+    display: block;
+    width: fit-content;            
+    
+    /* --- CHANGES ARE HERE --- */
+    background: url('https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/logo-cab3d495b9331db152448ceb0d5a52ebc2001b33aeca60e74419b730ee5a630f.png') no-repeat 15px center, linear-gradient(to bottom, #ff7c00, #e56a00);
+    background-size: 320px 50px, auto; /* First value for image, second for gradient */
+    padding: 2px 24px 2px 50px;       /* Increased left padding to make room for the image */
+    /* --- END OF CHANGES --- */
 
-        .info-button:hover {
-            background: linear-gradient(to bottom, #5a5a5a, #3a3a3a);
-            transform: scale(1.05);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-        }
-
-/* Hde Buttons color  ||||||||||||||||||||| ||||||||||||||||||||| |||||||||||||||||||||||||*/
-#hideem-toggle-btn {
-            background: linear-gradient(to bottom, #B9B9B9, #363337);
-            border: 2px solid #888;
-        }
-
-#hideem-toggle-btn:hover {
-            background: linear-gradient(to bottom, #B9B9B9, #363337);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-        }
-
-/* (INFO & FAQ) color  |||||||||||||||||||||||||*/
-#infofaq-toggle-btn {
-            background: linear-gradient(to bottom, #22FEFE, #363337);
-            border: 2px solid #adb5bd;
-        }
-
-#infofaq-toggle-btn:hover {
-            background: linear-gradient(to bottom, #22FEFE, #363337);
-            box-shadow: 0 0 8px #adb5bd;
-        }
-
-/* CHANGE LOG color an button  |||||||||||||||||||||||||*/
-#changlog-toggle-btn {
-            margin-top: 1px; /* Adjust this value as needed to lower it more or less */
-            background: linear-gradient(to bottom, #537CB9, #363337);
-              border: 2px solid #adb5bd;
-        }
-
-#changlog-toggle-btn:hover {
-            background: linear-gradient(to bottom, #537CB9, #363337);
-            box-shadow: 0 0 8px #00ccff;
-        }
-
-/* How to redeem color an button  |||||||||||||||||||||||||*/
-#redeem-toggle-btn {
-    margin-top: 5px;
-    background: linear-gradient(to bottom, #00aa00, #0055aa);
-    border: 2px solid #00ccff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 10px auto 15px auto;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 2px solid #ffc600;
+    text-shadow: 1px 1px 0 #000;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    font-family: 'Chakra Petch', sans-serif;
 }
-
-#redeem-toggle-btn:hover {
-    background: linear-gradient(to bottom, #00cc00, #0077cc);
-    box-shadow: 0 0 8px #00ccff;
+        
+.rewards-link:hover {
+    /* Add the image layer to the hover effect as well */
+    background: url('https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/logo-cab3d495b9331db152448ceb0d5a52ebc2001b33aeca60e74419b730ee5a630f.png') no-repeat 15px center, linear-gradient(to bottom, #ff8c00, #ff6a00);
+    background-size: 320px 50px, auto; /* Don't forget to include size here too */
+    
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #ffc600;
 }
-
-        /* Responsive design for mobile ||||||||||||||||||||| ||||||||||||||||||||| |||||||||||||||||||||||||*/
-        @media (max-width: 768px) {
-            .button-row {
-                flex-direction: column;
-                align-items: center;
-            }
-            
+              
             .info-button {
             display: block; /* Default to block for stacking */
             width: fit-content; /* Make width fit content */
@@ -1674,22 +1687,7 @@ margin: 10px auto;
             align-items: center;
         }
 
-/* --- START: Mobile Full-Screen Image Preview --- */
-@media (max-width: 768px) {
-    .image-preview-content,
-    .image-preview-content img {
-        /* Make the image and its container fill the entire screen */
-        max-width: 100%;
-        max-height: 100%;
-        
-        /* Remove the border and rounded corners for a seamless look */
-        border: none;
-        border-radius: 0;
 
-        /* Ensure the image scales nicely within the container */
-        object-fit: contain;
-    }
-}
 /* --- END: Mobile Full-Screen Image Preview --- */
 
         .close-preview {
@@ -1777,16 +1775,16 @@ margin: 10px auto;
 /* =================================================== */
 /*  This is where you can easily customize the colors  */
 .events-button {
-    background: linear-gradient(to bottom, #2E8B57, #1E5638); /* SeaGreen gradient */
+    background: linear-gradient(to bottom, #f01a11, #fe9f17); /* SeaGreen gradient */
     color: white;
-    padding: 10px 20px;
+    padding: 10px 35px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     transition: all 0.3s;
     font-size: 14px;
     text-transform: uppercase;
-    border: 1px solid #3CB371; /* MediumSeaGreen border */
+    border: 1px solid #890608; /* MediumSeaGreen border */
     text-shadow: 1px 1px 0 #000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     font-family: 'Chakra Petch', sans-serif;
@@ -1796,9 +1794,9 @@ margin: 10px auto;
 }
 
 .events-button:hover {
-    background: linear-gradient(to bottom, #3CB371, #2E8B57); /* Lighter green on hover */
+    background: linear-gradient(to bottom, #fe9f17, #f01a11); /* Lighter green on hover */
     transform: scale(1.05);
-    box-shadow: 0 0 8px rgba(60, 179, 113, 0.6); /* Green glow */
+    box-shadow: 0 0 8px rgba(255, 204, 61, 0.6); /* Green glow */
 }
 /* =================================================== */
 
@@ -2053,110 +2051,6 @@ margin: 10px auto;
     opacity: 0.8;
 }
 
-/* === Mobile Responsiveness for Active Code Footer === ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/
-/* =================================================================== */
-/*           ⭐ UNIFIED & ENHANCED MOBILE STYLES ⭐                  */
-/*   (Replaces all other @media blocks for a consistent experience)   */
-/* =================================================================== */
-@media (max-width: 768px) {
-
-    /* --- 1. Global & Container Adjustments --- */
-    body {
-        /* Reduce padding on the sides for more content space */
-        padding: 10px;
-        /* Slightly increase base font size for better readability */
-        font-size: 16px; 
-    }
-
-    .container {
-        /* Reduce padding inside the main container */
-        padding: 15px;
-    }
-
-    /* --- 2. Typography for Smaller Screens --- */
-    h1, h2, h3 {
-        /* Slightly smaller headings to save vertical space */
-        font-size: 12px;
-    }
-    
-    .title-text {
-        font-size: 14px; /* Make the main header text smaller */
-    }
-
-    /* --- 3. Main Page Buttons (Info, Collapse, etc.) --- */
-    /* Target all primary action buttons for a consistent look */
-    .info-button,
-    .collapse-btn,
-    .collapse-btn-exp,
-    .collapse-btn-Perm,
-    .collapse-btn-BlackMarket,
-    .roadmap-button {
-        display: block;  /* Make them block-level to stack */
-        width: 100%;     /* Make them full-width for an organized look */
-        margin: 10px 0;  /* Consistent vertical spacing, no horizontal auto-margin */
-        padding: 14px;   /* Increase padding for a larger, easier tap area */
-        font-size: 15px; /* Slightly larger font for readability */
-    }
-    
-    .rewards-link {
-        padding: 12px; /* Make the redeem link easier to tap */
-    }
-
-    /* --- 4. Code Box Footers (The most important part!) --- */
-    /* Target all footer variations */
-    .code-footer,
-    .permanent-code-footer {
-        flex-direction: column; /* Stack all items vertically */
-        align-items: stretch;   /* Stretch items to full width */
-        gap: 15px;              /* Increase space between stacked items (checkbox and button group) */
-    }
-
-    /* --- 5. Button Groups within Footers --- */
-    /* Target all button groups for consistent stacking */
-    .active-code-buttons-group,
-    .black-market-buttons-group {
-        display: flex;
-        flex-direction: column; /* Stack buttons inside the group vertically */
-        width: 100%;            /* Make the group take full width */
-        gap: 8px;               /* Space between stacked buttons */
-        margin: 0;              /* Reset any margins */
-    }
-
-    /* --- 6. Individual Buttons within Footers --- */
-    /* Make ALL buttons inside footers full-width and easy to tap */
-    .small-copy-btn,
-    .permanent-copy-btn,
-    .expired-copy-btn,
-    .preview-btn,
-    .prempreview-btn,
-    .activepreview-btn,
-    .exppreview-btn,
-    .bm-small-btn {
-        width: 100%;
-        padding: 12px;     /* Generous padding for easy tapping */
-        font-size: 14px;   /* Clear, readable text */
-        margin: 0;         /* Reset margins */
-    }
-
-    /* --- 7. Checkboxes in Footers --- */
-    /* Ensure checkboxes align nicely at the top of the stacked footer */
-    .redeem-checkbox,
-    .permredeem-checkbox,
-    .actredeem-checkbox,
-    .bmredeem-checkbox {
-        margin: 0;  /* Remove any auto margins */
-        order: -1;  /* Force the checkbox to always appear first (at the top) */
-        padding-bottom: 5px; /* Add a little space below the checkbox */
-    }
-    
-    /* Make the checkbox label larger and easier to read/tap */
-    .redeem-checkbox label,
-    .permredeem-checkbox label,
-    .actredeem-checkbox label,
-    .bmredeem-checkbox label {
-        font-size: 16px;
-    }
-}
 
 /* =================================================== */
 /*           NEW: CODE DESCRIPTION STYLING             */
@@ -2236,40 +2130,44 @@ margin: 10px auto;
 /*           FLOATING SHARE BUTTON & MENU (CORRECTED)  */
 /* =================================================== */
 .floating-share-container {
-    position: fixed;
-    bottom: 70px;  /* Raised up to be above the Kofi button */
+    position: relative;
+    bottom: 115px; /* This tightens up the spacing */
     left: 20px;    /* Moved to the LEFT corner */
-    z-index: 1002;
+    z-index: 1003;
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Aligns items to the LEFT */
 }
 
-/* The main "Share It" button */
+/* START: Solid Thin Line Share Button */
 .share-fab {
-    background: linear-gradient(to bottom, #34a853, #1e8e3e);
-    border: 2px solid #5bb974;
-    color: white;
-    width: 130px;
-    height: 45px;
-    border-radius: 50px; /* Pill shape */
-    font-size: 16px;
+    background: linear-gradient(to bottom, #1e8e3e, #166d2e); /* The new solid background */
+    border: 1px solid #34a853;
+    color: #fff;                  /* Text is now white for contrast */
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    padding: 6px 15px;
+    font-size: 14px;
     font-weight: bold;
     font-family: 'Chakra Petch', sans-serif;
-    text-shadow: 1px 1px 0 #000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    text-shadow: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Subtle drop shadow */
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .share-fab:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #5bb974;
+    background: linear-gradient(to bottom, #34a853, #1e8e3e); /* Brighter on hover */
+    transform: translateY(-1px); /* Add a slight lift */
+    box-shadow: 0 0 10px #5bb974;
 }
+/* END: Solid Thin Line Share Button */
+/* END: Thin Line Share Button */
 
 /* The pop-up menu container */
 .share-menu {
@@ -2435,19 +2333,6 @@ margin: 10px auto;
 }
 /* ADD THIS SNIPPET AT THE END OF YOUR CSS */
 
-/* Step 2: Override styles ONLY for mobile (the edge-to-edge view) */
-@media (max-width: 768px) {
-    .image-preview-content,
-    .image-preview-content img {
-        /* On mobile, allow the container and image to fill the screen */
-        max-width: 100%;
-        max-height: 100%;
-        
-        /* Remove the border and corners for the seamless mobile view */
-        border: none;
-        border-radius: 0;
-    }
-}
 /* --- END: Corrected Image Preview Styles --- */
 
 /* hide kofi when preview is open */
@@ -2458,6 +2343,434 @@ body.modal-open .floating-share-container { /* ...and the Share button container
     /* ...and hide them completely. */
     display: none !important; 
 }
+
+/* START: SITE OPTIONS CONTAINER STYLES */
+
+/* START: SITE OPTIONS CONTAINER STYLES (v4 - Polished Buttons) */
+
+/* --- The Main Wrapper (Unchanged) --- */
+/* --- Main Wrapper & Title --- */
+.site-options-container {
+    border: 2px solid #adb5bd; padding: 20px 15px; margin: 20px 0;
+    background: rgba(17, 26, 34, 0.6); box-shadow: 0 0 15px rgba(173, 181, 189, 0.2);
+    text-align: center; clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%); border-radius: 0;
+}
+.site-options-container .site-options-title {
+    color: #adb5bd; font-family: 'Chakra Petch', sans-serif; text-transform: uppercase;
+    font-weight: 700; font-size: 18px; letter-spacing: 2px; text-shadow: 0 0 2px rgba(173, 181, 189, 0.8);
+    margin: 0; cursor: pointer; user-select: none; line-height: 1.3;
+}
+.updated-subtitle {
+    display: block; font-size: 0.7em; font-weight: normal; color: #00ffff; text-shadow: 0 0 5px #00ffff;
+}
+
+/* --- Slide-down Logic --- */
+.site-options-container .slide-down-content {
+    max-height: 0; overflow: hidden; margin-top: 0;
+    transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+}
+.site-options-container.is-open .slide-down-content {
+    max-height: 80vh; margin-top: 20px;
+}
+
+/* --- The 2x2 Button Grid Structure --- */
+.options-button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.button-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+/* --- Polished Button Style --- */
+.option-btn {
+    flex: 1; 
+    min-width: 140px; padding: 12px 5px; font-family: 'Chakra Petch', sans-serif;
+    font-size: 14px; font-weight: bold; color: #fff; text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.7); border-top-color: rgba(255, 255, 255, 0.2);
+    border-radius: 6px; cursor: pointer; transition: all 0.2s ease-in-out;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+.option-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.option-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Button Colors --- */
+.option-btn-hide { background: linear-gradient(to bottom, #868e96, #495057); }
+.option-btn-faq { background: linear-gradient(to bottom, #36c2ca, #1c7b80); }
+.option-btn-log { background: linear-gradient(to bottom, #6979d5, #3e4a8b); }
+.option-btn-redeem { background: linear-gradient(to bottom, #05f515, #049efb); }
+
+/* --- Content Panel Container --- */
+.options-content-panels {
+    margin-top: 15px;
+}
+
+/* --- Scrollbar for Content --- */
+#info-section .info-content,
+#changelog-section .info-content,
+#redeem-section .info-content,
+#settings-section .info-content {
+    max-height: 40vh; overflow-y: auto; padding-right: 10px;
+}
+/* END: SITE OPTIONS CONTAINER STYLES */
+
+/* =================================================================== */
+/*           ⭐ FINAL, UNIFIED & ENHANCED MOBILE STYLES ⭐             */
+/* =================================================================== */
+@media (max-width: 768px) {
+
+    /* --- 1. Global & Container Adjustments --- */
+    body {
+        padding: 10px;
+        font-size: 16px; 
+    }
+    .container {
+        padding: 15px;
+    }
+    .floating-info-panel {
+        width: 90%;
+    }
+
+    /* --- 2. Typography for Smaller Screens --- */
+    h1, h2, h3 {
+        font-size: 12px;
+    }
+    .title-text {
+        font-size: 14px;
+    }
+
+    /* --- 3. Fix for "Site Options" Buttons --- */
+    .button-row {
+        flex-direction: column;
+    }
+    .option-btn {
+        width: 100%;
+        min-width: 0;
+        padding: 14px 10px;
+        font-size: 16px;
+    }
+
+    /* --- 4. Main Page Buttons (Collapse, Roadmap, etc.) --- */
+    .info-button,
+    .collapse-btn,
+    .collapse-btn-exp,
+    .collapse-btn-Perm,
+    .collapse-btn-BlackMarket,
+    .roadmap-button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 14px;
+        font-size: 15px;
+    }
+    .rewards-link {
+        padding: 12px;
+    }
+
+    /* --- 5. Code Box Styles --- */
+    .code-box::before,
+    .expired-code-box::before,
+    .black-market-code-box::before,
+    .permanent-code-box::before {
+        background-size: contain !important;
+    }
+    .code-footer,
+    .permanent-code-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    .active-code-buttons-group,
+    .black-market-buttons-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+        margin: 0;
+    }
+    .small-copy-btn,
+    .permanent-copy-btn,
+    .expired-copy-btn,
+    .preview-btn,
+    .prempreview-btn,
+    .activepreview-btn,
+    .exppreview-btn,
+    .bm-small-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        margin: 0;
+    }
+    .redeem-checkbox,
+    .permredeem-checkbox,
+    .actredeem-checkbox,
+    .bmredeem-checkbox {
+        margin: 0;
+        order: -1;
+        padding-bottom: 5px;
+    }
+    .redeem-checkbox label,
+    .permredeem-checkbox label,
+    .actredeem-checkbox label,
+    .bmredeem-checkbox label {
+        font-size: 16px;
+    }
+
+    /* --- 6. Image Preview Modal --- */
+    .image-preview-content,
+    .image-preview-content img {
+        max-width: 100%;
+        max-height: 100%;
+        border: none;
+        border-radius: 0;
+        object-fit: contain;
+    }
+}
+
+
+/* START: NEW COMMUNITY CHALLENGE STYLES */
+.challenge-button {
+    background: linear-gradient(to bottom, #BF40BF, #8A2BE2); /* Purple gradient */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid #DDA0DD; /* Light purple border */
+    text-shadow: 1px 1px 0 #000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Chakra Petch', sans-serif;
+    display: block;
+    width: fit-content;
+    margin: 10px auto; 
+}
+.challenge-button:hover {
+    background: linear-gradient(to bottom, #DDA0DD, #BF40BF);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.7); /* Purple glow */
+}
+
+/* Style for the dropdown panel's content */
+#challenge-section .info-content {
+    background: linear-gradient(to bottom, #4B0082, #24003F);
+    border: 2px solid #BF40BF;
+}
+/* END: NEW COMMUNITY CHALLENGE STYLES */```
+
+
+/* START: COMPLETE & FINAL ACTION BUTTONS CSS - DELETE ALL PREVIOUS VERSIONS */
+
+/* Hides the default Ko-fi floating icon */
+iframe#kofi-chat-widget { display: none !important; }
+
+/* Main container for the buttons */
+.action-buttons-container {
+    display: flex; justify-content: center; align-items: center;
+    flex-wrap: wrap; gap: 8px; margin: 15px 0;
+}
+
+/* Uniform style for all buttons in the row */
+.action-btn {
+    padding: 6px 14px !important; font-size: 13px !important;
+    font-family: 'Chakra Petch', sans-serif !important; font-weight: bold !important;
+    border-radius: 4px !important; cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4) !important;
+    line-height: 1.2 !important; border: 1px solid rgba(0,0,0,0.5) !important;
+}
+.action-btn:hover {
+    transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Removes old fixed positioning */
+.action-buttons-container .floating-share-container,
+.action-buttons-container .tally-button-wrapper,
+.action-buttons-container .floating-poll-btn {
+    position: static;
+}
+
+/* Specific button colors */
+.action-buttons-container .share-fab { background: linear-gradient(to bottom, #1e8e3e, #166d2e) !important; color: #fff !important; }
+.action-buttons-container .floating-poll-btn { background-color: #8A2BE2 !important; color: white !important; border: 1px solid #DDA0DD !important; }
+.action-buttons-container .tally-button-wrapper { background: linear-gradient(to bottom, #0056A8, #003B75) !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+.action-buttons-container .floating-tally-btn { all: unset; font: inherit; padding: 6px 14px; color: #fff !important; }
+.action-buttons-container .kofi-button { background: linear-gradient(to bottom, #EBEBEB, #B7B7B7) !important; color: #434747 !important; }
+
+/* --- THE CRITICAL FIX FOR THE SHARE MENU --- */
+
+/* The container for the share button and its dropdown menu */
+.floating-share-container {
+    position: relative; /* CRITICAL: This anchors the absolute menu below */
+}
+
+/* The dropdown menu itself */
+.action-buttons-container .share-menu {
+    display: none; /* Hide it completely by default */
+    position: absolute;
+    top: 100%; /* Position it right below its container */
+    left: 50%;
+    transform: translateX(-50%); /* Center the menu under the button */
+    margin-top: 8px; /* Space from the button */
+    z-index: 10000; /* CRITICAL: Ensures it appears on top of everything */
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 5px;
+    min-width: 180px; /* Set a minimum width */
+}
+
+/* The class that the JavaScript will add to show the menu */
+.action-buttons-container .share-menu.active {
+    display: block; /* This makes the menu visible */
+}
+/* END: COMPLETE & FINAL ACTION BUTTONS CSS */
+
+/* START: FINAL, OVERRIDING SHARE BUTTON CSS - PASTE AT THE VERY END OF YOUR <style> TAG */
+
+/* This uses a unique name to avoid conflicts */
+.share-container-final {
+    position: relative; /* This is essential for positioning the menu */
+}
+
+/* This uses a unique ID (#) which gives it HIGH priority */
+#final-share-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 110%; /* Position it just below the button */
+    left: 50%;
+    transform: translateX(-50%); /* Center it horizontally */
+    z-index: 10000; /* CRITICAL: Ensures it appears on top of EVERYTHING */
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 5px;
+    min-width: 180px;
+}
+
+/* This class is added by JavaScript to show the menu */
+#final-share-menu.active {
+    display: block;
+}
+
+/* These styles are for the links inside the pop-up menu */
+#final-share-menu .share-menu-item {
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    display: block; /* Makes the links stack vertically */
+    margin: 5px;
+    transition: transform 0.2s;
+}
+#final-share-menu .share-menu-item:hover {
+    transform: scale(1.05);
+}
+#final-share-menu .twitter-btn { background: #1DA1F2; }
+#final-share-menu .facebook-btn { background: #1877F2; }
+
+/* END: FINAL, OVERRIDING SHARE BUTTON CSS */
+
+
+/* START: Styles for the new Ko-fi Modal */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    position: relative;
+    padding: 20px;
+    background: #1f1f1f;
+    border: 2px solid #ffc600;
+    border-radius: 8px;
+    max-width: 90%;
+}
+.close-modal {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 28px;
+}
+#kofi-iframe-container iframe {
+    max-width: 80vw;
+    max-height: 80vh;
+}
+/* END: Styles for the new Ko-fi Modal */
+
+/* START: FINAL MOBILE BUTTON BAR FIX - PASTE AT END OF <style> TAG */
+
+/* Style the new elements for all screen sizes */
+.action-btn {
+    display: flex;
+    flex-direction: column; /* Allows text to stack vertically */
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3 !important;
+}
+
+.action-btn small {
+    font-size: 0.8em;
+    font-weight: normal;
+    opacity: 0.8;
+    margin-top: 3px;
+    display: block; /* Ensures it takes its own line */
+}
+
+.kofi-icon {
+    height: 16px;
+    margin-bottom: 4px;
+}
+
+/* This media query only applies these styles to smaller screens */
+@media (max-width: 768px) {
+    .action-buttons-container {
+        flex-wrap: nowrap; /* CRITICAL: Prevents buttons from wrapping to the next line */
+        align-items: stretch; /* Makes all buttons the same height */
+    }
+
+    /* Target all buttons inside the container on mobile */
+    .action-buttons-container > * {
+        flex: 1; /* CRITICAL: Makes each button take up an equal amount of space */
+        min-width: 0; /* Allows buttons to shrink smaller than their content */
+    }
+
+    /* Make the buttons and text smaller to fit */
+    .action-btn {
+        font-size: 11px !important; /* Smaller font */
+        padding: 5px !important; /* Less padding */
+    }
+}
+/* END: FINAL MOBILE BUTTON BAR FIX */
 
     </style>
 </head>
@@ -2479,158 +2792,235 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 </div>
 <!-- END of the replacement block -->
 
+
+
 <body>
 
 
-   <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-<script>
-  kofiWidgetOverlay.draw('xsmashx88x', {
-    'type': 'floating-chat',
-    'floating-chat.donateButton.text': 'Few Asked<br>Dono Button',
-    'floating-chat.donateButton.background-color': '#323842',
-    'floating-chat.donateButton.text-color': '#fff'
-  });
-</script> 
+
+
     <div class="noise"></div>
     <div class="scanlines"></div>
     
     <div class="container">
         <div class="title-bar">
-            <img src="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png" alt="Left Icon" class="icon">
+            <img src="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png" alt="Left Icon" class="icon">
             <div class="title-text">SHiFT Code Tracker  + More</div>
-            <img src="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png" alt="Right Icon" class="icon">
+            <img src="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png" alt="Right Icon" class="icon">
         </div>
- 
+
+<!-- DELETE your old action-buttons-container and REPLACE it with this one -->
+<div class="action-buttons-container">
+
+        <button class="action-btn kofi-button" onclick="openKofiModal()">
+        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi donations" class="kofi-icon"/>
+        Support This via Dono
+        <small>Means Alot If You Do</small>
+    </button>
+
+    <div class="tally-button-wrapper">
+        <button class="action-btn floating-tally-btn" data-tally-open="3j1glQ" data-tally-layout="modal" data-tally-width="750" 
+        data-tally-height="600">
+            Feedback<br>Forum<br><small>Updated 10/12/2025</small>
+        </button>
+    </div>
+    <!-- This container is the key -->
+    <div class="share-container-final">
+        <button class="action-btn share-fab" id="final-share-button">
+            🔗 Share It On Socials
+            <small>Help It Get Seen :)</small>
+        </button>
+    <div class="share-menu-final" id="final-share-menu">
+    <a href="https://twitter.com/intent/tweet?text=Vault%20Hunters%20This%20SHiFT%20Code%20tracker%20has%20it%20all%3A%20active%20codes%2C%20Black%20Market%20info%20%26%20weekly%20resets%20in%20one%20spot.%0A%0AThanks%20%40xsmashx88x%20for%20making%20this!%0A%0AEh%20%40Borderlands%20%40GearboxOfficial%2C%20show%20it%20some%20love!%20%3A)%0A%0A%23Borderlands%20%23ShiftCodes%20%23Borderlands4%20%23BL4&url=https://xsmashx88x.github.io/Shift-Codes/" class="share-menu-item twitter-btn" target="_blank">🐦 Share on X</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://xsmashx88x.github.io/Shift-Codes/&quote=Fellow%20Vault%20Hunters%2C%20check%20out%20this%20epic%20SHiFT%20Code%20tracker!%20It%20has%20it%20all%20in%20one%20place%3A%20active%20codes%2C%20Black%20Market%20locations%2C%20weekly%20reset%20info%2C%20and%20more.%20You%20won't%20need%20to%20hunt%20for%20codes%20again!" class="share-menu-item facebook-btn" target="_blank">👍 Share on FB</a>
+    </div>
+</div>
+
+
+    <button class="action-btn floating-poll-btn" id="openPollBtn">EH! Poll Time</button>
+
+</div>
+
+
+
+<!-- END: FINAL CORRECTED Floating Poll Button and Modal -->    
+
+    <!-- === START: FINAL FLOATING INFO PANEL === -->
+    <div class="floating-info-panel">
+        
+        <!-- This part is always visible -->
+        <div class="visible-reminder-text">
+            • FAV & CHECK DAILY • REFRESH OFTEN • 
+            
+            <!-- This is the smaller, clickable link that triggers the dropdown -->
+            <a class="thank-you-link" style="color: #ffffff;" onclick="toggleThankYouPanel(this)">
+                • Supporters & Special Thanks • <br> <small style="font-size: 0.7em; color: #00ffff;">Click To Open/Close list</small>
+            </a>
+        </div>
+        
+        <!-- This is the content that is hidden by default -->
+        <div class="thank-you-content">
+            <h4>MSG TO YOU ALL</h4>
+            <ul>
+                <li><span style="color: gold; font-weight: bold;">Sticky</span>, For being a legend, Good Friend. Love Ya Man | 🫂👊</li>                
+                <li>The amazing <span style="color: hotpink;">[/r/Borderlands]</span> Community! | 🫂👊</li>
+                <li>---------------------------------------------</li>
+                <li><span style="color: #F228BC;">To Everyone Who Has Supported This, An Will. Thank You</span>👊</li>
+                <li><span style="color: #28EBF2;">Means Alot, It's hard to express just how much this helps me on a personal level</span>🫂</li>
+                <li><span style="color: #F2C928;">Will Thank You On Kofi :) </span>🍵</li>
+                
+                <!-- Add more names here -->
+            </ul>
+        </div>
+
+    </div>
+
+<body>
+
 
 <!-- === START: High-Tech Contact Me Section === -->
 <div class="contact-me-section">
-<h4 class="contact-me-title">Connect/Contact</h4>
-<div class="social-links">
-<a href="https://x.com/xsmashx88x" target="_blank">🐦 Twitter</a>
-<a href="https://discord.com/users/97484502628052992" target="_blank">💬 Discord</a>
-<a href="https://www.reddit.com/user/smashcanuckgamer/" target="_blank">👾 Reddit</a>
-</div>
+    <h4 class="contact-me-title">Connect/Contact</h4>
+    
+    <!-- This new wrapper will handle the animation -->
+    <div class="slide-down-content">
+
+        <p class="info-text">
+            Xbox/Shift : xsmashx88x
+        </p>
+
+        <div class="social-links">  
+            <a href="https://x.com/xsmashx88x" target="_blank">🐦 Twitter | Follow/Chat </a>
+            <a href="https://discord.com/users/97484502628052992" target="_blank">💬 Discord | Chat</a>
+            <a href="https://www.reddit.com/user/smashcanuckgamer/" target="_blank">👾 Reddit | Chat</a>
+        </div>
+
+    </div>
 </div>
 <!-- === END: High-Tech Contact Me Section === -->
 
-<!-- === START: FLOATING SHARE BUTTON === -->
-<div class="floating-share-container">
-    <!-- The menu that will pop up -->
-    <div class="share-menu" id="shareMenu">
-        <a href="https://twitter.com/intent/tweet?url=https://xsmashx88x.github.io/Shift-Codes/&text=Check out this awesome tracker for Borderlands SHiFT Codes!Thanks @xsmashx88x For Making This&hashtags=Borderlands,ShiftCodes,Borderlands4,BL4" class="share-menu-item twitter-btn" target="_blank">
-            🐦 Share on X
-        </a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https://xsmashx88x.github.io/Shift-Codes/" class="share-menu-item facebook-btn" target="_blank">
-            👍 Share on Facebook
-        </a>
-    </div>
 
-    <!-- The main button that is always visible -->
-    <button class="share-fab" onclick="toggleShareMenu()">
-        🔗 Share It
-    </button>
-</div>
-<!-- === END: FLOATING SHARE BUTTON === -->
 
-<!-- NEW SETTINGS BUTTON AND SECTION (Place it here or where you prefer it visually) -->
-<button class="info-button" onclick="toggleInfo('settings-section')" id="hideem-toggle-btn">🙈Hide Items|🆕</button>
+<!-- START: FINAL, CORRECTLY ORGANIZED SITE OPTIONS CONTAINER -->
+<div class="site-options-container">
+    <h4 class="site-options-title" onclick="toggleOptionsContainer(this)">
+        SITE OPTIONS & INFO
+        <small class="updated-subtitle">UPDATED 10/12/2025</small>
+    </h4>
+    
+    <div class="slide-down-content">
+        <!-- CONTAINER 1: THE BUTTON GRID (This now ONLY contains buttons) -->
+        <div class="options-button-grid">
+            <div class="button-row">
+                <button class="option-btn option-btn-hide" onclick="toggleOptionPanel('settings-section')" id="hideem-toggle-btn">🙈Hide Items<small> </small></button>
+                <button class="option-btn option-btn-faq" onclick="toggleOptionPanel('info-section')" id="infofaq-toggle-btn">❗INFO/FAQ❓<br><small>Updated 10/10/2025</small></button>
+            </div>
+            <div class="button-row">
+                <button class="option-btn option-btn-log" onclick="toggleOptionPanel('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️<br><small>Updated 10/12/2025</small></button>
+                <button class="option-btn option-btn-redeem" onclick="toggleOptionPanel('redeem-section')" id="redeem-toggle-btn">🖥️ HOW TO REDEEM ON CONSOLE 🎮</button>
+            </div>
+        </div>
 
-        <div id="settings-section" class="info-section">
-            <div class="info-content">
-                <h3>Visibility Settings</h3>
-                <p>Choose which elements to hide:</p>
-                <div class="setting-item">
-                    <input type="checkbox" id="hide-redeem-toggle-btn" onchange="handleSettingChange('redeem-toggle-btn', this.checked)">
-                    <label for="hide-redeem-toggle-btn">Hide "How To Redeem" button</label>
-                </div>
+        <!-- CONTAINER 2: THE CONTENT PANELS (Now properly separated from the buttons) -->
+        <div class="options-content-panels">
+            <div id="settings-section" class="info-section">
+                <div class="info-content">
+                    <h3>Visibility Settings</h3>
+                    <p>Choose which elements to hide:</p>
                     <div class="setting-item">
-                    <input type="checkbox" id="hide-rewards-link" onchange="toggleRewardsLink(this.checked)">
-                    <label for="hide-rewards-link">🆕|Hide "Click Here | To Redeem Codes"</label>
+                        <input type="checkbox" id="hide-redeem-toggle-btn" onchange="handleSettingChange('redeem-toggle-btn', this.checked)">
+                        <label for="hide-redeem-toggle-btn">Hide "How To Redeem" button</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="hide-rewards-link" onchange="toggleRewardsLink(this.checked)">
+                        <label for="hide-rewards-link">🆕|Hide "Click Here | To Redeem Codes"</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="hide-roadmap-btn" onchange="handleSettingChange('roadmap-btn', this.checked)">
+                        <label for="hide-roadmap-btn">Hide "View BL4 Roadmap" button</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="hide-maurices-toggle-btn" onchange="handleSettingChange('maurices-toggle-btn', this.checked)">
+                        <label for="hide-maurices-toggle-btn">Hide "Mauric's Black Market" button</label>
+                    </div>
+                    <div class="setting-item">
+                        <input type="checkbox" id="hide-permanent-toggle-btn" onchange="handleSettingChange('permanent-toggle-btn', this.checked)">
+                        <label for="hide-permanent-toggle-btn">Hide "[View] Drops + Limited Time Codes + More" button</label>
+                    </div>
                 </div>
-                <div class="setting-item">
-                    <input type="checkbox" id="hide-roadmap-btn" onchange="handleSettingChange('roadmap-btn', this.checked)">
-                    <label for="hide-roadmap-btn">Hide "View BL4 Roadmap" button</label>
+            </div>
+            <div id="info-section" class="info-section">
+                <div class="info-content">
+                    <p style="color:#E10B0B;"><strong>🆕Welcome, Vault Hunter!</strong></p>
+                    <ul style="color:#FD8787;">
+                        <li><i>🆕I created this tracker for a simple reason: I saw how many of us were struggling to keep up with SHiFT codes, constantly wondering if they were still active or when they might expire. Since not everyone wants to live on Twitter/X, I wanted to build a single, reliable home for the community.<br><br>Due to some personal health matters, I have a lot of time on my hands, and I decided to put it to good use for a community I like. So many others just don't update fast enough or fix when a code should be expired but works or worse IGN they want you to sub to a service smfh<br><br>Now, about the donation button. Frankly, I didn't want to add one, but it was created by popular request from users who wanted to show their support. So let me be crystal clear:<br><br>This site will stay updated for as long as it's helpful to you, donations or not. That is my promise.<br><br>That said, for those who have chosen to contribute, your support is incredibly helpful on a personal level and genuinely appreciated more than you know.<br>Thank you for being an amazing community. Now, go get that loot</i></li>
+                    </ul>
+                    <p style="color:#7AFD42;"><strong>A Note to the Community</strong></p>
+                    <ul style="color:#C7FFB0;">
+                        <li><i>This project was created solely to help the community, not for personal gain like followers or fame. It's simply a tool built for fellow Vault Hunters.</i></li>
+                        <li><i>The donation button was added by popular request from community members who wished to support the project. It is, and always will be, completely optional.</i></li>
+                        <li><i>If you find this tracker valuable and wish to show your appreciation, your support is incredibly helpful. Thank you!</i></li>
+                    </ul>
+                    <p style="color:#FA70CE;"><strong>F.A.Q</strong></p>
+                    <ul style="color:#FFC1EB;">
+                        <li>🆕<b>Will you ever do older BL Games?</b> <i>Sadly, Did a poll and community got to pick and nope, they don't want it. <a href="https://i.postimg.cc/HkhmW7qV/screenshot-35.png">Poll View Image</a></i></li>
+                        <li><b>How quickly are codes updated?</b> <i>Codes are typically added within minutes of being released. The primary goal of this site is to serve as a reliable, long-term tracker for the entire community, especially for those who don't monitor social media 24/7. This saves you the frustration of finding and trying codes that have already expired.</i></li>
+                        <li><b>What is the purpose of this site?</b> <i>This tracker was built to provide a clear, simple solution for two things: to know for certain if a SHiFT code is still active, and to make redeeming them effortless with a one-click copy button.</i></li>
+                        <li><b>How are codes added to the tracker?</b> <i>Every code is found and added manually. I monitor official social media channels and community hubs for new releases. There are no automated bots, which ensures the information is as accurate as possible.</i></li>
+                        <li><b>"Haters that say : I can find keys faster than they get posted here."</b> <i>Congratulations on winning the race against a free public service! While you're refreshing social media 24/7, this site is busy being a reliable archive for people who have jobs, hobbies, or just better things to do. We'll be here when you need to check if that code from Tuesday is still good.</i></li>
+                    </ul>
+                    <p style="color:#FFDE59;"><strong>PSA</strong></p>
+                    <ul style="color:#FFF3C4;">
+                        <li><b>Gold Keys On Multi Systems :</b><i>if linked multi systems can redeem on each :) from what I hear.</i></li>
+                        <li><b>They Don't Show Even Tho Did Redeem Them :</b><i>If the redeem site shows 3 codes lets say the 3 you did, then close and restart your game they should show up.</i></li>
+                    </ul>
                 </div>
-                <div class="setting-item">
-                    <input type="checkbox" id="hide-maurices-toggle-btn" onchange="handleSettingChange('maurices-toggle-btn', this.checked)">
-                    <label for="hide-maurices-toggle-btn">Hide "Mauric's Black Market" button</label>
+            </div>
+            <div id="changelog-section" class="info-section">
+                <div class="info-content">
+                    <p><strong>Change Log | Info On Changes/Updates/ An More</strong></p>
+                    <ul>
+                        <li>🆕<b>10/12/2025:</b> Lil Fixs/Added : Lil Tweaks, UI Changes (moved floating buttons based on feedback)<br>sorry you gamers didnt see the check cause of the floating donate button</li>
+                        <li><b>10/8/2025:</b> Lil Fixs/Added : Lil Tweaks, UI Changes</li>
+                        <li><b>10/5/2025:</b> Lil Fixs/Added : Lil Tweaks, Added A Remember Copy Hightlight</li>
+                        <li><b>10/4/2025:</b> Fixed/Added : Lil Tweaks, Added Chest/View Keys Button (links to pics)</li>
+                        <li><b>10/2/2025:</b> Fixed/Added : Lil Tweaks</li>
+                        <li><b>9/29/2025:</b> Fixed/Added : New Codes, Some Lil Changes.</li>
+                        <li><b>9/28/2025:</b> Fixed/Added : Fixed Few Things, Added Wildcard/Encore Boss Info</li>
+                        <li><b>9/27/2025:</b> Fixed/Added : Just some small tweaks..</li>
+                        <li><b>9/26/2025:</b> Fixed/Added : Few Things... Might or Might Not Notice :)</li>
+                        <li><b>9/25/2025:</b> Fixed : Should Be More Mobile Friendly</li>
+                        <li><b>9/25/2025:</b> Added : Hide Buttons Option (should stick on refresh)</li>
+                        <li><b>9/25/2025:</b> Fixed : Mobile Button Issues For Black Market</li>
+                        <li><b>9/25/2025:</b> Added : Maurices Black Market, Static View</li>
+                        <li><b>9/25/2025:</b> Added : Maurices Black Market, With Map View</li>
+                        <li><b>9/24/2025:</b> Fixed time issues</li>
+                        <li><b>9/24/2025:</b> Fixed refresh issue on Android/some browsers</li>
+                        <li><b>9/23/2025:</b> Added "Mark as redeemed" feature with local storage</li>
+                        <li><b>9/22/2025:</b> Added preview button for image rewards</li>
+                        <li><b>9/21/2025:</b> Improved countdown timer functionality</li>
+                        <li><b>9/20/2025:</b> Added permanent/unknown expiration codes section</li>
+                        <li><b>9/19/2025:</b> Initial website launch with basic functionality</li>
+                    </ul>
                 </div>
-                 <div class="setting-item">
-                    <input type="checkbox" id="hide-permanent-toggle-btn" onchange="handleSettingChange('permanent-toggle-btn', this.checked)">
-                    <label for="hide-permanent-toggle-btn">Hide "[View] Drops + Limited Time Codes + More" button</label>
+            </div>
+            <div id="redeem-section" class="info-section">
+                <div class="info-content">
+                    <p><strong>In-Game</strong></p>
+                    <ol>
+                        <li>Open the Pause Menu while in-game Or On Main Menu</li>
+                        <li>Click "SHiFT"</li>
+                        <li>Click "Rewards"</li>
+                        <li>Enter codes and redeem them</li>
+                    </ol>
+                    <p><strong>Online</strong></p>
+                    <p>CLICK THAT BUTTON BELOW AND WILL OPEN THE SHIFT REDEEM SITE</p>
                 </div>
             </div>
         </div>
-
-<button class="info-button" onclick="toggleInfo('info-section')" id="infofaq-toggle-btn">❗INFO/FAQ❓|🆕</button>
-
-        <div id="info-section" class="info-section">
-            <div class="info-content">
-                <p><strong>MSG To People Thinking I Want Followers/Money (I Don't) SMFH</strong></p>
-                <ul>
-                    <li><i>This was not done for followers or fame, its to help people, it sucks to be reported on reddit/fb an few other places :(</i></li>
-                    <li><i>Some have wanted to donate/tip, so linked kofi button, this is not something have to do... so don't feel you have to.(</i></li>
-                    <li><i>But If you are a good person, really like what I am doing, then feel free to use that button.</i></li>             
-                </ul>
-                <p><strong>F.A.Q</strong></p>
-                <ul>
-                    <li>🆕<b>I can find keys faster then then show here : </b> <i>99% Of the time, right when randy post them they go on here, other day was a hour late, however not everyone watches his twitter, checks reddit 24/7 or facebook or others, this was done so users can have days to redeem/track and avoid the bullshit of oh this code is expired but was not marked somewhere. (some of you have said this, I get it if active enough just don't use this then).</i></li>
-                    <li><b>Why Was This Made :</b> <i>For peeps to know if codes are expired and be able to copy them more easy via the button.</i></li>
-                    <li><b>How are codes put here? :</b> <i>All me, I watch randy's twitter or see them around the net and add them, No auto grab system here.</i></li>            
-                </ul>
-                <p><strong>PSA</strong></p>
-                <ul>
-                    <li><b>Gold Keys On Multi Systems :</b><i>if linked multi systems can redeem on each :) from what I hear.</i></li>
-                    <li><b>🆕They Don't Show Even Tho Did Redeem Them :</b><i>If the redeem site shows 3 codes lets say the 3 you did, then close and restart your game they should show up.</i></li>
-                </ul>
-            </div>
-        </div>
-
-<button class="info-button" onclick="toggleInfo('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️|🆕</button>
-
-        <div id="changelog-section" class="info-section">
-            <div class="info-content">
-                <p><strong>Change Log | Last Updated : 10/4/2025</strong></p>
-                <ul>
-                    <li>🆕<b>10/4/2025:</b> Fixed/Added : Lil Tweaks, Added Chest/View Keys Button (links to pics)</li>
-                    <li><b>10/2/2025:</b> Fixed/Added : Lil Tweaks</li>
-                    <li><b>9/29/2025:</b> Fixed/Added : New Codes, Some Lil Changes.</li>
-                    <li><b>9/28/2025:</b> Fixed/Added : Fixed Few Things, Added Wildcard/Encore Boss Info</li>
-                    <li><b>9/27/2025:</b> Fixed/Added : Just some small tweaks..</li>
-                    <li><b>9/26/2025:</b> Fixed/Added : Few Things... Might or Might Not Notice :)</li>                    
-                    <li><b>9/25/2025:</b> Fixed : Should Be More Mobile Friendly</li>
-                    <li><b>9/25/2025:</b> Added : Hide Buttons Option (should stick on refresh)</li>  
-                    <li><b>9/25/2025:</b> Fixed : Mobile Button Issues For Black Market</li>                     
-                    <li><b>9/25/2025:</b> Added : Maurices Black Market, Static View</li>  
-                    <li><b>9/25/2025:</b> Added : Maurices Black Market, With Map View</li>                     
-                    <li><b>9/24/2025:</b> Fixed time issues</li>            
-                    <li><b>9/24/2025:</b> Fixed refresh issue on Android/some browsers</li>
-                    <li><b>9/23/2025:</b> Added "Mark as redeemed" feature with local storage</li>
-                    <li><b>9/22/2025:</b> Added preview button for image rewards</li>
-                    <li><b>9/21/2025:</b> Improved countdown timer functionality</li>
-                    <li><b>9/20/2025:</b> Added permanent/unknown expiration codes section</li>
-                    <li><b>9/19/2025:</b> Initial website launch with basic functionality</li>
-                </ul>
-            </div>
-        </div>
-
-        <button class="info-button redeem-button" onclick="toggleInfo('redeem-section')" id="redeem-toggle-btn">
-            🖥️ HOW TO REDEEM ON CONSOLE 🎮
-        </button>
-
-        <div id="redeem-section" class="info-section">
-            <div class="info-content">
-                <p><strong>In-Game</strong></p>
-                <ol>
-                    <li>Open the Pause Menu while in-game Or On Main Menu</li>
-                    <li>Click "SHiFT"</li>
-                    <li>Click "Rewards"</li>
-                    <li>Enter codes and redeem them</li>
-                </ol>
-                <p><strong>Online</strong></p>
-                <p>CLICK THAT BUTTON BELOW AND WILL OPEN THE SHIFT REDEEM SITE</p>
-            </div>
-        </div>
+    </div>
+</div>
+<!-- END: FINAL, CORRECTLY ORGANIZED SITE OPTIONS CONTAINER -->
 
 <div id="rewards-container">
     <a href="https://shift.gearboxsoftware.com/rewards" target="_blank" class="rewards-link">
@@ -2641,9 +3031,21 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 
         <button class="roadmap-button" onclick="openRoadmapImage()" id="roadmap-btn">🗺️ VIEW BL4 ROADMAP 🛣️</button>
                 <button class="events-button hidden" onclick="openEventsImage()" id="events-btn"></button>
+                        <button class="challenge-button hidden" onclick="toggleInfo('challenge-section')" id="challenge-btn"></button>
+        <div id="challenge-section" class="info-section">
+            <div class="info-content">
+                <!-- The clickable image -->
+                <a href="javascript:void(0);" onclick="openImagePreview(COMMUNITY_CHALLENGE_CONFIG.imageUrl)">
+                    <img id="challenge-image" src="" alt="Community Challenge Image" style="width: 100%; border-radius: 4px; border: 2px solid #BF40BF; cursor: pointer;">
+                </a>
+                <!-- The description text -->
+                <p id="challenge-description" style="margin-top: 15px; color: #E6E6FA; line-height: 1.5;"></p>
+            </div>
+        </div>
+        <!-- END OF NEW CODE -->
         <!-- END NEW ROADMAP BUTTON -->
 
-      <button class="collapse-btn-BlackMarket" onclick="toggleInfo('black-market-section')" id="maurices-toggle-btn">💵 Maurices Black Market/Boss + WildCard🫰<br> <small style="font-size: 0.7em; opacity: 0.9; ">After Reset, Give Me A Few To Update Images/Info Plz.</small><br>     <small style="font-size: 0.7em; opacity: 0.8; color: ##FF7979;" class="drops-pulse">!Updated 10/2/2025!</small> </button>
+      <button class="collapse-btn-BlackMarket" onclick="toggleInfo('black-market-section')" id="maurices-toggle-btn">💵 Maurices Black Market/Boss + WildCard🫰<br> <small style="font-size: 0.7em; opacity: 0.9; ">After Reset, Give Me A Few To Update Images/Info Plz.</small><br>     <small style="font-size: 0.7em; opacity: 0.8; color: ##FF7979;" class="drops-pulse">!Updated 10/9/2025!</small> </button>
         
         <div id="black-market-section" class="info-section">
             <h2  style="font-size: 1.2em;">💵 Maurices Black Market/Boss + Wild Card 🫰</h2>
@@ -2655,7 +3057,7 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 <button class="collapse-btn-Perm" onclick="togglePermanent()" id="permanent-toggle-btn">
     🎁 [View] Drops/Skins + Limited Time Codes + More ⌛
     <br>
-    <small style="font-size: 0.9em; opacity: 0.9; color: #14F8FF;" class="drops-pulse">!Updated 10/2/2025!</small>
+    <small style="font-size: 0.9em; opacity: 0.9; color: #14F8FF;" class="drops-pulse">!Updated 10/6/2025!</small>
 </button>
         
         <div id="permanent-section" class="permanent-section">
@@ -2667,7 +3069,7 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 
 <h1>👍 Active BL4 SHiFT Codes (New At Top) 🗝️ <br> <small style="font-size: 0.6em; opacity: 0.9; "> ⬇ Gold Keys Only ⬇ | ⬆ Drops Button For Skins + Others ⬆</small> 
     <br>
-    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/4/2025!</small>
+    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/12/2025!</small>
     
     <!-- === NEW BUTTONS CONTAINER === -->
     <div class="key-info-buttons-container">
@@ -2697,6 +3099,208 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 
     <script>
 
+// Add these functions to your main script tag
+function openKofiModal() {
+    const container = document.getElementById('kofi-iframe-container');
+    // Add the iframe content ONLY when the modal is opened
+    container.innerHTML = `<iframe id='kofiframe' src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&embed=true&preview=true' style='border:none;width:100%;padding:4px;background:#f9f9f9;' height='712' title='xsmashx88x'></iframe>`;
+    
+    const modal = document.getElementById('kofi-modal-overlay');
+    modal.style.display = 'flex';
+}
+
+function closeKofiModal() {
+    const modal = document.getElementById('kofi-modal-overlay');
+    modal.style.display = 'none';
+    
+    // Remove the iframe content to stop any potential background activity
+    const container = document.getElementById('kofi-iframe-container');
+    container.innerHTML = '';
+}
+
+// NEW, DEDICATED function to clear Black Market statuses
+function clearBlackMarketStatusOnReset() {
+    try {
+        console.log("A weekly reset has been detected. Clearing Black Market redemption statuses...");
+        const redeemedCodes = JSON.parse(localStorage.getItem('shiftRedeemedCodes')) || {};
+
+        // Loop through the vendor config and remove each corresponding key
+        BLACK_MARKET_VENDORS.forEach((vendorData, index) => {
+            const uniqueId = vendorData.code.replace(/\s+/g, '-') + '-' + index;
+            if (redeemedCodes.hasOwnProperty(uniqueId)) {
+                delete redeemedCodes[uniqueId];
+                console.log(`Removed status for: ${uniqueId}`);
+            }
+        });
+
+        // Save the cleaned object back to localStorage
+        localStorage.setItem('shiftRedeemedCodes', JSON.stringify(redeemedCodes));
+    } catch (e) {
+        console.error("Error during Black Market status cleanup:", e);
+    }
+}        
+
+// Function to toggle the main container
+function toggleOptionsContainer(titleElement) {
+    const container = titleElement.closest('.site-options-container');
+    if (container) {
+        container.classList.toggle('is-open');
+    }
+}
+
+// Function to manage the content panels, ensuring only one is open at a time
+function toggleOptionPanel(sectionIdToShow) {
+    const panelIds = ['settings-section', 'info-section', 'changelog-section', 'redeem-section'];
+    const targetPanel = document.getElementById(sectionIdToShow);
+    if (!targetPanel) return;
+    const isAlreadyOpen = targetPanel.classList.contains('show');
+    panelIds.forEach(id => {
+        const panel = document.getElementById(id);
+        if (panel) {
+            panel.classList.remove('show');
+            saveSectionState(id, false);
+        }
+    });
+    if (!isAlreadyOpen) {
+        targetPanel.classList.add('show');
+        saveSectionState(sectionIdToShow, true);
+    }
+}
+
+        // === START: NEW FUNCTION TO CLEAR HIGHLIGHT ===
+
+function clearLastCopied() {
+    try {
+        // Remove the ID from browser memory
+        localStorage.removeItem('lastCopiedCodeId');
+        
+        // Find whichever element currently has the highlight and remove the class
+        const highlightedBox = document.querySelector('.last-copied');
+        if (highlightedBox) {
+            highlightedBox.classList.remove('last-copied');
+        }
+    } catch (e) {
+        console.error("Error clearing last copied state:", e);
+    }
+}
+
+// === END: NEW FUNCTION ===
+
+// === START: NEW FUNCTIONS FOR LAST COPIED ===
+
+function setLastCopied(codeId) {
+    try {
+        localStorage.setItem('lastCopiedCodeId', codeId);
+        // First, remove the highlight from any element that might have it
+        document.querySelectorAll('.last-copied').forEach(el => el.classList.remove('last-copied'));
+        // Then, find the specific element we just copied and add the highlight
+        const newLastCopiedBox = document.querySelector(`[data-code-id="${codeId}"]`);
+        if (newLastCopiedBox) {
+            newLastCopiedBox.classList.add('last-copied');
+        }
+    } catch (e) { console.error("Error in setLastCopied:", e); }
+}
+
+function applyLastCopiedState() {
+    try {
+        const lastCopiedId = localStorage.getItem('lastCopiedCodeId');
+        if (lastCopiedId) {
+            // This runs on page load to find and highlight the saved item
+            const element = document.querySelector(`[data-code-id="${lastCopiedId}"]`);
+            if (element) {
+                element.classList.add('last-copied');
+            }
+        }
+    } catch (e) { console.error("Error applying last copied state:", e); }
+}
+
+// === END: NEW FUNCTIONS ===        
+
+// ADD THESE TWO NEW FUNCTIONS
+
+// === START: NEW FUNCTIONS FOR SAVING STATE ===
+
+/**
+ * Saves the open/closed state of a specific section to localStorage.
+ * @param {string} sectionId - The ID of the section (e.g., 'info-section').
+ * @param {boolean} isOpen - True if the section is open, false if closed.
+ */
+function saveSectionState(sectionId, isOpen) {
+    try {
+        const sectionStates = JSON.parse(localStorage.getItem('sectionStates')) || {};
+        sectionStates[sectionId] = isOpen;
+        localStorage.setItem('sectionStates', JSON.stringify(sectionStates));
+    } catch (e) {
+        console.error("Error saving section state:", e);
+    }
+}
+
+/**
+ * Reads the saved states from localStorage and applies them when the page loads.
+ */
+function applySavedSectionStates() {
+    try {
+        const savedStates = JSON.parse(localStorage.getItem('sectionStates')) || {};
+        for (const sectionId in savedStates) {
+            const section = document.getElementById(sectionId);
+            const isOpen = savedStates[sectionId];
+            if (section && isOpen) {
+                section.classList.add('show');
+            }
+        }
+    } catch (e) {
+        console.error("Error applying saved section states:", e);
+    }
+}
+// === END: NEW FUNCTIONS ===     
+
+// === START: POLL MODAL SCRIPT ===
+document.addEventListener('DOMContentLoaded', () => {
+    const pollModal = document.getElementById('pollModal');
+    const openPollBtn = document.getElementById('openPollBtn');
+    const closePollBtn = document.getElementById('closePollBtn');
+
+    // Function to open the modal
+    const openPoll = () => {
+        if (pollModal) pollModal.style.display = 'flex';
+    };
+
+    // Function to close the modal
+    const closePoll = () => {
+        if (pollModal) pollModal.style.display = 'none';
+    };
+
+    // Event Listeners
+    if (openPollBtn) openPollBtn.addEventListener('click', openPoll);
+    if (closePollBtn) closePollBtn.addEventListener('click', closePoll);
+
+    // Also close if the user clicks on the dark overlay
+    if (pollModal) {
+        pollModal.addEventListener('click', (event) => {
+            if (event.target === pollModal) {
+                closePoll();
+            }
+        });
+    }
+
+    // ==========================================================
+    // === PASTE THE NEW CLICK LISTENER CODE BLOCK RIGHT HERE ===
+    // ==========================================================
+    document.addEventListener('click', function(event) {
+        // Check if the thing that was clicked is INSIDE a code box of any type.
+        const isInsideCodeBox = event.target.closest('.code-box, .permanent-code-box, .expired-code-box, .black-market-code-box');
+
+        // If the click was NOT inside a code box, clear the highlight.
+        if (!isInsideCodeBox) {
+            clearLastCopied();
+        }
+    });
+    // ==========================================================
+
+}); // <-- This is the final closing bracket for DOMContentLoaded
+
+// === END: POLL MODAL SCRIPT ===
+
 /* mobile image zoom fix maybe */
 // ADD THIS code block at the top of your <script> tag
 
@@ -2709,24 +3313,27 @@ function zoomIn() {
 // --- END: Image Preview Zoom ---
 
 // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
-        /* mobile image zoom fix maybe */
-        // --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
-        const shareFab = document.querySelector('.share-fab');
-        const shareMenu = document.getElementById('shareMenu');
+// START: FINAL SHARE BUTTON JAVASCRIPT - DELETE ALL PREVIOUS VERSIONS
+document.addEventListener('DOMContentLoaded', function() {
+    const shareButton = document.getElementById('final-share-button');
+    const shareMenu = document.getElementById('final-share-menu');
 
-        function toggleShareMenu(event) {
-            event.stopPropagation(); 
-            shareMenu.classList.toggle('active');
-        }
+    if (shareButton && shareMenu) {
+        // This runs ONLY when the share button is clicked
+        shareButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Stops the click from closing the menu instantly
+            shareMenu.classList.toggle('active'); // Shows or hides the menu
+        });
 
-// Add the click listener directly to the button
-        shareFab.addEventListener('click', toggleShareMenu);
-
-        window.addEventListener('click', function(event) {
-            if (shareMenu.classList.contains('active') && !shareMenu.contains(event.target)) {
+        // This runs when you click anywhere else on the page
+        document.addEventListener('click', function() {
+            if (shareMenu.classList.contains('active')) {
                 shareMenu.classList.remove('active');
             }
         });
+    }
+});
+// END: FINAL SHARE BUTTON JAVASCRIPT
 
 // --- ADD THIS FUNCTION for the new floating panel refresh and thanks ---
 
@@ -2761,28 +3368,88 @@ function zoomIn() {
 
 // ==================== CONFIGURATION ====================
 const ALL_CODES_CONFIG = [
+        {
+        code: "T9RJB-BFKRR-3RBTW-B33TB-KCZB9",
+        description: 'All Platforms<br>Perm Key, Good For A Long Time',
+        title: '1 Gold Key',
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/skulliconkey.png"
+    },
+            {
+        code: "J9FB3-9XTW3-56JJK-TBBTJ-TF9X3",
+        expires: createDate(2025, 10, 14, 4, 23, 0, 0), // 
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-12",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showCopyButton: true
+    },
+        {
+        code: "BZX3B-6RTWB-5FTBW-TBT3B-3XZCT",
+        expires: createDate(2025, 10, 14, 4, 23, 0, 0), // 
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-12",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showCopyButton: true
+    },
+        {
+        code: "BHXBB-W6BCB-WXJ3W-B3BTT-FTW3Z",
+        expires: createDate(2025, 10, 14, 4, 23, 0, 0), // 
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-12",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showCopyButton: true
+    },
+            {
+        code: "TZ6TT-FKBKB-W6T35-BTTB3-636SR",
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1976415477862895671" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-9",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showCopyButton: true
+    },
+            {
+        code: "JH63B-S5TK3-KFJJC-BBB3T-5KR63",
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1976415477862895671" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-9",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showCopyButton: true
+    },
+            {
+        code: "T963J-TRBKB-56JBW-3BJBJ-ZZ3JR",
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1976415477862895671" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-9",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showCopyButton: true
+    },
             {
         code: "T9XTB-93BC3-56T35-TBBJT-KF5TW",
-        expires: createDate(2025, 10, 6, 1, 37, 0, 0), // 
+        expires: createDate(2025, 10, 5, 9, 35, 0, 1), // 
+        description: 'expired now',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1974287733985325112" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-3",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
         {
         code: "TZRBJ-3KTWT-KX3BC-TT3TB-B9ZSK",
-        expires: createDate(2025, 10, 6, 1, 37, 0, 0), // 
+        expires: "UED", // 
+        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1974287733985325112" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-3",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
         {
         code: "3HR33-KWBKT-KRJ3W-JBBTJ-FSTC3",
-        expires: createDate(2025, 10, 6, 1, 37, 0, 0), // 
+        expires: createDate(2025, 10, 5, 9, 35, 0, 1), // 
+        description: 'expired now',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1974287733985325112" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-3",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
                 {
@@ -2791,25 +3458,25 @@ const ALL_CODES_CONFIG = [
         description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
             {
         code: "J9RT3-RBJ5T-WRTBK-JB3J3-5TB3R",
-        expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        description: 'expired now',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
             {
         code: "TH6BJ-WJTC3-W6B3C-3TTBT-5HTTH",
-        expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        description: 'expired now',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
             {
@@ -2817,25 +3484,25 @@ const ALL_CODES_CONFIG = [
         expires: createDate(2025, 10, 2, 9, 35, 0, 1), // 
                 dateAdded: "2025-09-30",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
            {
         code: "BH6TJ-Z993B-5RJBK-JT3B3-RXT3Z",
-        expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        description: 'expired now',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200020347428912" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
         {
         code: "3S6TT-RSHJ3-WFJ3K-BBJB3-W5ZKS",
-        expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        expires: createDate(2025, 10, 3, 9, 35, 0, 1), // 
+        description: 'expired now',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200020347428912" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
         {
@@ -2843,7 +3510,7 @@ const ALL_CODES_CONFIG = [
         expires: createDate(2025, 9, 29, 4, 45, 0, 1), // 
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1972042073701528063" target="_blank">Via Twit</a>',
         dateAdded: "2025-09-27",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
         {
@@ -2851,7 +3518,7 @@ const ALL_CODES_CONFIG = [
         expires: createDate(2025, 9, 29, 4, 45, 0, 1), // 
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1972042073701528063" target="_blank">Via Twit</a>',
         dateAdded: "2025-09-27",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
         {
@@ -2859,7 +3526,7 @@ const ALL_CODES_CONFIG = [
         expires: createDate(2025, 9, 29, 4, 45, 0, 1), // 
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1972042073701528063" target="_blank">Via Twit</a>',
         dateAdded: "2025-09-27",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
     {
@@ -2867,7 +3534,7 @@ const ALL_CODES_CONFIG = [
         expires: createDate(2025, 9, 26, 4, 19, 0, 1), // 4:19 PM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1970946292131188745" target="_blank">Via Twit</a>',
         dateAdded: "2025-09-24",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
     {
@@ -2875,106 +3542,112 @@ const ALL_CODES_CONFIG = [
         expires: createDate(2025, 9, 26, 4, 19, 0, 1), // 4:19 PM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1970946292131188745" target="_blank">Via Twit</a>',
         dateAdded: "2025-09-24",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "BHFJ3-WXHBB-W63JK-B33B3-5HX95",
         expires: createDate(2025, 9, 26, 4, 19, 0, 1), // 4:19 PM
         title: '1 Gold Key- <a href="https://x.com/DuvalMagic/status/1970946292131188745" target="_blank">Via Twit</a> | 9/24/2025',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "J9XBB-KK9T3-CRTBW-BBT3T-KTBTW",
         expires: createDate(2025, 9, 24, 12, 28, 0, 1), // 12:28 PM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1970163226441547832" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
         showCopyButton: true
     },
     {
         code: "JHFTJ-R5HBT-KF3TK-TBJT3-JJTHH",
         expires: createDate(2025, 9, 24, 12, 28, 0, 1), // 12:28 PM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1970163226441547832" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
-    },
-    {
-        code: "T9RJB-BFKRR-3RBTW-B33TB-KCZB9",
-        title: '1 Gold Key',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/skulliconkey.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "THRBT-WW6CB-56TB5-3B3BJ-XBW3X",
         expires: createDate(2025, 9, 30, 0, 0, 0, 1), // Fixed: September 30, 2025 (month is 0-indexed)
         title: '1 Gold Key',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "3H63J-Z3S3J-KR3BK-BTJ33-ZWKTK",
         expires: createDate(2025, 9, 22, 12, 36, 0, 1), // 12:36 PM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1969440522528792653" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "TSR3B-J5S3T-KRBJW-BTTBJ-JRCXX",
         expires: createDate(2025, 9, 22, 12, 36, 0, 1), // 12:36 PM
         title: '1 : Gold Key - <a href="https://x.com/DuvalMagic/status/1969440522528792653" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "3ZXJB-53STT-56T3W-B3TT3-HTS95",
         expires: createDate(2025, 9, 21, 11, 58, 1, 1), // 11:58 AM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1969068501215170641" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "BSRT3-FTZBJ-K6BTW-JB3T3-WXT99",
         expires: createDate(2025, 9, 21, 11, 58, 1, 1), // 11:58 AM
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1969068501215170641" target="_blank">Via Twit</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "B9XT3-HX6TT-W6BBW-TTJT3-JTFKX",
         expires: createDate(2025, 9, 10, 12, 0, 0, 0), // September 10, 2025, 12:00 PM (no isPM specified, defaults to AM)
         title: "1 Gold Key",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },              
     {
         code: "39RTT-3ZR3T-5FJBK-3J3J3-C5CRT",
         expires: createDate(2025, 9, 10, 12, 0, 0, 0), // September 10, 2025, 12:00 PM
         title: "1 Gold Key",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },          
     {
         code: "WHWJB-XH3SX-39CZW-H3BBB-BTF55",
         expires: createDate(2025, 9, 10, 12, 0, 0, 0), // September 10, 2025, 12:00 PM
         title: "1 Gold Key",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },          
     {
         code: "3SR3J-CS63T-CFB3K-J3JTT-RZ5JR",
         expires: createDate(2025, 9, 10, 12, 0, 0, 0), // September 10, 2025, 12:00 PM
         title: "1 Gold Key",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "3SRBB-X9RBJ-CRTBW-3BBB3-KJFW6",
         expires: createDate(2025, 9, 10, 12, 0, 0, 0), // September 10, 2025, 12:00 PM
         title: "1 Gold Key",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     },
     {
         code: "WEWJB-XH3SX-39CZW-H3BBB-BPF55",
         expires: createDate(2025, 9, 20, 12, 0, 0, 0), // September 20, 2025, 12:00 PM
         title: '1 Gold Key - Requires linked My2K Games account - <a href="https://shift.gearboxsoftware.com/associations" target="_blank">Associate Account</a>',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/blkey50.png"
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     }       
 ];
 
 const PERMANENT_CODES = [
+                {
+        code: "JZ6BJ-SBR5J-WF3BK-BT3BB-TX9HB",
+        title: 'Amon Cult Classic | Vault Hunter Skin',
+        description: 'Community Challenge : Defeat 300,000 Vault Bosses from Oct 3-5 as Amon<br><a href="https://x.com/Borderlands/status/1974172598222352649" target="_blank">Link To Tweet</a> ',
+        dateAdded: "10/6/2025",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/bl4icon%20(GitHub%20icon).png",
+        showCopyButton: true,
+        showPreviewButton: true,
+        imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyeventchal/oct3oct5chal.png",
+        expires: createDate(2030, 12, 31, 0, 0, 0, 0) // 
+    },
         {
         code: "No Code",
         title: 'Twitch Drops : Watch, Drop, and Roll ECHO-4 Drone Skin cosmetic',
         description:'<a href="https://borderlands.2k.com/twitch-drops/" target="_blank">Read About It Here Or Via Info Below</a><br><br>Sep  27, 2025 - Oct 25, 2025<br><br>• Watch any livestream in the Borderlands 4 category on the official <a href="http://twitch.tv/Borderlands" target="_blank">Borderlands 4 Twitch channel</a> or <a href="https://www.twitch.tv/gearboxofficial" target="_blank">Gearbox Twitch channel</a> for 15 minutes and claim the reward',        
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/twitchicon%20(Custom).png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/twitchorange.png",
         showCopyButton: false,
         showPreviewButton: true,
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/BL4_Echobot_Drop_Wide_textless.png",
@@ -2996,7 +3669,7 @@ const PERMANENT_CODES = [
         title: 'Discord  |  Borderlands Bundles + Single Items',
         description:'Click On Shop, Look for the Borderlands 4 Image or Scroll down and will find it. <br>Items Range from $10.99CAD to $5.99CAD Being The Lowest<br><br>NO ETA ON WHEN IT GOES AWAY, COULD BE A WEEK OR MONTH OR MONTHS FROM NOW<br><br> [Click the preview button to see video of the effects]',        
         dateAdded: "9/26/2025",
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/discordicon%20(Custom).png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/discordiconorange.png",
         showCopyButton: false,
         showPreviewButton: true,
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/smaller%20%20cbr%20%20%20%202025-09-26%2012-09-25_1.mp4",
@@ -3005,7 +3678,7 @@ const PERMANENT_CODES = [
         code: "No Code",
         title: 'Twitch Drops 2 : Forsaken Chaos Legendary shotgun',
         description:'<a href="https://borderlands.2k.com/twitch-drops/" target="_blank">Read About It Here Or Via Info Below</a><br><br>September 11, 2025 - September 30, 2025<br><br>• Watch any Borderlands 4 Twitch livestream in the <a href="https://www.twitch.tv/directory/category/borderlands-4" target="_blank">Borderlands 4 category</a> for 2 hours and claim the reward',        
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/twitchicon%20(Custom).png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/twitchorange.png",
         showCopyButton: false,
         showPreviewButton: true,
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/BL4_ForsakenChaos.png",
@@ -3015,7 +3688,7 @@ const PERMANENT_CODES = [
         code: "No Code",
         title: 'Twitch Drops 3 : Midnight Defiance Legendary sniper rifle',
         description:'<a href="https://borderlands.2k.com/twitch-drops/" target="_blank">Read About It Here Or Via Info Below</a><br><br>September 11, 2025 - September 30, 2025<br><br>• Watch any Borderlands 4 Twitch livestream in the <a href="https://www.twitch.tv/directory/category/borderlands-4" target="_blank">Borderlands 4 category</a> hosted by a <a href="https://borderlands.2k.com/borderlands-4/partnered-creators/" target="_blank">partnered creator</a> for 2 hours and claim the reward',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/twitchicon%20(Custom).png",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/twitchorange.png",
         showCopyButton: false,
         showPreviewButton: true,
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/BL4_MidnightDefiance.png",
@@ -3049,49 +3722,66 @@ const BLACK_MARKET_VENDORS = [
         code: "Black Market Vendor",
         title: 'Maurices Black Market - Refreshes every Thursday at 12:00 PM EDT',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/MauricesBlackMarket.png",
-        description:'<b>Static Image Button</b> : <i>Is where he is</i><br><br><b>View Location (MAP)</b> : <i>It Shows few Spots He Can Be <br> <br> If Static Button Is Missing, Means Update Is Happening</i>',
+        description:'<b>Static Image Button</b> : <i>Is where he is</i><br>The Groaning Core POI in Carcadia District<br><b>View Location (MAP)</b> : <i>It Shows few Spots He Can Be <br> <br> If Static Button Is Missing, Means Update Is Happening</i>',
         showCopyButton: false,
         showPreviewButton: true,
         mapGenieLocation: "https://mapgenie.io/borderlands-4/maps/kairos?embed=light&catIds=13472",
-        staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bmvendorlocation/bl4bmvendor%20-%20Idolator%E2%80%99s%20Noose%20province%20in%20the%20Fadefields%20region.png",
-        staticImageCredit: 'Static Image From : <a href="https://mentalmars.com/borderlands-4/loot/black-market/" target="_blank">MentalMars (Check Them Out)</a>',
+        staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bmvendorlocation/bmvendor-TheGroaningCorePOI-in-CarcadiaDistrict.png",
+        staticImageCredit: 'Static Image Can Be From : <a href="https://mentalmars.com/borderlands-4/loot/black-market/" target="_blank">MentalMars (Check Them Out)</a>',
         type: 'weekly-vendor'
     },
     {
         code: "Weekly WildCard Mission",
-        title: 'Means Of Ascent : Weekly Wild Card - Refreshes every Thursday at 12:00 PM EDT',
+        title: 'Null And Void : Weekly Wild Card - Refreshes every Thursday at 12:00 PM EDT',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklymission.png",
-        description:'<b>Drop</b> : <i>Star Helix (Daedalus Assault Rifle)</i><br><br><b>Where To Go?</b> : <i>Start the mission via the conrner of the map via the button there, It will reload the map and can track an get to the mission.<br><br>PS : If any of the 3 buttons are missing, means still updating</i>', // <--- COMMA ADDED HERE
+        description:'<b>Drop</b> : <i>Phantom Flame (Jakobs Pistol)</i><br><br><b>Where To Go?</b> : <i>Start the mission via the conrner of the map via the button there, It will reload the map and can track an get to the mission.<br><br>PS : If any of the 3 buttons are missing, means still updating</i>', // <--- COMMA ADDED HERE
         showCopyButton: false,
         showPreviewButton: true,
-        loot: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyweapons/Star%20Helix%20-%20weapon.png",
-        infoUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyact/means%20of%20ascent%20-%20info%20card.png",
-        staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyact/means%20of%20ascent%20-%20location.png",
+        loot: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/Phantom%20Flame-Pistol.png",
+        infoUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyact/NullandVoidinfocard.png",
+        staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyact/NullandVoidmaplocation.png",
         staticImageCredit: 'Image Credit : Me,Others',
         type: 'weekly-vendor'
     },
     {
         code: "Weekly Big Encore Boss",
-        title: 'Driller Hole : Big Encore Boss - Refreshes every Thursday at 12:00 PM EDT',
+        title: 'Directive-0 : Big Encore Boss - Refreshes every Thursday at 12:00 PM EDT',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/BigEncoreBoss.png",
-        loot: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/oct2oct9thencoreloot.gif",
-        description:'<b>Drops</b> : <i>G.M.R assault rifle, Katagawas Revenge sniper, and Fuse grenade.</i> <br><br> <b>Location : </b><i>Tonnage Peel and lower section of that area <br><br>PS : No Info For Drops/Location Its Being Updated</i>', // <--- COMMA ADDED HERE
+                customButtons: {
+            "💰View All Loot (Gif)": "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/oct9-16th-encore-directive0-loot.gif",
+            "💰Bonnie And Clyde": "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/Bonnie%20And%20Clyde.png", // Replace with actual URL
+            "💰Rowan's Charge": "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/Rowans%20Charge.png",   // Replace with actual URL
+            "💰Whiskey Foxtrot": "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/Whiskey%20Foxtrot.png" // Replace with actual URL
+        },
+        description:'<b>Drops</b> : <i>Bonnie And Clyde (AR), Rowans Charge (AR), Whiskyey Foxtrot (AR)</i> <br><br> <b>Location : </b><i>Ironwall Resolve Bunker (Terminus District Dominion)<br><br>PS : No Info For Drops/Location Its Being Updated</i>', // <--- COMMA ADDED HERE
         showCopyButton: false,
         showPreviewButton: true,
-        staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyact/Driller%20Hole%20-%20Encore%20location.png",
+        staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyact/Directive-0---encore-location.png",
         staticImageCredit: '<b>TIP :</b> <i>If you dont see the skull with hat icon, just means you have not done anything around there... use image button an go to around that area :)</i> <br> <b>Image Credit : </b><i>Me,Others</i>',
         type: 'weekly-vendor'
     }
     // You can add more vendor objects here, separated by commas
 ];
 
+const POLL_CONFIG = {
+    isEnabled: false // Set to true (1) to show the poll button, false (0) to hide it
+};
+
 const ROADMAP_CONFIG = {
-    imageUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/roadmap.png", // <--- CHANGE THIS TO YOUR ACTUAL ROADMAP IMAGE URL
+    imageUrl: "https://i.postimg.cc/PqwXK6rS/screenshot-35.png", // <--- CHANGE THIS TO YOUR ACTUAL ROADMAP IMAGE URL
 };
 
 const EVENTS_CONFIG = {
-    imageUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyeventchal/oct3oct5chal.png", // <-- PASTE YOUR EVENT IMAGE URL HERE
-    buttonText: "🎉 VIEW CURRENT EVENT/CHALLENGE 📅<br>Oct3/Oct5" // <-- EDIT THE BUTTON TEXT HERE
+    imageUrl: "https://i.postimg.cc/hGCNCNB4/screenshot-35.png", // <-- PASTE YOUR EVENT IMAGE URL HERE
+    buttonText: "🎉 IT'S VEXIN' TIME 📅<br>CURRENT CHALLENGE<br>Oct10/Oct13" // <-- EDIT THE BUTTON TEXT HERE
+};
+
+// --- ADD THIS NEW CONFIGURATION OBJECT ---
+const COMMUNITY_CHALLENGE_CONFIG = {
+    isEnabled: true, // Set to true to show the button, false to hide it
+    buttonText: "🏆 Horrors of Kairos 🏆<br><small>Seasonal Mini-Event | Oct 23 - Nov 6</small>",
+    imageUrl: "https://i.postimg.cc/0QdYjZvh/screenshot-35.png", // The image inside the dropdown
+    descriptionText: "<b>Key Takeaways :</b><br>● The Horrors of Kairos Seasonal Mini-Event takes place from October 23 to November 6, 2025<br>● Blood rains down during World Boss Encounters (Rifts)<br>● World Boss Reward Chests can contain new Legendaries<br><br><b>Horrors of Kairos Loot : </b><br>Murmur <i>Tediore Assault Rifle</i> | Executes weakened enemies with guaranteed crits on targets under 35% health.<br><br>Skully <i>Order Grenade</i> | This death-dealing grenade fires out projectiles as it seeks out the nearest target.<br><br>Gourd Your Loins <i>Pumpkin Head</i> | xxxx-shift-code-coming-soon-xxxx<br><br>Hex Appeal <i>Weapon Skin</i> | xxxx-shift-code-coming-soon-xxxx" // The text inside the dropdown
 };
 
 const BLACK_MARKET_EXTRA_CONFIG = {
@@ -3151,6 +3841,8 @@ function getFormattedDateAdded(codeData) {
             return nextRefresh;
         }
 
+// FINAL, BACKWARD-COMPATIBLE version of the function
+// FINAL, COMPLETE, AND CORRECT version of the function
 function createBlackMarketVendorBox(vendorData, index) {
     const nextRefresh = getNextVendorRefresh();
     const now = new Date();
@@ -3161,59 +3853,45 @@ function createBlackMarketVendorBox(vendorData, index) {
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
     
-const iconHtml = createIconHtml(vendorData.icon, false, 'blackmarket');
+    const iconHtml = createIconHtml(vendorData.icon, false, 'blackmarket');
     
     const uniqueId = vendorData.code.replace(/\s+/g, '-') + '-' + index;
     const isRedeemed = getRedemptionStatus(uniqueId);
     const redeemedClass = isRedeemed ? 'redeemed' : '';
 
-    // --- Logic for ALL optional buttons ---
-    let lootButtonHtml = '';
-    let infoButtonHtml = ''; // <--- NEW INFO BUTTON VARIABLE
-    let staticImageButtonHtml = '';
-    let mapGenieButtonHtml = '';
+    // --- Button Logic Starts Here ---
+    let dynamicButtonsHtml = '';
 
-    // LOOT Button logic (only show if vendorData.loot is a non-empty string)
-    if (vendorData.loot && vendorData.loot.trim() !== '') {
-        lootButtonHtml = `
-            <button class="bm-small-btn bm-loot-info-btn" onclick="openImagePreview('${vendorData.loot}')">
-                💰 View Loot
-            </button>
-        `;
+    // 1. Checks for the NEW customButtons object (Priority)
+    if (vendorData.customButtons) {
+        for (const buttonText in vendorData.customButtons) {
+            const url = vendorData.customButtons[buttonText];
+            dynamicButtonsHtml += `<button class="bm-small-btn bm-loot-info-btn" onclick="openImagePreview('${url}')">  ${buttonText}</button>`;
+        }
+    } 
+    // 2. Falls back to the OLD loot property if customButtons is not found
+    else if (vendorData.loot && vendorData.loot.trim() !== '') {
+        dynamicButtonsHtml = `<button class="bm-small-btn bm-loot-info-btn" onclick="openImagePreview('${vendorData.loot}')">💰 View Loot</button>`;
     }
 
-    // NEW: INFO Button logic (only show if vendorData.infoUrl is a non-empty string)
+    // --- THIS IS THE CORRECTED PART THAT WAS MISSING ---
+    // It now correctly creates the other buttons without placeholder comments.
+    let infoButtonHtml = '';
     if (vendorData.infoUrl && vendorData.infoUrl.trim() !== '') {
-        infoButtonHtml = `
-            <button class="bm-small-btn bm-loot-info-btn" onclick="openImagePreview('${vendorData.infoUrl}')">
-                📰 View Info
-            </button>
-        `;
+        infoButtonHtml = `<button class="bm-small-btn bm-loot-info-btn" onclick="openImagePreview('${vendorData.infoUrl}')">📰 View Info</button>`;
     }
-    // END NEW LOGIC
-
+    let staticImageButtonHtml = '';
     if (vendorData.staticImageLocation) {
-        staticImageButtonHtml = `
-            <button class="bm-small-btn bm-static-image-btn" onclick="openImagePreview('${vendorData.staticImageLocation}')">
-                📍 View Location (STATIC)
-            </button>
-        `;
+        staticImageButtonHtml = `<button class="bm-small-btn bm-static-image-btn" onclick="openImagePreview('${vendorData.staticImageLocation}')">📍 View Location (STATIC)</button>`;
     }
-
+    let mapGenieButtonHtml = '';
     if (vendorData.mapGenieLocation) {
-        mapGenieButtonHtml = `
-            <button class="bm-small-btn bm-mapgenie-btn" onclick="openImagePreview('${vendorData.mapGenieLocation}')">
-                📍 View Location (MAP)
-            </button>
-        `;
+        mapGenieButtonHtml = `<button class="bm-small-btn bm-mapgenie-btn" onclick="openImagePreview('${vendorData.mapGenieLocation}')">🗺️ View Location (MAP)</button>`;
     }
+    // --- END OF THE CORRECTION ---
     
-    let descriptionHtml = '';
-    if (vendorData.description) {
-        descriptionHtml = `<div class="code-description">${vendorData.description}</div>`;
-    }
+    let descriptionHtml = vendorData.description ? `<div class="code-description">${vendorData.description}</div>` : '';
 
-    // --- HTML STRUCTURE UPDATED BELOW ---
     return `
         <div class="black-market-code-box ${redeemedClass}" id="black-market-vendor-${index}">
             <div class="code-header">
@@ -3223,7 +3901,6 @@ const iconHtml = createIconHtml(vendorData.icon, false, 'blackmarket');
             
             <div class="code-text">${vendorData.code}</div>
             
-            <!-- Description is now here, after the title and code -->
             ${descriptionHtml}
             
             <div class="expire-date">Next refresh: ${formatDate(nextRefresh)}</div>
@@ -3231,8 +3908,8 @@ const iconHtml = createIconHtml(vendorData.icon, false, 'blackmarket');
             ${vendorData.staticImageCredit ? `<div class="black-market-credit">${vendorData.staticImageCredit}</div>` : ''}
             <div class="code-footer">
                 <div class="black-market-buttons-group">
-                    ${lootButtonHtml}
-                    ${infoButtonHtml}  <!-- <--- INSERTED NEW INFO BUTTON HERE -->
+                    ${dynamicButtonsHtml}
+                    ${infoButtonHtml}
                     ${staticImageButtonHtml}
                     ${mapGenieButtonHtml}
                 </div>
@@ -3258,36 +3935,6 @@ function updateVendorTimer() {
         const now = new Date();
         const timeLeft = nextRefresh.getTime() - now.getTime();
 
-        // Handle case where refresh just occurred
-        if (timeLeft <= 0) {
-            try {
-                // 1. Get the existing redemption data object from localStorage
-                const redeemedCodes = JSON.parse(localStorage.getItem('shiftRedeemedCodes')) || {};
-
-                // 2. Loop through the BLACK_MARKET_VENDORS config to find the keys that need to be deleted
-                BLACK_MARKET_VENDORS.forEach((vendorData, index) => {
-                    // 3. Recreate the unique ID used as the key, e.g., "Black-Market-Vendor-0"
-                    const uniqueId = vendorData.code.replace(/\s+/g, '-') + '-' + index;
-                    
-                    // 4. If that key exists in our redemption object, delete it
-                    if (redeemedCodes.hasOwnProperty(uniqueId)) {
-                        delete redeemedCodes[uniqueId];
-                    }
-                });
-
-                // 5. Save the modified object (with the vendor keys removed) back to localStorage
-                localStorage.setItem('shiftRedeemedCodes', JSON.stringify(redeemedCodes));
-
-                console.log("Black Market Vendor refreshed and redemption statuses cleared. Reloading page...");
-            } catch (e) {
-                console.error("Error clearing Black Market redemption statuses:", e);
-            } finally {
-                // 6. Reload the page to show the new vendor data and unchecked boxes
-                location.reload();
-            }
-            return; // Stop further execution as the page will reload
-        }
-        
         const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
         const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -3380,15 +4027,29 @@ function openEventsImage() {
 }
 
 
-        function setupOptionalButtons() {
-            const eventsButton = document.getElementById('events-btn');
-            // Check if the imageUrl is not null and not an empty string
-            if (EVENTS_CONFIG.imageUrl && EVENTS_CONFIG.imageUrl.trim() !== "") {
-                // If we have a URL, set the button text and make it visible
-                eventsButton.innerHTML = EVENTS_CONFIG.buttonText;
-                eventsButton.classList.remove('hidden');
-            }
-        }
+function setupOptionalButtons() {
+    const eventsButton = document.getElementById('events-btn');
+    const challengeButton = document.getElementById('challenge-btn'); // Get the new button
+    const challengeImage = document.getElementById('challenge-image');
+    const challengeDescription = document.getElementById('challenge-description');
+
+    // --- Logic for the original Events Button (unchanged) ---
+    if (EVENTS_CONFIG.imageUrl && EVENTS_CONFIG.imageUrl.trim() !== "") {
+        eventsButton.innerHTML = EVENTS_CONFIG.buttonText;
+        eventsButton.classList.remove('hidden');
+    }
+
+    // --- NEW LOGIC FOR THE COMMUNITY CHALLENGE BUTTON ---
+    if (COMMUNITY_CHALLENGE_CONFIG.isEnabled) {
+        // Set the button's text
+        challengeButton.innerHTML = COMMUNITY_CHALLENGE_CONFIG.buttonText;
+        // Set the content inside the dropdown
+        challengeImage.src = COMMUNITY_CHALLENGE_CONFIG.imageUrl;
+        challengeDescription.innerHTML = COMMUNITY_CHALLENGE_CONFIG.descriptionText;
+        // Make the button visible
+        challengeButton.classList.remove('hidden');
+    }
+}
 
 
         function showPreviewFallback(url) {
@@ -3427,20 +4088,26 @@ function closeImagePreview() {
             }
         });
 
-        function toggleInfo(sectionId) {
-            const section = document.getElementById(sectionId);
-            section.classList.toggle('show');
-        }
+function toggleInfo(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.classList.toggle('show');
+    // Save the new state
+    saveSectionState(sectionId, section.classList.contains('show'));
+}
 
-        function toggleExpired() {
-            const expiredSection = document.getElementById('expired-section');
-            expiredSection.classList.toggle('show');
-        }
+function toggleExpired() {
+    const expiredSection = document.getElementById('expired-section');
+    expiredSection.classList.toggle('show');
+    // Save the new state
+    saveSectionState('expired-section', expiredSection.classList.contains('show'));
+}
 
-        function togglePermanent() {
-            const permanentSection = document.getElementById('permanent-section');
-            permanentSection.classList.toggle('show');
-        }
+function togglePermanent() {
+    const permanentSection = document.getElementById('permanent-section');
+    permanentSection.classList.toggle('show');
+    // Save the new state
+    saveSectionState('permanent-section', permanentSection.classList.contains('show'));
+}
 
         function copyToClipboard(text, index, type) {
             navigator.clipboard.writeText(text).then(() => {
@@ -3467,7 +4134,9 @@ function closeImagePreview() {
                     }, 2000);
                 }
             });
-        }
+    // ADD THIS LINE AT THE END
+    setLastCopied(text);
+}
 
         function saveRedemptionStatus(code, isRedeemed) {
             try {
@@ -3717,7 +4386,7 @@ function createPermanentCodeBox(codeData, index) {
             let previewButtonHtml = ''; if (hasPreviewButton && codeData.imagePreview) { previewButtonHtml = `<button class="prempreview-btn" onclick="openImagePreview('${codeData.imagePreview}')">📷 PREVIEW</button>`; }
             
             return `
-                <div class="permanent-code-box clearfix ${redeemedClass}" id="permanent-${index}">
+                <div class="permanent-code-box clearfix ${redeemedClass}" id="permanent-${index}" data-code-id="${codeData.code}">
                     <div class="permanent-code-header">${iconHtml}<div class="permanent-code-text">${codeData.code}</div></div>
                     ${dateAddedHtml}
                     <div class="permanent-title-container">${codeData.title}</div>
@@ -3759,7 +4428,7 @@ const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
             let previewButtonHtml = ''; if (hasPreviewButton && codeData.imagePreview) { previewButtonHtml = `<button class="activepreview-btn" onclick="openImagePreview('${codeData.imagePreview}')">📷 PREVIEW</button>`; }
             
             return `
-                <div class="code-box ${redeemedClass}" id="active-${index}">
+                <div class="code-box ${redeemedClass}" id="active-${index}" data-code-id="${codeData.code}">
                     <div class="code-header">${iconHtml}<div class="title-container">${codeData.title}</div></div>
                     ${dateAddedHtml}
                     ${descriptionHtml}
@@ -3815,7 +4484,7 @@ const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
             }
 
             return `
-                <div class="expired-code-box ${redeemedClass}" id="expired-${index}">
+                <div class="expired-code-box ${redeemedClass}" id="expired-${index}" data-code-id="${codeData.code}">
                     <div class="code-header">
                         ${iconHtml}
                         <div class="title-container">${codeData.title}</div>
@@ -3979,6 +4648,12 @@ code.code + (code.expires ? (new Date(code.expires).getTime() || '') : '') + (co
         }
 
 function initializePage() {
+        // === ADD THIS BLOCK AT THE TOP OF THE FUNCTION ===
+    const pollButton = document.getElementById('openPollBtn');
+    if (pollButton && !POLL_CONFIG.isEnabled) {
+        pollButton.classList.add('hidden');
+    }
+    // 
     const permanentContainer = document.getElementById('permanent-codes-container');
     const activeContainer = document.getElementById('active-codes-container');
     const expiredContainer = document.getElementById('expired-codes-container');
@@ -4033,20 +4708,38 @@ function initializePage() {
         setupOptionalButtons();
     
     updateCountdowns(); // Initial call
+// ... (rest of the function) ...
     setInterval(updateCountdowns, 1000); 
-    // The separate updateVendorTimer is already running from its own setInterval, which is fine.
-
     applyDisplayPreferences();
+    applySavedSectionStates();
+        applyLastCopiedState();
 }
 
   let scrollYPosition = 0; // Defining this globally for the lock function
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Run version check, if codes changed, page will reload.
-            if (!checkCodesVersion()) {
-                initializePage(); // THIS IS THE FUNCTION THAT DRAWS YOUR CODES
-            }
-    // ... (your existing code like checkCodesVersion)
+document.addEventListener('DOMContentLoaded', () => {
+    // --- THIS IS THE NEW, ROBUST RESET LOGIC ---
+    try {
+        const nextRefreshTimestamp = getNextVendorRefresh().getTime();
+        const lastKnownRefresh = localStorage.getItem('lastKnownRefresh');
+
+        // If the upcoming refresh time is different from the last one we saved,
+        // it means a weekly reset has happened since the last visit.
+        if (lastKnownRefresh !== nextRefreshTimestamp.toString()) {
+            clearBlackMarketStatusOnReset();
+            // After cleaning up, save the new upcoming refresh time so we don't clean up again until the *next* reset.
+            localStorage.setItem('lastKnownRefresh', nextRefreshTimestamp);
+            console.log(`New refresh time set for: ${new Date(nextRefreshTimestamp)}`);
+        }
+    } catch (e) {
+        console.error("Error in weekly reset detection logic:", e);
+    }
+    // --- END OF NEW LOGIC ---
+
+    // The rest of the function remains the same
+    if (!checkCodesVersion()) {
+        initializePage();
+    }
 
     // Connect the buttons to the NEW Panzoom control functions
             const zoomInButton = document.getElementById('zoom-in-btn');
@@ -4119,7 +4812,30 @@ function initializePage() {
             applyDisplayPreferences(); // Re-apply all preferences immediately
         }
         // -- END NEW FUNCTIONS --
-
     </script>
+
+        <div class="poll-modal-overlay" id="pollModal">
+        <div class="poll-modal-content">
+            <button class="close-poll-btn" id="closePollBtn">&times;</button>
+            <div class="strawpoll-embed" id="strawpoll_kjn1Ddk30yQ">
+                <iframe title="StrawPoll Embed" id="strawpoll_iframe_kjn1Ddk30yQ" src="https://strawpoll.com/embed/kjn1Ddk30yQ?theme=dark" frameborder="0" allowfullscreen allowtransparency></iframe>
+                <script async src="https://cdn.strawpoll.com/dist/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </div>
+        <!-- feedback ish remove this line/next and third -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
+            <!-- feedback ish remove this line/next and third -->
+<!-- START: New Ko-fi Modal -->
+<div id="kofi-modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeKofiModal()">&times;</button>
+        <div id="kofi-iframe-container">
+            <!-- The iframe will be inserted here by JavaScript -->
+        </div>
+    </div>
+</div>
+<!-- END: New Ko-fi Modal -->
+
 </body>
 </html>
