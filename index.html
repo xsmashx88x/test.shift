@@ -3396,33 +3396,39 @@ iframe#kofi-chat-widget { display: none !important; }
     <script>
 let globallyReportedCodes = new Set();
 
-/// ADD THIS ENTIRE FUNCTION TO YOUR SCRIPT
+// REPLACE your old fetch and DOMContentLoaded functions with this SINGLE block.
+
+// This is the unbreakable sequence that starts your application.
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("--- Starting Application ---");
+
+    // This is a classic promise chain. It is guaranteed to run in the correct order.
+    fetchGloballyReportedCodes().then(() => {
+        // This code inside .then() will ONLY run after fetchGloballyReportedCodes is 100% complete.
+        // The race condition is now impossible.
+        console.log("--- Fetch complete. Building page now... ---");
+        initializePage();
+        
+        // Setup all other non-critical event listeners
+        setupEventListeners();
+    });
+});
+
 async function fetchGloballyReportedCodes() {
     try {
         const gistUrl = "https://gist.githubusercontent.com/xsmashx88x/f5888f3144b2af9c62db71583cc0ce85/raw/b3c397278209d8353550e867b2e6cf6d7e0c14c0/reported_codes.txt";
         const response = await fetch(`${gistUrl}?v=${new Date().getTime()}`);
         if (response.ok) {
             const text = await response.text();
+            // This is a more robust way to handle different line endings and whitespace
             const codes = text.split(/\r?\n/).map(code => code.trim()).filter(Boolean);
             globallyReportedCodes = new Set(codes);
+            console.log("--- Successfully loaded global list:", globallyReportedCodes);
         }
     } catch (error) {
-        console.error('Could not fetch Gist:', error);
+        console.error('--- ERROR: Could not fetch the global reported codes list:', error);
     }
 }
-
-// REPLACE your old 'DOMContentLoaded' block with this FINAL version
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Await the fetch. This forces the script to wait.
-    await fetchGloballyReportedCodes();
-
-    // 2. Only after the fetch is done, build the page.
-    initializePage();
-
-    // 3. Setup all other event listeners.
-    setupEventListeners();
-});
 
 // ADD THIS ENTIRE NEW FUNCTION TO YOUR SCRIPT
 
@@ -4958,13 +4964,13 @@ function createActiveCodeBox(codeData, index) {
     // ... (rest of expiration logic is unchanged, so I've shortened it for clarity) ...
     if (codeData.expires === "UED") { expirationDetailsHtml = `<div class="expire-date">Expires: Unknown</div>`; } else if (codeData.expires) { let expiresDate; try { expiresDate = new Date(codeData.expires); if (!isNaN(expiresDate.getTime())) { const timeLeft = expiresDate.getTime() - new Date().getTime(); if (timeLeft > 0) { const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24)); const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); expirationDetailsHtml = `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div><div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`; } } } catch (e) { console.error("Error parsing expires date:", e); } } else { expirationDetailsHtml = `<div class="expire-date">Expires: Never (Permanent Code)</div>`; }
     
-    // --- START: REPLACE THIS LOGIC BLOCK ---
+    // --- FINAL REPORT BUTTON LOGIC ---
     let reportButtonHtml = '';
     if (codeData.showReportButton !== false) {
         
         const codeToCheck = codeData.code.trim();
         
-        // THIS IS THE FIX: It now reads directly from the global variable
+        // THIS IS THE FIX: It now reads directly from the global variable,
         // which is guaranteed to be ready before this function runs.
         const isGloballyReported = globallyReportedCodes.has(codeToCheck);
         
@@ -4979,7 +4985,7 @@ function createActiveCodeBox(codeData, index) {
             }
         }
     }
-    // --- END: REPLACE THIS LOGIC BLOCK ---
+    // --- END: FINAL REPORT BUTTON LOGIC ---
 
     let copyButtonHtml = ''; if (hasCopyButton) { copyButtonHtml = `<button class="small-copy-btn" onclick="copyToClipboard('${codeData.code}', ${index}, 'active')">COPY</button>`; }
     let previewButtonHtml = ''; if (hasPreviewButton && codeData.imagePreview) { previewButtonHtml = `<button class="activepreview-btn" onclick="openImagePreview('${codeData.imagePreview}')">📷 PREVIEW</button>`; }
