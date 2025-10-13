@@ -3399,19 +3399,26 @@ let globallyReportedCodes = new Set();
 /// ADD THIS ENTIRE FUNCTION TO YOUR SCRIPT
 async function fetchGloballyReportedCodes() {
     try {
+        console.log('🔄 Fetching global reported codes...');
         const gistUrl = "https://gist.githubusercontent.com/xsmashx88x/f5888f3144b2af9c62db71583cc0ce85/raw/b3c397278209d8353550e867b2e6cf6d7e0c14c0/reported_codes.txt";
         const response = await fetch(`${gistUrl}?v=${new Date().getTime()}`);
+        
         if (response.ok) {
             const text = await response.text();
-            const codes = text.split(/\r?\n/).map(code => code.trim()).filter(Boolean);
+            console.log('📄 Raw Gist content:', text);
+            
+            const codes = text.split(/\r?\n/)
+                .map(code => code.trim())
+                .filter(code => code.length > 0);
+            
             globallyReportedCodes = new Set(codes);
-            console.log('Loaded globally reported codes:', Array.from(globallyReportedCodes));
+            console.log('✅ Loaded global codes:', Array.from(globallyReportedCodes));
         } else {
-            console.warn('Failed to fetch Gist, using empty set');
+            console.warn('❌ Failed to fetch Gist');
             globallyReportedCodes = new Set();
         }
     } catch (error) {
-        console.error('Could not fetch Gist:', error);
+        console.error('💥 Gist fetch error:', error);
         globallyReportedCodes = new Set();
     }
 }
@@ -3420,21 +3427,17 @@ async function fetchGloballyReportedCodes() {
 
 // REPLACE your current DOMContentLoaded with this:
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('Starting page initialization...');
+    console.log('🚀 Starting initialization...');
     
-    // 1. FIRST load the global reported codes
+    // 1. Load global reported codes FIRST
     await fetchGloballyReportedCodes();
-    console.log('Global codes loaded, count:', globallyReportedCodes.size);
-
-    // 2. THEN initialize the page
+    
+    // 2. Initialize page
     if (!checkCodesVersion()) {
         initializePage();
     }
-
-    // 3. Set up other event listeners
-    setupEventListeners();
     
-    console.log('Page initialization complete');
+    setupEventListeners();
 });
 
 // Add this function if you don't have it:
