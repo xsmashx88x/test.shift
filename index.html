@@ -3485,18 +3485,92 @@ function getReportedStatus(code) {
 const GIST_ID = 'f5888f3144b2af9c62db71583cc0ce85';
 const GIST_FILENAME = 'reported_codes.txt';
 
-// Read from Gist (no token needed for public Gists)
+// Read reported keys from Gist
 async function getReportedKeys() {
     try {
         const response = await fetch(`https://api.github.com/gists/${GIST_ID}`);
         const gistData = await response.json();
         const content = gistData.files[GIST_FILENAME].content;
-        
-        // Parse your current text format
         return parseKeysFromText(content);
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error reading from Gist:', error);
         return {};
+    }
+}
+
+// In your cloud function (using environment variables for tokens)
+export async function handler(request) {
+    if (request.method !== 'POST') {
+        return new Response('Method not allowed', { status: 405 });
+    }
+    
+    const { action, key, expires, reported_at } = await request.json();
+    
+    if (action === 'report_key') {
+        // Validate the key format
+        if (!isValidKey(key)) {
+            return new Response(JSON.stringify({ success: false, error: 'Invalid key' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+        
+        // Update the Gist securely (server-side)
+        const success = await updateGistWithKey(key, expires, reported_at);
+        
+        return new Response(JSON.stringify({ success: success }), {
+            status: success ? 200 : 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+    
+    return new Response(JSON.stringify({ success: false, error: 'Unknown action' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
+
+// Secure server-side Gist update
+async function updateGistWithKey(key, expires, reported_at) {
+    const GIST_ID = process.env.GIST_ID;
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Safe in server environment
+    
+    try {
+        // Get current Gist content
+        const gistResponse = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'User-Agent': 'Key-Reporter'
+            }
+        });
+        
+        const gistData = await gistResponse.json();
+        let content = gistData.files['reported_codes.txt'].content;
+        
+        // Append the new key (or update to JSON format)
+        const updatedContent = content + `\n${key} - Reported: ${new Date().toLocaleString()}`;
+        
+        // Update Gist
+        const updateResponse = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json',
+                'User-Agent': 'Key-Reporter'
+            },
+            body: JSON.stringify({
+                files: {
+                    'reported_codes.txt': {
+                        content: updatedContent
+                    }
+                }
+            })
+        });
+        
+        return updateResponse.ok;
+    } catch (error) {
+        console.error('Server-side Gist update failed:', error);
+        return false;
     }
 }
 
