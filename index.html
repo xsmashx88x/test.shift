@@ -3399,16 +3399,17 @@ let globallyReportedCodes = new Set();
 // REPLACE your old fetch and DOMContentLoaded functions with this SINGLE block.
 
 // This is the unbreakable sequence that starts your application.
-ddocument.addEventListener('DOMContentLoaded', () => {
-    // This uses a classic promise chain. It is GUARANTEED to run in the correct order.
-    fetchGloballyReportedCodes().then(() => {
-        // This code inside .then() will ONLY run after fetchGloballyReportedCodes is 100% complete.
-        // The race condition is now impossible.
-        initializePage();
-        
-        // This sets up all your other non-critical event listeners AFTER the page is built.
-        setupEventListeners();
-    });
+// ADD THIS BLOCK AT THE VERY END OF YOUR SCRIPT
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Await the fetch. This forces the script to wait here.
+    await fetchGloballyReportedCodes();
+
+    // 2. Only after the fetch is done, build the page.
+    initializePage();
+
+    // 3. Setup all other event listeners.
+    setupEventListeners();
 });
 
 async function fetchGloballyReportedCodes() {
@@ -3465,13 +3466,15 @@ function setupEventListeners() {
     if (resetZoomButton) resetZoomButton.addEventListener('click', resetZoom);
     if (closePreviewButton) closePreviewButton.addEventListener('click', closeImagePreview);
 
-    // --- General click-outside-the-box listener ---
+    // --- Other Listeners ---
     document.addEventListener('click', function(event) {
         const isInsideCodeBox = event.target.closest('.code-box, .permanent-code-box, .expired-code-box, .black-market-code-box');
         if (!isInsideCodeBox) {
             clearLastCopied();
         }
     });
+
+    // Add any other general click listeners here
 }
 
 
@@ -3752,53 +3755,7 @@ function applySavedSectionStates() {
         console.error("Error applying saved section states:", e);
     }
 }
-// === END: NEW FUNCTIONS ===     
 
-
-// === START: POLL MODAL SCRIPT ===
-document.addEventListener('DOMContentLoaded', () => {
-    const pollModal = document.getElementById('pollModal');
-    const openPollBtn = document.getElementById('openPollBtn');
-    const closePollBtn = document.getElementById('closePollBtn');
-
-    // Function to open the modal
-    const openPoll = () => {
-        if (pollModal) pollModal.style.display = 'flex';
-    };
-
-    // Function to close the modal
-    const closePoll = () => {
-        if (pollModal) pollModal.style.display = 'none';
-    };
-
-    // Event Listeners
-    if (openPollBtn) openPollBtn.addEventListener('click', openPoll);
-    if (closePollBtn) closePollBtn.addEventListener('click', closePoll);
-
-    // Also close if the user clicks on the dark overlay
-    if (pollModal) {
-        pollModal.addEventListener('click', (event) => {
-            if (event.target === pollModal) {
-                closePoll();
-            }
-        });
-    }
-
-    // ==========================================================
-    // === PASTE THE NEW CLICK LISTENER CODE BLOCK RIGHT HERE ===
-    // ==========================================================
-    document.addEventListener('click', function(event) {
-        // Check if the thing that was clicked is INSIDE a code box of any type.
-        const isInsideCodeBox = event.target.closest('.code-box, .permanent-code-box, .expired-code-box, .black-market-code-box');
-
-        // If the click was NOT inside a code box, clear the highlight.
-        if (!isInsideCodeBox) {
-            clearLastCopied();
-        }
-    });
-    // ==========================================================
-
-}); // <-- This is the final closing bracket for DOMContentLoaded
 
 // === END: POLL MODAL SCRIPT ===
 
@@ -3811,30 +3768,7 @@ function zoomIn() {
         panzoomInstance.zoomIn();
     }
 }
-// --- END: Image Preview Zoom ---
 
-// --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
-// START: FINAL SHARE BUTTON JAVASCRIPT - DELETE ALL PREVIOUS VERSIONS
-document.addEventListener('DOMContentLoaded', function() {
-    const shareButton = document.getElementById('final-share-button');
-    const shareMenu = document.getElementById('final-share-menu');
-
-    if (shareButton && shareMenu) {
-        // This runs ONLY when the share button is clicked
-        shareButton.addEventListener('click', function(event) {
-            event.stopPropagation(); // Stops the click from closing the menu instantly
-            shareMenu.classList.toggle('active'); // Shows or hides the menu
-        });
-
-        // This runs when you click anywhere else on the page
-        document.addEventListener('click', function() {
-            if (shareMenu.classList.contains('active')) {
-                shareMenu.classList.remove('active');
-            }
-        });
-    }
-});
-// END: FINAL SHARE BUTTON JAVASCRIPT
 
 // --- ADD THIS FUNCTION for the new floating panel refresh and thanks ---
 
@@ -5274,24 +5208,6 @@ function initializePage() {
 
   let scrollYPosition = 0; // Defining this globally for the lock function
 
-document.addEventListener('DOMContentLoaded', () => {
-    // --- THIS IS THE NEW, ROBUST RESET LOGIC ---
-    try {
-        const nextRefreshTimestamp = getNextVendorRefresh().getTime();
-        const lastKnownRefresh = localStorage.getItem('lastKnownRefresh');
-
-        // If the upcoming refresh time is different from the last one we saved,
-        // it means a weekly reset has happened since the last visit.
-        if (lastKnownRefresh !== nextRefreshTimestamp.toString()) {
-            clearBlackMarketStatusOnReset();
-            // After cleaning up, save the new upcoming refresh time so we don't clean up again until the *next* reset.
-            localStorage.setItem('lastKnownRefresh', nextRefreshTimestamp);
-            console.log(`New refresh time set for: ${new Date(nextRefreshTimestamp)}`);
-        }
-    } catch (e) {
-        console.error("Error in weekly reset detection logic:", e);
-    }
-    // --- END OF NEW LOGIC ---
 
     // The rest of the function remains the same
     if (!checkCodesVersion()) {
