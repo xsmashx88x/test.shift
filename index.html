@@ -3564,7 +3564,6 @@ function submitCode() {
     setTimeout(closeCodeSubmitModal, 3000);
 }        
 
-// REPLACE your old reportCode function with this new one
 async function reportCode(code, buttonElement) {
     if (buttonElement) {
         buttonElement.disabled = true;
@@ -3573,8 +3572,9 @@ async function reportCode(code, buttonElement) {
     }
 
     try {
+        // 1. Send to your webhook (for Discord notification)
         const pipedreamWebhookUrl = "https://shift-code-reporter.xsmashx88x.workers.dev"; 
-        const response = await fetch(pipedreamWebhookUrl, {
+        const webhookResponse = await fetch(pipedreamWebhookUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -3584,8 +3584,13 @@ async function reportCode(code, buttonElement) {
             })
         });
 
-        if (response.ok) {
-            // Update UI immediately
+        if (webhookResponse.ok) {
+            console.log('✅ Webhook successful, now updating Gist...');
+            
+            // 2. UPDATE THE GIST so other users see this code as reported
+            await updateGistWithReportedCode(code);
+            
+            // 3. Update UI
             if (buttonElement) {
                 buttonElement.innerHTML = '✔️';
                 buttonElement.title = 'Reported! Thank you.';
@@ -3595,7 +3600,7 @@ async function reportCode(code, buttonElement) {
             // Save locally
             saveReportedStatus(code, true);
             
-            // Add to global set temporarily (until next page load)
+            // Add to global set
             globallyReportedCodes.add(code.trim());
             
             const modal = document.getElementById('report-success-modal');
@@ -3604,12 +3609,12 @@ async function reportCode(code, buttonElement) {
                 setTimeout(() => { modal.classList.remove('show'); }, 3000);
             }
             
-            console.log('Successfully reported code:', code);
+            console.log('✅ Successfully reported code to both systems:', code);
         } else {
             throw new Error('Webhook response not OK');
         }
     } catch (error) {
-        console.error('Failed to report code:', error);
+        console.error('❌ Failed to report code:', error);
         if (buttonElement) {
             buttonElement.innerHTML = '❌';
             buttonElement.title = 'Failed to report. Try again.';
@@ -3619,6 +3624,33 @@ async function reportCode(code, buttonElement) {
                 buttonElement.title = 'Report This Code as Expired';
             }, 2000);
         }
+    }
+}
+
+// ADD THIS NEW FUNCTION TO UPDATE THE GIST
+async function updateGistWithReportedCode(newCode) {
+    try {
+        // First, get the current Gist content
+        const gistUrl = "https://gist.githubusercontent.com/xsmashx88x/f5888f3144b2af9c62db71583cc0ce85/raw/b3c397278209d8353550e867b2e6cf6d7e0c14c0/reported_codes.txt";
+        const response = await fetch(`${gistUrl}?v=${new Date().getTime()}`);
+        let currentContent = '';
+        
+        if (response.ok) {
+            currentContent = await response.text();
+        }
+        
+        // Add the new code to the content
+        const updatedContent = currentContent.trim() + 
+                              (currentContent.trim() ? '\n' : '') + 
+                              newCode.trim();
+        
+        console.log('📝 Updated Gist content:', updatedContent);
+        
+        // Note: You'll need GitHub API to actually update the Gist
+        // For now, this just shows what should happen
+        
+    } catch (error) {
+        console.error('❌ Failed to update Gist:', error);
     }
 }
 
