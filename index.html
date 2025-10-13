@@ -3414,15 +3414,66 @@ async function fetchGloballyReportedCodes() {
 // REPLACE your old 'DOMContentLoaded' block with this FINAL version
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. This "await" FORCES the script to wait here until the Gist is downloaded.
+    // 1. Await the fetch. This forces the script to wait.
     await fetchGloballyReportedCodes();
 
-    // 2. Only AFTER the download is finished, this will run, building your page.
+    // 2. Only after the fetch is done, build the page.
     initializePage();
 
-    // 3. All your other startup logic and event listeners are safe.
-    setupEventListeners(); // Assuming you have a function for other listeners
+    // 3. Setup all other event listeners.
+    setupEventListeners();
 });
+
+// ADD THIS ENTIRE NEW FUNCTION TO YOUR SCRIPT
+
+function setupEventListeners() {
+    // --- Poll Button Logic ---
+    const pollButton = document.getElementById('openPollBtn');
+    if (pollButton && POLL_CONFIG && !POLL_CONFIG.isEnabled) {
+        pollButton.classList.add('hidden');
+    }
+    const pollModal = document.getElementById('pollModal');
+    const openPollBtn = document.getElementById('openPollBtn');
+    const closePollBtn = document.getElementById('closePollBtn');
+    if (openPollBtn) openPollBtn.addEventListener('click', () => { if (pollModal) pollModal.style.display = 'flex'; });
+    if (closePollBtn) closePollBtn.addEventListener('click', () => { if (pollModal) pollModal.style.display = 'none'; });
+    if (pollModal) {
+        pollModal.addEventListener('click', (event) => { if (event.target === pollModal) pollModal.style.display = 'none'; });
+    }
+
+    // --- Share Button Logic ---
+    const shareButton = document.getElementById('final-share-button');
+    const shareMenu = document.getElementById('final-share-menu');
+    if (shareButton && shareMenu) {
+        shareButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+            shareMenu.classList.toggle('active');
+        });
+        document.addEventListener('click', function() {
+            if (shareMenu.classList.contains('active')) {
+                shareMenu.classList.remove('active');
+            }
+        });
+    }
+    
+    // --- Image Preview Zoom Button Logic ---
+    const zoomInButton = document.getElementById('zoom-in-btn');
+    const zoomOutButton = document.getElementById('zoom-out-btn');
+    const resetZoomButton = document.getElementById('reset-zoom-btn');
+    const closePreviewButton = document.getElementById('close-preview-btn');
+    if (zoomInButton) zoomInButton.addEventListener('click', zoomIn);
+    if (zoomOutButton) zoomOutButton.addEventListener('click', zoomOut);
+    if (resetZoomButton) resetZoomButton.addEventListener('click', resetZoom);
+    if (closePreviewButton) closePreviewButton.addEventListener('click', closeImagePreview);
+
+    // --- General click-outside-the-box listener ---
+    document.addEventListener('click', function(event) {
+        const isInsideCodeBox = event.target.closest('.code-box, .permanent-code-box, .expired-code-box, .black-market-code-box');
+        if (!isInsideCodeBox) {
+            clearLastCopied();
+        }
+    });
+}
 
 
 // ADD THESE TWO FUNCTIONS BACK
