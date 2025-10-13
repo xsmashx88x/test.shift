@@ -1777,7 +1777,7 @@ margin: 10px auto;
 .events-button {
     background: linear-gradient(to bottom, #f01a11, #fe9f17); /* SeaGreen gradient */
     color: white;
-    padding: 10px 35px;
+    padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
@@ -2437,9 +2437,8 @@ body.modal-open .floating-share-container { /* ...and the Share button container
         padding: 15px;
     }
     .floating-info-panel {
-        width: 90%;
+        width: calc(100%);
     }
-
     /* --- 2. Typography for Smaller Screens --- */
     h1, h2, h3 {
         font-size: 12px;
@@ -2567,7 +2566,39 @@ body.modal-open .floating-share-container { /* ...and the Share button container
     background: linear-gradient(to bottom, #4B0082, #24003F);
     border: 2px solid #BF40BF;
 }
-/* END: NEW COMMUNITY CHALLENGE STYLES */```
+/* END: NEW COMMUNITY CHALLENGE STYLES */
+/* EVENTS STYLES |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* START: FINAL & CORRECTED EVENTS DROPDOWN STYLE - REPLACE OLD VERSION */
+
+.events-content-unique {
+    /* FIX: New, richer Orange/Red theme to better match the button */
+    background: linear-gradient(to bottom, #611815, #5c3a0e) !important; 
+    border: 2px solid #fe9f17 !important; /* Bright orange border */
+    color: #f0f0f0 !important;
+
+    /* Base layout styles */
+    padding: 15px !important;
+    margin-top: 8px !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5) !important;
+}
+
+/* Styles for the content inside */
+.events-content-unique b {
+    color: #ffffff;
+    font-size: 1.1em;
+}
+.events-content-unique ul {
+    list-style-type: '• ';
+    padding-left: 20px;
+    color: #f0f0f0;
+}
+.events-content-unique img {
+    border: 2px solid #fe9f17; /* Match the main border */
+    border-radius: 4px;
+}
+
+/* END: FINAL & CORRECTED EVENTS DROPDOWN STYLE */
 
 
 /* START: COMPLETE & FINAL ACTION BUTTONS CSS - DELETE ALL PREVIOUS VERSIONS */
@@ -2604,8 +2635,20 @@ iframe#kofi-chat-widget { display: none !important; }
 /* Specific button colors */
 .action-buttons-container .share-fab { background: linear-gradient(to bottom, #1e8e3e, #166d2e) !important; color: #fff !important; }
 .action-buttons-container .floating-poll-btn { background-color: #8A2BE2 !important; color: white !important; border: 1px solid #DDA0DD !important; }
-.action-buttons-container .tally-button-wrapper { background: linear-gradient(to bottom, #0056A8, #003B75) !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
-.action-buttons-container .floating-tally-btn { all: unset; font: inherit; padding: 6px 14px; color: #fff !important; }
+.action-buttons-container .tally-button-wrapper {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: flex; /* This is crucial to make the inner button fill the space */
+    align-items: stretch; /* This is also crucial */
+}
+.action-buttons-container .floating-tally-btn {
+    background: linear-gradient(to bottom, #0056A8, #003B75) !important;
+    width: 100%; /* Make the button fill the invisible wrapper */
+    border-radius: 4px !important; /* Re-apply the border radius */
+    border: 1px solid #007BFF !important; /* Add a subtle border */
+}
 .action-buttons-container .kofi-button { background: linear-gradient(to bottom, #EBEBEB, #B7B7B7) !important; color: #434747 !important; }
 
 /* --- THE CRITICAL FIX FOR THE SHARE MENU --- */
@@ -2772,6 +2815,215 @@ iframe#kofi-chat-widget { display: none !important; }
 }
 /* END: FINAL MOBILE BUTTON BAR FIX */
 
+/* START: FINAL Style for the SQUARE Corner Report Button */
+
+.report-btn-corner {
+    /* Positioning */
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 5;
+
+    /* APPEARANCE - Black, SQUARE button */
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #7a2a2a;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px; /* Makes it a rounded square */
+    
+    /* Centering the icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* FIX: This nudges the emoji up to be perfectly centered */
+    padding-bottom: 2px; 
+    
+    /* Text and other styles */
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.report-btn-corner:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px #ff7a7a;
+}
+
+/* END: FINAL Style for the SQUARE Corner Report Button */
+
+/* START: Styles for the Custom Report Modal */
+.report-modal {
+    /* Initially hidden */
+    display: none;
+    opacity: 0;
+    
+    /* Positioning */
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10001; /* Highest z-index to be on top of everything */
+
+    /* Appearance */
+    background: linear-gradient(to bottom, #1e8e3e, #166d2e); /* Green theme */
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 6px;
+    border: 2px solid #34a853;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    
+    /* Text Style */
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+    
+    /* Smooth transition for fade in/out */
+    transition: opacity 0.5s ease-in-out;
+}
+
+.report-modal.show {
+    display: block;
+    opacity: 1;
+}
+/* END: Styles for the Custom Report Modal */
+
+
+/* Add this new CSS for the reported button state */
+.report-btn-corner.reported,
+.report-btn-corner:disabled {
+    background: rgba(42, 122, 59, 0.7) !important; /* Greenish background */
+    border-color: #7aff8d !important;
+    cursor: not-allowed;
+}
+
+.report-btn-corner.reported:hover,
+.report-btn-corner:disabled:hover {
+    transform: none; /* No zoom effect */
+    box-shadow: none; /* No glow */
+}
+
+/* Styles for the new main button group */
+.main-action-buttons {
+    display: flex;
+    flex-direction: column; /* Stacks the button rows vertically */
+    align-items: center;   /* Centers them horizontally */
+    gap: 10px;             /* Adds a nice space between the rows */
+    margin-bottom: 20px;   /* Adds space below the whole group */
+}
+
+.submit-code-btn {
+    margin-top: 8px; /* Adds a 15px space directly above ONLY this button */
+}
+
+/* Remove old margins to prevent double-spacing */
+.main-action-buttons .submit-code-btn {
+    margin-top: 25px; /* Adds a 15px space above the submit button */
+}
+
+
+/* START: Styles for Code Submission Feature */
+
+/* The main button to open the modal */
+.submit-code-btn {
+    background: linear-gradient(to bottom, #ff7c00, #e56a00);
+    border: 1px solid #ffc600;
+    color: #fff;
+    padding: 4px 10px; /* Small padding for a small button */
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 11px; /* This makes the text very small */
+    text-transform: uppercase;
+    font-family: 'Chakra Petch', sans-serif;
+    text-shadow: 1px 1px 0 #000;
+    transition: all 0.2s;
+}
+.submit-code-btn:hover {
+    background: linear-gradient(to bottom, #ff8c00, #ff6a00);
+    transform: scale(1.05);
+    box-shadow: 0 0 6px #ffc600;
+}
+
+/* The pop-up form styles */
+.submit-modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+.submit-modal-content {
+    background: #1f1f1f;
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid #ffc600;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    font-family: 'Chakra Petch', sans-serif;
+}
+.submit-modal-content h3 {
+    color: #ffc600;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.close-submit-modal {
+    position: absolute; top: -15px; right: -15px;
+    background: #ff4444; color: white; border: none;
+    border-radius: 50%; width: 30px; height: 30px;
+    font-size: 20px; cursor: pointer; font-weight: bold;
+}
+
+/* Form element styles */
+.form-group {
+    margin: 15px 0;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+    font-size: 14px;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Chakra Petch', sans-serif;
+}
+.submit-action-btn {
+    background: #ff7c00; border: none; color: white;
+    padding: 12px 20px; border-radius: 4px; font-size: 16px;
+    font-weight: bold; cursor: pointer; width: 100%;
+    text-transform: uppercase; margin-top: 10px;
+}
+
+/* Message styles */
+#submit-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    display: none; /* Hidden by default */
+    font-weight: bold;
+}
+.submit-error {
+    background: #5c1f1f; color: #ffaaaa; border: 1px solid #ff7a7a;
+}
+.submit-success {
+    background: #166d2e; color: #a3ffb5; border: 1px solid #34a853;
+}
+
+/* END: Styles for Code Submission Feature */
+
     </style>
 </head>
 <!-- REPLACE the existing image-preview-modal div with this one -->
@@ -2821,7 +3073,7 @@ iframe#kofi-chat-widget { display: none !important; }
     <div class="tally-button-wrapper">
         <button class="action-btn floating-tally-btn" data-tally-open="3j1glQ" data-tally-layout="modal" data-tally-width="750" 
         data-tally-height="600">
-            Feedback<br>Forum<br><small>Updated 10/12/2025</small>
+            Feedback<br>Forum<br><small>Updated 10/13/2025</small>
         </button>
     </div>
     <!-- This container is the key -->
@@ -2874,6 +3126,36 @@ iframe#kofi-chat-widget { display: none !important; }
         </div>
 
     </div>
+<!-- START: Custom Report Success Modal -->
+<div id="report-success-modal" class="report-modal">
+    <p>Reported! Thank you. : If its truly expired, Will remove it soon... It can glitch an work for others.</p>
+</div>
+<!-- END: Custom Report Success Modal -->
+
+<!-- START: Code Submission Modal -->
+<div id="submit-modal-overlay" class="submit-modal-overlay">
+    <div class="submit-modal-content">
+        <button class="close-submit-modal" onclick="closeCodeSubmitModal()">&times;</button>
+        <h3>Submit a SHiFT Code</h3>
+        <p>Found a code we're missing? Let us know!</p>
+        
+        <div class="form-group">
+            <label for="submit-description">What is the code for? (e.g., "1 Gold Key", "Vex Skin")</label>
+            <input type="text" id="submit-description" placeholder="Enter a brief description...">
+        </div>
+
+        <div class="form-group">
+            <label for="submit-code">SHiFT Code</label>
+            <input type="text" id="submit-code" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX">
+        </div>
+
+        <!-- This div will show success or error messages -->
+        <div id="submit-message"></div>
+
+        <button class="submit-action-btn" onclick="submitCode()">Submit to Admins</button>
+    </div>
+</div>
+<!-- END: Code Submission Modal -->
 
 <body>
 
@@ -2905,7 +3187,7 @@ iframe#kofi-chat-widget { display: none !important; }
 <div class="site-options-container">
     <h4 class="site-options-title" onclick="toggleOptionsContainer(this)">
         SITE OPTIONS & INFO
-        <small class="updated-subtitle">UPDATED 10/12/2025</small>
+        <small class="updated-subtitle">UPDATED 10/13/2025</small>
     </h4>
     
     <div class="slide-down-content">
@@ -2916,7 +3198,7 @@ iframe#kofi-chat-widget { display: none !important; }
                 <button class="option-btn option-btn-faq" onclick="toggleOptionPanel('info-section')" id="infofaq-toggle-btn">❗INFO/FAQ❓<br><small>Updated 10/10/2025</small></button>
             </div>
             <div class="button-row">
-                <button class="option-btn option-btn-log" onclick="toggleOptionPanel('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️<br><small>Updated 10/12/2025</small></button>
+                <button class="option-btn option-btn-log" onclick="toggleOptionPanel('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️<br><small>Updated 10/13/2025</small></button>
                 <button class="option-btn option-btn-redeem" onclick="toggleOptionPanel('redeem-section')" id="redeem-toggle-btn">🖥️ HOW TO REDEEM ON CONSOLE 🎮</button>
             </div>
         </div>
@@ -2980,7 +3262,8 @@ iframe#kofi-chat-widget { display: none !important; }
                 <div class="info-content">
                     <p><strong>Change Log | Info On Changes/Updates/ An More</strong></p>
                     <ul>
-                        <li>🆕<b>10/12/2025:</b> Lil Fixs/Added : Lil Tweaks, UI Changes (moved floating buttons based on feedback)<br>sorry you gamers didnt see the check cause of the floating donate button</li>
+                        <li>🆕<b>10/13/2025:</b> Lil Fixs/Added : A report expired codes + submit codes button :  if its truly expired i will get an alert and will remove it as soon as i can</li>
+                        <li><b>10/12/2025:</b> Lil Fixs/Added : Lil Tweaks, UI Changes (moved floating buttons based on feedback)<br>sorry you gamers didnt see the check cause of the floating donate button</li>
                         <li><b>10/8/2025:</b> Lil Fixs/Added : Lil Tweaks, UI Changes</li>
                         <li><b>10/5/2025:</b> Lil Fixs/Added : Lil Tweaks, Added A Remember Copy Hightlight</li>
                         <li><b>10/4/2025:</b> Fixed/Added : Lil Tweaks, Added Chest/View Keys Button (links to pics)</li>
@@ -3030,7 +3313,13 @@ iframe#kofi-chat-widget { display: none !important; }
 </div>
 
         <button class="roadmap-button" onclick="openRoadmapImage()" id="roadmap-btn">🗺️ VIEW BL4 ROADMAP 🛣️</button>
-                <button class="events-button hidden" onclick="openEventsImage()" id="events-btn"></button>
+                <button class="events-button hidden" onclick="toggleInfo('events-section')" id="events-btn"></button>
+<div id="events-section" class="info-section events-content-unique">
+    <a href="javascript:void(0);" onclick="openImagePreview(EVENTS_CONFIG.imageUrl)">
+        <img id="events-image" src="" alt="Events Image" style="width: 100%; cursor: pointer;">
+    </a>
+    <p id="events-description" style="margin-top: 15px; line-height: 1.5; text-align: left;"></p>
+</div>
                         <button class="challenge-button hidden" onclick="toggleInfo('challenge-section')" id="challenge-btn"></button>
         <div id="challenge-section" class="info-section">
             <div class="info-content">
@@ -3042,6 +3331,8 @@ iframe#kofi-chat-widget { display: none !important; }
                 <p id="challenge-description" style="margin-top: 15px; color: #E6E6FA; line-height: 1.5;"></p>
             </div>
         </div>
+        <!-- ADD THIS NEW DIV for the events dropdown -->
+
         <!-- END OF NEW CODE -->
         <!-- END NEW ROADMAP BUTTON -->
 
@@ -3080,6 +3371,10 @@ iframe#kofi-chat-widget { display: none !important; }
             Find Gold Chest
         </button>
     </div>
+
+    <button class="submit-code-btn" onclick="openCodeSubmitModal()">📝 Submit a Code</button>
+</div>
+
 </h1>
         <div id="active-codes-container">
             <!-- Active codes will be inserted here by JavaScript -->
@@ -3097,7 +3392,162 @@ iframe#kofi-chat-widget { display: none !important; }
         </div>
     </div>
 
+
     <script>
+let globallyReportedCodes = new Set();
+
+/// ADD THIS ENTIRE FUNCTION TO YOUR SCRIPT
+async function fetchGloballyReportedCodes() {
+    try {
+        const gistUrl = "https://gist.githubusercontent.com/xsmashx88x/f5888f3144b2af9c62db71583cc0ce85/raw/b3c397278209d8353550e867b2e6cf6d7e0c14c0/reported_codes.txt";
+        const response = await fetch(`${gistUrl}?v=${new Date().getTime()}`);
+        if (response.ok) {
+            const text = await response.text();
+            const codes = text.split(/\r?\n/).map(code => code.trim()).filter(Boolean);
+            globallyReportedCodes = new Set(codes);
+        }
+    } catch (error) {
+        console.error('Could not fetch Gist:', error);
+    }
+}
+
+// REPLACE your old 'DOMContentLoaded' block with this FINAL version
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. This "await" FORCES the script to wait here until the Gist is downloaded.
+    await fetchGloballyReportedCodes();
+
+    // 2. Only AFTER the download is finished, this will run, building your page.
+    initializePage();
+
+    // 3. All your other startup logic and event listeners are safe.
+    setupEventListeners(); // Assuming you have a function for other listeners
+});
+
+
+// ADD THESE TWO FUNCTIONS BACK
+function saveReportedStatus(code, isReported) {
+    try {
+        const reportedCodes = JSON.parse(localStorage.getItem('shiftReportedCodes')) || {};
+        reportedCodes[code] = isReported;
+        localStorage.setItem('shiftReportedCodes', JSON.stringify(reportedCodes));
+    } catch (e) { console.error("Error saving reported status:", e); }
+}
+
+function getReportedStatus(code) {
+    try {
+        const reportedCodes = JSON.parse(localStorage.getItem('shiftReportedCodes')) || {};
+        return reportedCodes[code] || false;
+    } catch (e) { console.error("Error reading reported status:", e); return false; }
+}
+
+// ADD THESE THREE NEW FUNCTIONS to your main script tag
+
+// --- Function to open and reset the modal ---
+function openCodeSubmitModal() {
+    // Clear any old messages and input values
+    document.getElementById('submit-message').style.display = 'none';
+    document.getElementById('submit-description').value = '';
+    document.getElementById('submit-code').value = '';
+    
+    // Show the modal
+    document.getElementById('submit-modal-overlay').style.display = 'flex';
+}
+
+// --- Function to close the modal ---
+function closeCodeSubmitModal() {
+    document.getElementById('submit-modal-overlay').style.display = 'none';
+}
+
+// --- The main function to handle the submission ---
+function submitCode() {
+    // 1. Get the data from the form
+    const description = document.getElementById('submit-description').value;
+    const code = document.getElementById('submit-code').value;
+    const messageDiv = document.getElementById('submit-message');
+
+    // 2. Simple validation
+    if (!description || !code) {
+        messageDiv.textContent = 'Please fill out both fields.';
+        messageDiv.className = 'submit-error';
+        messageDiv.style.display = 'block';
+        return;
+    }
+
+    // 3. CHECK FOR DUPLICATES
+    const standardizedCode = code.trim().toUpperCase();
+    const allCodes = [...ALL_CODES_CONFIG, ...PERMANENT_CODES];
+    const isDuplicate = allCodes.some(c => c.code.toUpperCase() === standardizedCode);
+
+    if (isDuplicate) {
+        messageDiv.textContent = 'This code is already on the list! Thanks for checking.';
+        messageDiv.className = 'submit-error';
+        messageDiv.style.display = 'block';
+        return;
+    }
+
+    // 4. If everything is good, send the webhook
+    
+    // **IMPORTANT**: Replace with your new Webhook URL for submissions
+    const webhookUrl = "https://discord.com/api/webhooks/1427252615942770783/ODC4nIRGAlupTRTwtlYXGDUyeZlvUz5cnr-6ATlf6KDeCP5hJo_MSf3x9DyNUrMdY56P"; 
+
+    // Create a nicely formatted Discord embed
+    const embed = {
+        title: "📬 New SHiFT Code Submission!",
+        color: 5814783, // A nice blue color
+        fields: [
+            {
+                name: "Description",
+                value: description
+            },
+            {
+                name: "Submitted Code",
+                value: `\`\`\`${standardizedCode}\`\`\``
+            }
+        ],
+        timestamp: new Date().toISOString()
+    };
+
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [embed] })
+    });
+
+    // 5. Show success message and close the modal
+    messageDiv.textContent = 'Success! Code has been submitted for review. Thank you!';
+    messageDiv.className = 'submit-success';
+    messageDiv.style.display = 'block';
+
+    // Automatically close the modal after 3 seconds
+    setTimeout(closeCodeSubmitModal, 3000);
+}        
+
+// REPLACE your old reportCode function with this new one
+// REPLACE your current reportCode function
+function reportCode(code, buttonElement) {
+    if (buttonElement) {
+        buttonElement.disabled = true;
+        buttonElement.innerHTML = '✔️';
+        buttonElement.title = 'Reported! Thank you.';
+        buttonElement.classList.add('reported');
+    }
+    // This saves the "reported" state to the user's browser
+    saveReportedStatus(code, true);
+
+    const pipedreamWebhookUrl = "https://shift-code-reporter.xsmashx88x.workers.dev"; 
+    fetch(pipedreamWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reportedCode: code })
+    });
+
+    const modal = document.getElementById('report-success-modal');
+    if (modal) {
+        modal.classList.add('show');
+        setTimeout(() => { modal.classList.remove('show'); }, 3000);
+    }
+}
 
 // Add these functions to your main script tag
 function openKofiModal() {
@@ -3254,6 +3704,7 @@ function applySavedSectionStates() {
 }
 // === END: NEW FUNCTIONS ===     
 
+
 // === START: POLL MODAL SCRIPT ===
 document.addEventListener('DOMContentLoaded', () => {
     const pollModal = document.getElementById('pollModal');
@@ -3366,12 +3817,15 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
 
+
 // ==================== CONFIGURATION ====================
+/* Active codes ||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 const ALL_CODES_CONFIG = [
         {
         code: "T9RJB-BFKRR-3RBTW-B33TB-KCZB9",
         description: 'All Platforms<br>Perm Key, Good For A Long Time',
         title: '1 Gold Key',
+        showReportButton: false,
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/skulliconkey.png"
     },
             {
@@ -3380,6 +3834,7 @@ const ALL_CODES_CONFIG = [
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-12",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: false,
         showCopyButton: true
     },
         {
@@ -3388,6 +3843,7 @@ const ALL_CODES_CONFIG = [
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-12",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: false,
         showCopyButton: true
     },
         {
@@ -3396,33 +3852,37 @@ const ALL_CODES_CONFIG = [
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-12",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: false,
         showCopyButton: true
     },
             {
         code: "TZ6TT-FKBKB-W6T35-BTTB3-636SR",
         expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        description: 'key should be expired, for some reason its not.. will check daily and remove it once it stops working',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1976415477862895671" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-9",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
         showCopyButton: true
     },
             {
         code: "JH63B-S5TK3-KFJJC-BBB3T-5KR63",
         expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        description: 'key should be expired, for some reason its not.. will check daily and remove it once it stops working',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1976415477862895671" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-9",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
         showCopyButton: true
     },
             {
         code: "T963J-TRBKB-56JBW-3BJBJ-ZZ3JR",
         expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        description: 'key should be expired, for some reason its not.. will check daily and remove it once it stops working',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1976415477862895671" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-9",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
         showCopyButton: true
     },
             {
@@ -3437,10 +3897,11 @@ const ALL_CODES_CONFIG = [
         {
         code: "TZRBJ-3KTWT-KX3BC-TT3TB-B9ZSK",
         expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        description: 'key should be expired, for some reason its not.. will check daily and remove it once it stops working',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1974287733985325112" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-3",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
         showCopyButton: true
     },
         {
@@ -3455,10 +3916,11 @@ const ALL_CODES_CONFIG = [
                 {
         code: "TZFT3-K9Z33-5FT3W-BJ33T-WZ5X5",
         expires: "UED", // 
-        description: 'key should be expired, for some reason its not.. will check daly and remove it once it stops working',
+        description: 'key should be expired, for some reason its not.. will check daily and remove it once it stops working',
         dateAdded: "2025-10-1",
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1973200166888104169" target="_blank">Via Twit</a>',
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
         showCopyButton: true
     },
             {
@@ -3632,6 +4094,15 @@ const ALL_CODES_CONFIG = [
 ];
 
 const PERMANENT_CODES = [
+        {
+        code: "JS63J-JSCWJ-CFTBW-3TJ3J-WJS5R",
+        title: 'Break Free cosmetics pack and Legendary Ripper shield <br><br>• [Break Free] Vault Hunter Skin (for Vex, Rafa, Amon, and Harlowe)<br>• [Firebreak] Legendary Ripper Shield (with minimum level of 25)<br>• [Break Free] ECHO-4 Drone Skin<br>• [Kn0x] ECHO-4 Drone Skin',
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/bl4icon%20(GitHub%20icon).png",
+        showCopyButton: true,
+        showPreviewButton: true,
+        imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/breakfree.png",
+        expires: createDate(2031, 1, 1, 2, 45, 0, 1) // Fixed: December 31, 2030, midnight AM
+    },
                 {
         code: "JZ6BJ-SBR5J-WF3BK-BT3BB-TX9HB",
         title: 'Amon Cult Classic | Vault Hunter Skin',
@@ -3643,17 +4114,7 @@ const PERMANENT_CODES = [
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/weeklyeventchal/oct3oct5chal.png",
         expires: createDate(2030, 12, 31, 0, 0, 0, 0) // 
     },
-        {
-        code: "No Code",
-        title: 'Twitch Drops : Watch, Drop, and Roll ECHO-4 Drone Skin cosmetic',
-        description:'<a href="https://borderlands.2k.com/twitch-drops/" target="_blank">Read About It Here Or Via Info Below</a><br><br>Sep  27, 2025 - Oct 25, 2025<br><br>• Watch any livestream in the Borderlands 4 category on the official <a href="http://twitch.tv/Borderlands" target="_blank">Borderlands 4 Twitch channel</a> or <a href="https://www.twitch.tv/gearboxofficial" target="_blank">Gearbox Twitch channel</a> for 15 minutes and claim the reward',        
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/twitchorange.png",
-        showCopyButton: false,
-        showPreviewButton: true,
-        imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/BL4_Echobot_Drop_Wide_textless.png",
-        expires: createDate(2025, 10, 25, 2, 59, 0, 1) // 
-    },
-            {
+                {
         code: "TZXT3-XJXCB-CXBJW-BTTJT-9SK6B",
         title: 'Rafas Savings Savior | Vault Hunter Skin',
         description: 'Community Challenge : Get 20 million Second Winds from Sep. 26-28 as Rafa<br><a href="https://x.com/Borderlands/status/1971651935104098527" target="_blank">Link To Tweet</a> ',
@@ -3664,7 +4125,7 @@ const PERMANENT_CODES = [
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/G1y2OQYXEAAqQVZ.jpeg",
         expires: createDate(2030, 12, 31, 0, 0, 0, 0) // September 29, 2025, midnight AM (explicitly set to avoid default issues)
     },
-        {
+            {
         code: "No Code",
         title: 'Discord  |  Borderlands Bundles + Single Items',
         description:'Click On Shop, Look for the Borderlands 4 Image or Scroll down and will find it. <br>Items Range from $10.99CAD to $5.99CAD Being The Lowest<br><br>NO ETA ON WHEN IT GOES AWAY, COULD BE A WEEK OR MONTH OR MONTHS FROM NOW<br><br> [Click the preview button to see video of the effects]',        
@@ -3673,6 +4134,16 @@ const PERMANENT_CODES = [
         showCopyButton: false,
         showPreviewButton: true,
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/smaller%20%20cbr%20%20%20%202025-09-26%2012-09-25_1.mp4",
+    },
+        {
+        code: "No Code",
+        title: 'Twitch Drops : Watch, Drop, and Roll ECHO-4 Drone Skin cosmetic',
+        description:'<a href="https://borderlands.2k.com/twitch-drops/" target="_blank">Read About It Here Or Via Info Below</a><br><br>Sep  27, 2025 - Oct 25, 2025<br><br>• Watch any livestream in the Borderlands 4 category on the official <a href="http://twitch.tv/Borderlands" target="_blank">Borderlands 4 Twitch channel</a> or <a href="https://www.twitch.tv/gearboxofficial" target="_blank">Gearbox Twitch channel</a> for 15 minutes and claim the reward',        
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/twitchorange.png",
+        showCopyButton: false,
+        showPreviewButton: true,
+        imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/BL4_Echobot_Drop_Wide_textless.png",
+        expires: createDate(2025, 10, 25, 2, 59, 0, 1) // 
     },
     {
         code: "No Code",
@@ -3693,15 +4164,6 @@ const PERMANENT_CODES = [
         showPreviewButton: true,
         imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/BL4_MidnightDefiance.png",
         expires: createDate(2025, 9, 30, 0, 0, 0, 0) // September 30, 2025, midnight AM
-    },
-    {
-        code: "JS63J-JSCWJ-CFTBW-3TJ3J-WJS5R",
-        title: 'Break Free cosmetics pack and Legendary Ripper shield <br><br>• [Break Free] Vault Hunter Skin (for Vex, Rafa, Amon, and Harlowe)<br>• [Firebreak] Legendary Ripper Shield (with minimum level of 25)<br>• [Break Free] ECHO-4 Drone Skin<br>• [Kn0x] ECHO-4 Drone Skin',
-        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/bm-images/bl4icon%20(GitHub%20icon).png",
-        showCopyButton: true,
-        showPreviewButton: true,
-        imagePreview: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/breakfree.png",
-        expires: createDate(2031, 1, 1, 2, 45, 0, 1) // Fixed: December 31, 2030, midnight AM
     },
     {
         code: "NO CODE - SIGNED UP AN IS SENT",
@@ -3771,9 +4233,20 @@ const ROADMAP_CONFIG = {
     imageUrl: "https://i.postimg.cc/PqwXK6rS/screenshot-35.png", // <--- CHANGE THIS TO YOUR ACTUAL ROADMAP IMAGE URL
 };
 
+// REPLACE your old EVENTS_CONFIG object with this one
+
 const EVENTS_CONFIG = {
-    imageUrl: "https://i.postimg.cc/hGCNCNB4/screenshot-35.png", // <-- PASTE YOUR EVENT IMAGE URL HERE
-    buttonText: "🎉 IT'S VEXIN' TIME 📅<br>CURRENT CHALLENGE<br>Oct10/Oct13" // <-- EDIT THE BUTTON TEXT HERE
+    isEnabled: true, // This makes the button visible
+    buttonText: "🎉 IT'S VEXIN' TIME 📅<br><small>CURRENT EVENT CHALLENGE | OCT 10 - OCT 13</small>",
+    imageUrl: "https://i.postimg.cc/hGCNCNB4/screenshot-35.png", // <-- I have found and added the correct image URL for you
+    descriptionText: `
+        <b>Vexin' Time Challenge:</b>
+        <ul>
+            <li>If you can run the Rippers out of 1.8M Ripper Drill Sites as Vex from Oct. 10-13</li>
+            <li>Community Gets | Mass Market Appeal outfit</li>
+            <li>xxxx-shift-code-coming-soon-xxxx | Will be posted under drops after this event buttons goes away</li>
+        </ul>
+    `
 };
 
 // --- ADD THIS NEW CONFIGURATION OBJECT ---
@@ -3781,7 +4254,22 @@ const COMMUNITY_CHALLENGE_CONFIG = {
     isEnabled: true, // Set to true to show the button, false to hide it
     buttonText: "🏆 Horrors of Kairos 🏆<br><small>Seasonal Mini-Event | Oct 23 - Nov 6</small>",
     imageUrl: "https://i.postimg.cc/0QdYjZvh/screenshot-35.png", // The image inside the dropdown
-    descriptionText: "<b>Key Takeaways :</b><br>● The Horrors of Kairos Seasonal Mini-Event takes place from October 23 to November 6, 2025<br>● Blood rains down during World Boss Encounters (Rifts)<br>● World Boss Reward Chests can contain new Legendaries<br><br><b>Horrors of Kairos Loot : </b><br>Murmur <i>Tediore Assault Rifle</i> | Executes weakened enemies with guaranteed crits on targets under 35% health.<br><br>Skully <i>Order Grenade</i> | This death-dealing grenade fires out projectiles as it seeks out the nearest target.<br><br>Gourd Your Loins <i>Pumpkin Head</i> | xxxx-shift-code-coming-soon-xxxx<br><br>Hex Appeal <i>Weapon Skin</i> | xxxx-shift-code-coming-soon-xxxx" // The text inside the dropdown
+    descriptionText: `
+        <b>Key Takeaways:</b>
+        <ul>
+            <li>The Horrors of Kairos Seasonal Mini-Event takes place from October 23 to November 6, 2025</li>
+            <li>Blood rains down during World Boss Encounters (Rifts)</li>
+            <li>World Boss Reward Chests can contain new Legendaries</li>
+        </ul>
+        <br>
+        <b>Horrors of Kairos Loot:</b>
+        <ul>
+            <li>Murmur <i>Tediore Assault Rifle</i> | Executes weakened enemies with guaranteed crits on targets under 35% health.</li>
+            <li>Skully <i>Order Grenade</i> | This death-dealing grenade fires out projectiles as it seeks out the nearest target.</li>
+            <li>Gourd Your Loins <i>Pumpkin Head</i> | xxxx-shift-code-coming-soon-xxxx</li>
+            <li>Hex Appeal <i>Weapon Skin</i> | xxxx-shift-code-coming-soon-xxxx</li>
+        </ul>
+    `
 };
 
 const BLACK_MARKET_EXTRA_CONFIG = {
@@ -4027,27 +4515,28 @@ function openEventsImage() {
 }
 
 
+// REPLACE your entire setupOptionalButtons function with this one
 function setupOptionalButtons() {
-    const eventsButton = document.getElementById('events-btn');
-    const challengeButton = document.getElementById('challenge-btn'); // Get the new button
+    // --- Logic for the Community Challenge Button ---
+    const challengeButton = document.getElementById('challenge-btn'); 
     const challengeImage = document.getElementById('challenge-image');
     const challengeDescription = document.getElementById('challenge-description');
-
-    // --- Logic for the original Events Button (unchanged) ---
-    if (EVENTS_CONFIG.imageUrl && EVENTS_CONFIG.imageUrl.trim() !== "") {
-        eventsButton.innerHTML = EVENTS_CONFIG.buttonText;
-        eventsButton.classList.remove('hidden');
+    if (COMMUNITY_CHALLENGE_CONFIG.isEnabled) {
+        challengeButton.innerHTML = COMMUNITY_CHALLENGE_CONFIG.buttonText;
+        if(challengeImage) challengeImage.src = COMMUNITY_CHALLENGE_CONFIG.imageUrl;
+        if(challengeDescription) challengeDescription.innerHTML = COMMUNITY_CHALLENGE_CONFIG.descriptionText;
+        challengeButton.classList.remove('hidden');
     }
 
-    // --- NEW LOGIC FOR THE COMMUNITY CHALLENGE BUTTON ---
-    if (COMMUNITY_CHALLENGE_CONFIG.isEnabled) {
-        // Set the button's text
-        challengeButton.innerHTML = COMMUNITY_CHALLENGE_CONFIG.buttonText;
-        // Set the content inside the dropdown
-        challengeImage.src = COMMUNITY_CHALLENGE_CONFIG.imageUrl;
-        challengeDescription.innerHTML = COMMUNITY_CHALLENGE_CONFIG.descriptionText;
-        // Make the button visible
-        challengeButton.classList.remove('hidden');
+    // --- New Logic for the Events Button ---
+    const eventsButton = document.getElementById('events-btn');
+    const eventsImage = document.getElementById('events-image');
+    const eventsDescription = document.getElementById('events-description');
+    if (EVENTS_CONFIG.isEnabled) {
+        eventsButton.innerHTML = EVENTS_CONFIG.buttonText;
+        if(eventsImage) eventsImage.src = EVENTS_CONFIG.imageUrl;
+        if(eventsDescription) eventsDescription.innerHTML = EVENTS_CONFIG.descriptionText;
+        eventsButton.classList.remove('hidden');
     }
 }
 
@@ -4090,9 +4579,11 @@ function closeImagePreview() {
 
 function toggleInfo(sectionId) {
     const section = document.getElementById(sectionId);
-    section.classList.toggle('show');
-    // Save the new state
-    saveSectionState(sectionId, section.classList.contains('show'));
+    if (section) {
+        section.classList.toggle('show');
+        // This saves the new state (open or closed) so it remembers for next time
+        saveSectionState(sectionId, section.classList.contains('show'));
+    }
 }
 
 function toggleExpired() {
@@ -4399,47 +4890,63 @@ function createPermanentCodeBox(codeData, index) {
                 </div>`;
         }
 
-        function createActiveCodeBox(codeData, index) {
-            const hasCopyButton = codeData.showCopyButton !== false;
-            const hasPreviewButton = codeData.showPreviewButton;
-            const isRedeemed = getRedemptionStatus(codeData.code);
-            const redeemedClass = isRedeemed ? 'redeemed' : '';
-const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
-            
-            const descriptionHtml = codeData.description ? `<div class="code-description">${codeData.description}</div>` : '';
 
-            // --- SIMPLIFIED DATE LOGIC ---
-            // Call our new merged function to get the final, formatted date.
-            const formattedDate = getFormattedDateAdded(codeData);
-            const dateAddedHtml = formattedDate ? `<div class="date-added">Added Here On : ${formattedDate}</div>` : '';
-            // --- END OF SIMPLIFIED LOGIC ---
+// REPLACE your entire createActiveCodeBox function with this one
 
-            let expirationDetailsHtml = '';
-            if (codeData.expires === "UED") {
-                expirationDetailsHtml = `<div class="expire-date">Expires: Unknown</div>`;
-            } else if (codeData.expires) {
-                // ... (rest of expiration logic is unchanged)
-                let expiresDate; try { expiresDate = (codeData.expires instanceof Date) ? codeData.expires : new Date(codeData.expires); if (!isNaN(expiresDate.getTime())) { const timeLeft = expiresDate.getTime() - new Date().getTime(); if (timeLeft > 0) { const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24)); const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); expirationDetailsHtml = `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div><div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`; } } } catch (e) { console.error("Error parsing expires date:", e); }
+function createActiveCodeBox(codeData, index) {
+    const hasCopyButton = codeData.showCopyButton !== false;
+    const hasPreviewButton = codeData.showPreviewButton;
+    const isRedeemed = getRedemptionStatus(codeData.code);
+    const redeemedClass = isRedeemed ? 'redeemed' : '';
+    const iconHtml = createIconHtml(codeData.icon, false, 'active-code');
+    const descriptionHtml = codeData.description ? `<div class="code-description">${codeData.description}</div>` : '';
+    const formattedDate = getFormattedDateAdded(codeData);
+    const dateAddedHtml = formattedDate ? `<div class="date-added">Added Here On : ${formattedDate}</div>` : '';
+
+    let expirationDetailsHtml = '';
+    // ... (rest of expiration logic is unchanged, so I've shortened it for clarity) ...
+    if (codeData.expires === "UED") { expirationDetailsHtml = `<div class="expire-date">Expires: Unknown</div>`; } else if (codeData.expires) { let expiresDate; try { expiresDate = new Date(codeData.expires); if (!isNaN(expiresDate.getTime())) { const timeLeft = expiresDate.getTime() - new Date().getTime(); if (timeLeft > 0) { const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24)); const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); expirationDetailsHtml = `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div><div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`; } } } catch (e) { console.error("Error parsing expires date:", e); } } else { expirationDetailsHtml = `<div class="expire-date">Expires: Never (Permanent Code)</div>`; }
+    
+    // --- START: REPLACE THIS LOGIC BLOCK ---
+    let reportButtonHtml = '';
+    if (codeData.showReportButton !== false) {
+        
+        const codeToCheck = codeData.code.trim();
+        
+        // THIS IS THE FIX: It now reads directly from the global variable
+        // which is guaranteed to be ready before this function runs.
+        const isGloballyReported = globallyReportedCodes.has(codeToCheck);
+        
+        if (isGloballyReported) {
+            reportButtonHtml = `<button class="report-btn-corner reported" title="This code has been reported as expired by the community." disabled>✔️</button>`;
+        } else {
+            const isReportedLocally = getReportedStatus(codeToCheck);
+            if (isReportedLocally) {
+                reportButtonHtml = `<button class="report-btn-corner reported" title="You have already reported this code. Thank you!" disabled>✔️</button>`;
             } else {
-                expirationDetailsHtml = `<div class="expire-date">Expires: Never (Permanent Code)</div>`;
+                reportButtonHtml = `<button class="report-btn-corner" onclick="reportCode('${codeToCheck}', this)" title="Report This Code as Expired">⚠️</button>`;
             }
-            
-            let copyButtonHtml = ''; if (hasCopyButton) { copyButtonHtml = `<button class="small-copy-btn" onclick="copyToClipboard('${codeData.code}', ${index}, 'active')">COPY</button><span id="copied-active-${index}" class="copied-message">✓ Copied!</span>`; }
-            let previewButtonHtml = ''; if (hasPreviewButton && codeData.imagePreview) { previewButtonHtml = `<button class="activepreview-btn" onclick="openImagePreview('${codeData.imagePreview}')">📷 PREVIEW</button>`; }
-            
-            return `
-                <div class="code-box ${redeemedClass}" id="active-${index}" data-code-id="${codeData.code}">
-                    <div class="code-header">${iconHtml}<div class="title-container">${codeData.title}</div></div>
-                    ${dateAddedHtml}
-                    ${descriptionHtml}
-                    <div class="code-text">${codeData.code}</div>
-                    ${expirationDetailsHtml}
-                    <div class="code-footer">
-                        <div class="actredeem-checkbox"><input type="checkbox" id="redeemed-${index}" ${isRedeemed ? 'checked' : ''} onchange="handleRedemptionChange('${codeData.code}', this, document.getElementById('active-${index}'))"><label for="redeemed-${index}">👍</label></div>
-                        <div class="active-code-buttons-group">${previewButtonHtml}${copyButtonHtml}</div>
-                    </div>
-                </div>`;
         }
+    }
+    // --- END: REPLACE THIS LOGIC BLOCK ---
+
+    let copyButtonHtml = ''; if (hasCopyButton) { copyButtonHtml = `<button class="small-copy-btn" onclick="copyToClipboard('${codeData.code}', ${index}, 'active')">COPY</button>`; }
+    let previewButtonHtml = ''; if (hasPreviewButton && codeData.imagePreview) { previewButtonHtml = `<button class="activepreview-btn" onclick="openImagePreview('${codeData.imagePreview}')">📷 PREVIEW</button>`; }
+    
+    return `
+        <div class="code-box ${redeemedClass}" id="active-${index}" data-code-id="${codeData.code}">
+            ${reportButtonHtml}
+            <div class="code-header">${iconHtml}<div class="title-container">${codeData.title}</div></div>
+            ${dateAddedHtml}
+            ${descriptionHtml}
+            <div class="code-text">${codeData.code}</div>
+            ${expirationDetailsHtml}
+            <div class="code-footer">
+                <div class="actredeem-checkbox"><input type="checkbox" id="redeemed-${index}" ${isRedeemed ? 'checked' : ''} onchange="handleRedemptionChange('${codeData.code}', this, document.getElementById('active-${index}'))"><label for="redeemed-${index}">👍</label></div>
+                <div class="active-code-buttons-group">${previewButtonHtml}${copyButtonHtml}</div>
+            </div>
+        </div>`;
+}
 
 
         function createExpiredCodeBox(codeData, index) {
