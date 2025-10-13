@@ -3482,6 +3482,89 @@ function getReportedStatus(code) {
     } catch (e) { console.error("Error reading reported status:", e); return false; }
 }
 
+const GIST_ID = 'f5888f3144b2af9c62db71583cc0ce85';
+const GIST_FILENAME = 'reported_codes.txt';
+
+// Read from Gist (no token needed for public Gists)
+async function getReportedKeys() {
+    try {
+        const response = await fetch(`https://api.github.com/gists/${GIST_ID}`);
+        const gistData = await response.json();
+        const content = gistData.files[GIST_FILENAME].content;
+        
+        // Parse your current text format
+        return parseKeysFromText(content);
+    } catch (error) {
+        console.error('Error:', error);
+        return {};
+    }
+}
+
+function parseKeysFromText(content) {
+    const reportedKeys = {};
+    const lines = content.split('\n');
+    
+    lines.forEach(line => {
+        const keyMatch = line.match(/[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}/);
+        if (keyMatch) {
+            reportedKeys[keyMatch[0]] = {
+                reported: true,
+                reported_at: new Date().toISOString(),
+                expires: "Unknown"
+            };
+        }
+    });
+    
+    return reportedKeys;
+}
+
+// Function to check key status and update UI on page load
+async function initializePage() {
+    const key = extractKeyFromPage(); // You'll need to implement this based on your page structure
+    
+    if (key && await isKeyReported(key)) {
+        // Key is already reported - update UI
+        showKeyAlreadyReported(key);
+    } else {
+        // Key can be reported - enable reporting
+        enableReportingUI();
+    }
+}
+
+// UI update functions
+function showKeyAlreadyReported(key) {
+    // Disable report button
+    const reportBtn = document.querySelector('#report-button'); // Adjust selector
+    if (reportBtn) {
+        reportBtn.disabled = true;
+        reportBtn.textContent = 'Already Reported';
+    }
+    
+    // Show status message
+    const statusDiv = document.createElement('div');
+    statusDiv.className = 'reported-status';
+    statusDiv.innerHTML = `
+        <strong>This key has already been reported</strong>
+        <br>Other users can see that this key is no longer valid.
+    `;
+    statusDiv.style.cssText = 'background: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin: 10px 0;';
+    
+    // Insert near the key display
+    const keyElement = document.querySelector('.key-display'); // Adjust selector
+    if (keyElement) {
+        keyElement.parentNode.insertBefore(statusDiv, keyElement.nextSibling);
+    }
+}
+
+function enableReportingUI() {
+    const reportBtn = document.querySelector('#report-button');
+    if (reportBtn) {
+        reportBtn.disabled = false;
+        reportBtn.textContent = 'Report Key';
+        reportBtn.onclick = reportCurrentKey;
+    }
+}
+
 // ADD THESE THREE NEW FUNCTIONS to your main script tag
 
 // --- Function to open and reset the modal ---
@@ -3563,6 +3646,71 @@ function submitCode() {
     // Automatically close the modal after 3 seconds
     setTimeout(closeCodeSubmitModal, 3000);
 }        
+
+async function reportCurrentKey() {
+    const key = extractKeyFromPage();
+    const expires = "Unknown"; // Extract from page if available
+    
+    if (!key) {
+        alert('No key found to report');
+        return;
+    }
+    
+    // Check if already reported (double-check)
+    if (await isKeyReported(key)) {
+        showKeyAlreadyReported(key);
+        return;
+    }
+    
+    // Disable button during reporting
+    const reportBtn = document.querySelector('#report-button');
+    reportBtn.disabled = true;
+    reportBtn.textContent = 'Reporting...';
+    
+    try {
+        // Mark as reported in Gist
+        const success = await markKeyAsReported(key, expires);
+        
+        if (success) {
+            // Update UI to show success
+            reportBtn.textContent = 'Reported Successfully';
+            showSuccessMessage();
+            
+            // Optional: Also call your existing webhook
+            await callYourExistingWebhook(key);
+        } else {
+            throw new Error('Failed to update Gist');
+        }
+    } catch (error) {
+        console.error('Reporting failed:', error);
+        reportBtn.textContent = 'Report Failed - Try Again';
+        reportBtn.disabled = false;
+        alert('Failed to report key. Please try again.');
+    }
+}
+
+function extractKeyFromPage() {
+    // This depends on your page structure - adjust accordingly
+    // Example: look for elements containing the key pattern
+    const keyPattern = /[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}/;
+    
+    // Try different selectors where your key might be displayed
+    const possibleElements = [
+        document.body.textContent.match(keyPattern),
+        document.querySelector('code')?.textContent,
+        document.querySelector('pre')?.textContent
+    ];
+    
+    for (let element of possibleElements) {
+        if (element && keyPattern.test(element)) {
+            const match = element.match(keyPattern);
+            return match ? match[0] : null;
+        }
+    }
+    
+    return null;
+}
+
 
 async function reportCode(code, buttonElement) {
     if (buttonElement) {
