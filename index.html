@@ -3396,85 +3396,70 @@ iframe#kofi-chat-widget { display: none !important; }
     <script>
 let globallyReportedCodes = new Set();
 
-// REPLACE your old fetch and DOMContentLoaded functions with this SINGLE block.
-
-// This is the unbreakable sequence that starts your application.
-// ADD THIS BLOCK AT THE VERY END OF YOUR SCRIPT
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Await the fetch. This forces the script to wait here.
-    await fetchGloballyReportedCodes();
-
-    // 2. Only after the fetch is done, build the page.
-    initializePage();
-
-    // 3. Setup all other event listeners.
-    setupEventListeners();
-});
-
+/// ADD THIS ENTIRE FUNCTION TO YOUR SCRIPT
 async function fetchGloballyReportedCodes() {
     try {
         const gistUrl = "https://gist.githubusercontent.com/xsmashx88x/f5888f3144b2af9c62db71583cc0ce85/raw/b3c397278209d8353550e867b2e6cf6d7e0c14c0/reported_codes.txt";
         const response = await fetch(`${gistUrl}?v=${new Date().getTime()}`);
         if (response.ok) {
             const text = await response.text();
-            // This is a more robust way to handle different line endings and whitespace
             const codes = text.split(/\r?\n/).map(code => code.trim()).filter(Boolean);
             globallyReportedCodes = new Set(codes);
-            console.log("--- Successfully loaded global list:", globallyReportedCodes);
+            console.log('Loaded globally reported codes:', Array.from(globallyReportedCodes));
+        } else {
+            console.warn('Failed to fetch Gist, using empty set');
+            globallyReportedCodes = new Set();
         }
     } catch (error) {
-        console.error('--- ERROR: Could not fetch the global reported codes list:', error);
+        console.error('Could not fetch Gist:', error);
+        globallyReportedCodes = new Set();
     }
 }
 
-// ADD THIS ENTIRE NEW FUNCTION TO YOUR SCRIPT
+// REPLACE your old 'DOMContentLoaded' block with this FINAL version
 
-function setupEventListeners() {
-    // --- Poll Button Logic ---
-    const pollModal = document.getElementById('pollModal');
-    const openPollBtn = document.getElementById('openPollBtn');
-    const closePollBtn = document.getElementById('closePollBtn');
-    if (openPollBtn) openPollBtn.addEventListener('click', () => { if (pollModal) pollModal.style.display = 'flex'; });
-    if (closePollBtn) closePollBtn.addEventListener('click', () => { if (pollModal) pollModal.style.display = 'none'; });
-    if (pollModal) {
-        pollModal.addEventListener('click', (event) => { if (event.target === pollModal) pollModal.style.display = 'none'; });
-    }
-
-    // --- Share Button Logic ---
-    const shareButton = document.getElementById('final-share-button');
-    const shareMenu = document.getElementById('final-share-menu');
-    if (shareButton && shareMenu) {
-        shareButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            shareMenu.classList.toggle('active');
-        });
-        document.addEventListener('click', function() {
-            if (shareMenu.classList.contains('active')) {
-                shareMenu.classList.remove('active');
-            }
-        });
-    }
+// REPLACE your current DOMContentLoaded with this:
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Starting page initialization...');
     
-    // --- Image Preview Zoom Button Logic ---
+    // 1. FIRST load the global reported codes
+    await fetchGloballyReportedCodes();
+    console.log('Global codes loaded, count:', globallyReportedCodes.size);
+
+    // 2. THEN initialize the page
+    if (!checkCodesVersion()) {
+        initializePage();
+    }
+
+    // 3. Set up other event listeners
+    setupEventListeners();
+    
+    console.log('Page initialization complete');
+});
+
+// Add this function if you don't have it:
+function setupEventListeners() {
+    // Your existing event listener setup code
     const zoomInButton = document.getElementById('zoom-in-btn');
     const zoomOutButton = document.getElementById('zoom-out-btn');
     const resetZoomButton = document.getElementById('reset-zoom-btn');
-    const closePreviewButton = document.getElementById('close-preview-btn');
+    const closeButton = document.getElementById('close-preview-btn');
+
     if (zoomInButton) zoomInButton.addEventListener('click', zoomIn);
     if (zoomOutButton) zoomOutButton.addEventListener('click', zoomOut);
     if (resetZoomButton) resetZoomButton.addEventListener('click', resetZoom);
-    if (closePreviewButton) closePreviewButton.addEventListener('click', closeImagePreview);
 
-    // --- Other Listeners ---
-    document.addEventListener('click', function(event) {
-        const isInsideCodeBox = event.target.closest('.code-box, .permanent-code-box, .expired-code-box, .black-market-code-box');
-        if (!isInsideCodeBox) {
-            clearLastCopied();
-        }
-    });
-
-    // Add any other general click listeners here
+    const newCloseButton = document.getElementById('close-preview-btn');
+    if (newCloseButton) newCloseButton.addEventListener('click', closeImagePreview);
+    
+    const modal = document.getElementById('image-preview-modal');
+    if(modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target.id === 'image-preview-modal') {
+                closeImagePreview();
+            }
+        });
+    }
 }
 
 
@@ -3577,28 +3562,60 @@ function submitCode() {
 }        
 
 // REPLACE your old reportCode function with this new one
-// REPLACE your current reportCode function
-function reportCode(code, buttonElement) {
+async function reportCode(code, buttonElement) {
     if (buttonElement) {
         buttonElement.disabled = true;
-        buttonElement.innerHTML = '✔️';
-        buttonElement.title = 'Reported! Thank you.';
-        buttonElement.classList.add('reported');
+        buttonElement.innerHTML = '⏳';
+        buttonElement.title = 'Reporting...';
     }
-    // This saves the "reported" state to the user's browser
-    saveReportedStatus(code, true);
 
-    const pipedreamWebhookUrl = "https://shift-code-reporter.xsmashx88x.workers.dev"; 
-    fetch(pipedreamWebhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reportedCode: code })
-    });
+    try {
+        const pipedreamWebhookUrl = "https://shift-code-reporter.xsmashx88x.workers.dev"; 
+        const response = await fetch(pipedreamWebhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                reportedCode: code,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            })
+        });
 
-    const modal = document.getElementById('report-success-modal');
-    if (modal) {
-        modal.classList.add('show');
-        setTimeout(() => { modal.classList.remove('show'); }, 3000);
+        if (response.ok) {
+            // Update UI immediately
+            if (buttonElement) {
+                buttonElement.innerHTML = '✔️';
+                buttonElement.title = 'Reported! Thank you.';
+                buttonElement.classList.add('reported');
+            }
+            
+            // Save locally
+            saveReportedStatus(code, true);
+            
+            // Add to global set temporarily (until next page load)
+            globallyReportedCodes.add(code.trim());
+            
+            const modal = document.getElementById('report-success-modal');
+            if (modal) {
+                modal.classList.add('show');
+                setTimeout(() => { modal.classList.remove('show'); }, 3000);
+            }
+            
+            console.log('Successfully reported code:', code);
+        } else {
+            throw new Error('Webhook response not OK');
+        }
+    } catch (error) {
+        console.error('Failed to report code:', error);
+        if (buttonElement) {
+            buttonElement.innerHTML = '❌';
+            buttonElement.title = 'Failed to report. Try again.';
+            setTimeout(() => {
+                buttonElement.disabled = false;
+                buttonElement.innerHTML = '⚠️';
+                buttonElement.title = 'Report This Code as Expired';
+            }, 2000);
+        }
     }
 }
 
@@ -3755,7 +3772,53 @@ function applySavedSectionStates() {
         console.error("Error applying saved section states:", e);
     }
 }
+// === END: NEW FUNCTIONS ===     
 
+
+// === START: POLL MODAL SCRIPT ===
+document.addEventListener('DOMContentLoaded', () => {
+    const pollModal = document.getElementById('pollModal');
+    const openPollBtn = document.getElementById('openPollBtn');
+    const closePollBtn = document.getElementById('closePollBtn');
+
+    // Function to open the modal
+    const openPoll = () => {
+        if (pollModal) pollModal.style.display = 'flex';
+    };
+
+    // Function to close the modal
+    const closePoll = () => {
+        if (pollModal) pollModal.style.display = 'none';
+    };
+
+    // Event Listeners
+    if (openPollBtn) openPollBtn.addEventListener('click', openPoll);
+    if (closePollBtn) closePollBtn.addEventListener('click', closePoll);
+
+    // Also close if the user clicks on the dark overlay
+    if (pollModal) {
+        pollModal.addEventListener('click', (event) => {
+            if (event.target === pollModal) {
+                closePoll();
+            }
+        });
+    }
+
+    // ==========================================================
+    // === PASTE THE NEW CLICK LISTENER CODE BLOCK RIGHT HERE ===
+    // ==========================================================
+    document.addEventListener('click', function(event) {
+        // Check if the thing that was clicked is INSIDE a code box of any type.
+        const isInsideCodeBox = event.target.closest('.code-box, .permanent-code-box, .expired-code-box, .black-market-code-box');
+
+        // If the click was NOT inside a code box, clear the highlight.
+        if (!isInsideCodeBox) {
+            clearLastCopied();
+        }
+    });
+    // ==========================================================
+
+}); // <-- This is the final closing bracket for DOMContentLoaded
 
 // === END: POLL MODAL SCRIPT ===
 
@@ -3768,7 +3831,30 @@ function zoomIn() {
         panzoomInstance.zoomIn();
     }
 }
+// --- END: Image Preview Zoom ---
 
+// --- SCRIPT FOR FLOATING SHARE BUTTON (CORRECTED) ---
+// START: FINAL SHARE BUTTON JAVASCRIPT - DELETE ALL PREVIOUS VERSIONS
+document.addEventListener('DOMContentLoaded', function() {
+    const shareButton = document.getElementById('final-share-button');
+    const shareMenu = document.getElementById('final-share-menu');
+
+    if (shareButton && shareMenu) {
+        // This runs ONLY when the share button is clicked
+        shareButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Stops the click from closing the menu instantly
+            shareMenu.classList.toggle('active'); // Shows or hides the menu
+        });
+
+        // This runs when you click anywhere else on the page
+        document.addEventListener('click', function() {
+            if (shareMenu.classList.contains('active')) {
+                shareMenu.classList.remove('active');
+            }
+        });
+    }
+});
+// END: FINAL SHARE BUTTON JAVASCRIPT
 
 // --- ADD THIS FUNCTION for the new floating panel refresh and thanks ---
 
@@ -4897,7 +4983,7 @@ function createActiveCodeBox(codeData, index) {
         
         const codeToCheck = codeData.code.trim();
         
-        // THIS IS THE FIX: It now reads directly from the global variable,
+        // THIS IS THE FIX: It now reads directly from the global variable
         // which is guaranteed to be ready before this function runs.
         const isGloballyReported = globallyReportedCodes.has(codeToCheck);
         
@@ -5208,6 +5294,24 @@ function initializePage() {
 
   let scrollYPosition = 0; // Defining this globally for the lock function
 
+document.addEventListener('DOMContentLoaded', () => {
+    // --- THIS IS THE NEW, ROBUST RESET LOGIC ---
+    try {
+        const nextRefreshTimestamp = getNextVendorRefresh().getTime();
+        const lastKnownRefresh = localStorage.getItem('lastKnownRefresh');
+
+        // If the upcoming refresh time is different from the last one we saved,
+        // it means a weekly reset has happened since the last visit.
+        if (lastKnownRefresh !== nextRefreshTimestamp.toString()) {
+            clearBlackMarketStatusOnReset();
+            // After cleaning up, save the new upcoming refresh time so we don't clean up again until the *next* reset.
+            localStorage.setItem('lastKnownRefresh', nextRefreshTimestamp);
+            console.log(`New refresh time set for: ${new Date(nextRefreshTimestamp)}`);
+        }
+    } catch (e) {
+        console.error("Error in weekly reset detection logic:", e);
+    }
+    // --- END OF NEW LOGIC ---
 
     // The rest of the function remains the same
     if (!checkCodesVersion()) {
