@@ -3399,17 +3399,14 @@ let globallyReportedCodes = new Set();
 // REPLACE your old fetch and DOMContentLoaded functions with this SINGLE block.
 
 // This is the unbreakable sequence that starts your application.
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("--- Starting Application ---");
-
-    // This is a classic promise chain. It is guaranteed to run in the correct order.
+ddocument.addEventListener('DOMContentLoaded', () => {
+    // This uses a classic promise chain. It is GUARANTEED to run in the correct order.
     fetchGloballyReportedCodes().then(() => {
         // This code inside .then() will ONLY run after fetchGloballyReportedCodes is 100% complete.
         // The race condition is now impossible.
-        console.log("--- Fetch complete. Building page now... ---");
         initializePage();
         
-        // Setup all other non-critical event listeners
+        // This sets up all your other non-critical event listeners AFTER the page is built.
         setupEventListeners();
     });
 });
@@ -3434,10 +3431,6 @@ async function fetchGloballyReportedCodes() {
 
 function setupEventListeners() {
     // --- Poll Button Logic ---
-    const pollButton = document.getElementById('openPollBtn');
-    if (pollButton && POLL_CONFIG && !POLL_CONFIG.isEnabled) {
-        pollButton.classList.add('hidden');
-    }
     const pollModal = document.getElementById('pollModal');
     const openPollBtn = document.getElementById('openPollBtn');
     const closePollBtn = document.getElementById('closePollBtn');
@@ -4964,7 +4957,7 @@ function createActiveCodeBox(codeData, index) {
     // ... (rest of expiration logic is unchanged, so I've shortened it for clarity) ...
     if (codeData.expires === "UED") { expirationDetailsHtml = `<div class="expire-date">Expires: Unknown</div>`; } else if (codeData.expires) { let expiresDate; try { expiresDate = new Date(codeData.expires); if (!isNaN(expiresDate.getTime())) { const timeLeft = expiresDate.getTime() - new Date().getTime(); if (timeLeft > 0) { const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24)); const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); expirationDetailsHtml = `<div class="expire-date">Expires: ${formatDate(expiresDate)}</div><div class="countdown">Time left: ${days}d ${hours}h ${minutes}m</div>`; } } } catch (e) { console.error("Error parsing expires date:", e); } } else { expirationDetailsHtml = `<div class="expire-date">Expires: Never (Permanent Code)</div>`; }
     
-    // --- FINAL REPORT BUTTON LOGIC ---
+    // --- START: REPLACE THIS LOGIC BLOCK ---
     let reportButtonHtml = '';
     if (codeData.showReportButton !== false) {
         
@@ -4985,7 +4978,7 @@ function createActiveCodeBox(codeData, index) {
             }
         }
     }
-    // --- END: FINAL REPORT BUTTON LOGIC ---
+    // --- END: REPLACE THIS LOGIC BLOCK ---
 
     let copyButtonHtml = ''; if (hasCopyButton) { copyButtonHtml = `<button class="small-copy-btn" onclick="copyToClipboard('${codeData.code}', ${index}, 'active')">COPY</button>`; }
     let previewButtonHtml = ''; if (hasPreviewButton && codeData.imagePreview) { previewButtonHtml = `<button class="activepreview-btn" onclick="openImagePreview('${codeData.imagePreview}')">📷 PREVIEW</button>`; }
