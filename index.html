@@ -7082,51 +7082,25 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- FINAL, SELF-CONTAINED EXECUTION BLOCK ---
-// --- VITAL: START POLLING ---
+// --- FINAL, CORRECTED EXECUTION BLOCK (Always Polling) ---
 document.addEventListener('DOMContentLoaded', () => {
     
-    let pollingIntervalId = null; // Variable to hold the ID of the running timer
-
-    // --- FUNCTION 1: STOP POLLING ---
-    const stopPolling = () => {
-        if (pollingIntervalId !== null) {
-            clearInterval(pollingIntervalId);
-            pollingIntervalId = null;
-        }
-    };
-
-    // --- FUNCTION 2: START POLLING (Only runs when the tab is focused) ---
-    const startPolling = () => {
-        if (pollingIntervalId === null) {
-            // Run the check once immediately
-            checkAndShowNotification();
-            
-            // Start the continuous polling loop and save its ID
-            pollingIntervalId = setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
-        }
-    };
-    
-    // --- Initial setup (unchanged) ---
+    // 1. Setup (unchanged)
     const notifButton = document.getElementById('notif-permission-btn');
 
     if ("Notification" in window && notifButton) {
         updateButtonDisplay(Notification.permission);
         notifButton.onclick = requestNotificationPermission; 
     }
-    // ------------------------------------
-
-    // 1. Initial check (Run when the page is first loaded/refreshed)
-    startPolling();
-
-    // 2. Attach Visibility Change Listeners (THE CORE FIX)
-    document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') {
-            startPolling(); // Tab is now focused/visible, resume polling
-        } else {
-            stopPolling();  // Tab is now in the background, stop polling
-        }
-    });
+    
+    // 2. Run the check once immediately (with a short delay to load)
+    setTimeout(checkAndShowNotification, 3000); 
+    
+    // 3. Start the continuous polling loop (THE VITAL STEP)
+    // The browser will now run this in the background, triggering the notification.
+    setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
 });
+// --- END FINAL, CORRECTED EXECUTION BLOCK ---
 // --- END FINAL, SELF-CONTAINED EXECUTION BLOCK ---
 </script>
 
