@@ -3626,44 +3626,77 @@ body.stealth-mode {
 /*    END: CONSOLIDATED COLOR & LAYOUT MODE STYLES     */
 /* =================================================== */
 
-/* START: Custom Sticky Notification Bar Styles */
-#custom-notification-bar {
-    position: sticky; /* Makes it stick just below the title bar on scroll */
-    top: 0;
-    width: 100%;
-    margin-top: -20px; /* Pulls it up to sit just below the header */
-    background: linear-gradient(90deg, #ff4444, #cc0000);
+/* START: Notification Bell Icon Style */
+.floating-notif-bell {
+    /* Positioning: 50px above the gear icon */
+    position: fixed;
+    bottom: 70px; 
+    left: 20px; 
+    z-index: 1003;
+
+    /* Appearance */
+    background: #444; /* Dark grey default */
     color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Chakra Petch', sans-serif;
-}
-#custom-notification-bar p {
-    margin: 0;
-}
-#custom-notification-bar a {
-    color: #ffff00;
-    text-decoration: underline;
-    margin-left: 10px;
-    cursor: pointer;
-}
-#custom-notification-bar button {
-    background: none;
-    border: none;
-    color: white;
+    border: 1px solid #777;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    
+    /* Content - Uses a CSS pseudo-element for the icon */
+    font-family: 'Arial', sans-serif; /* Use a font that displays emojis reliably */
     font-size: 18px;
-    font-weight: bold;
+    content: '🔔'; /* Default Bell */
+    
+    /* Center the icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
-    line-height: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease-in-out;
 }
-/* END: Custom Sticky Notification Bar Styles */
+
+/* Hover/Default Style */
+.floating-notif-bell:hover {
+    background: #666;
+    transform: scale(1.1);
+}
+
+/* --- Styles added by JavaScript based on permission status --- */
+
+/* State 1: Ready to be Clicked / Default Permission */
+.floating-notif-bell:before {
+    content: '🔔'; /* Default Bell */
+    color: #fff;
+}
+
+/* State 2: Permission DENIED (Blocking) */
+.floating-notif-bell.denied {
+    background: #ff4444; /* Red */
+    border-color: #cc0000;
+    cursor: not-allowed;
+}
+.floating-notif-bell.denied:before {
+    content: '🚫'; /* Blocked sign */
+    color: #fff;
+}
+
+/* State 3: Permission GRANTED (Enabled, but Hidden by JS) */
+.floating-notif-bell.granted {
+    background: #00cc00; /* Green */
+    border-color: #00aa00;
+}
+.floating-notif-bell.granted:before {
+    content: '✅'; /* Checkmark */
+    color: #fff;
+}
+
+/* State 4: Hidden (When permission is granted) */
+.floating-notif-bell.hidden {
+    display: none !important; 
+}
+/* END: Notification Bell Icon Style */
 
     </style>
 </head>
@@ -4285,15 +4318,7 @@ body.stealth-mode {
 </div>
 <!-- END: COMBINED LAYOUT & COLOR MODE PANEL -->
 
-<!-- START: CUSTOM STICKY NOTIFICATION BAR -->
-<div id="custom-notification-bar" style="display: none;">
-    <p>
-        🚨 New SHiFT Codes Dropped! Click to view!
-        <a href="https://xsmashx88x.github.io/Shift-Codes/" target="_self" onclick="this.parentNode.style.display='none';">REFRESH NOW</a>
-    </p>
-    <button onclick="document.getElementById('custom-notification-bar').style.display='none';">X</button>
-</div>
-<!-- END: CUSTOM STICKY NOTIFICATION BAR -->
+<button class="floating-notif-bell" id="notif-permission-btn" title="Enable Notifications"></button>
 
     <script>
 
@@ -4301,46 +4326,58 @@ body.stealth-mode {
 /*        START: FINAL WORKING NOTIFICATION LOGIC      */
 /* =================================================== */
 
-// --- VITAL CONSTANTS (Ensure these are defined) ---
+// --- VITAL CONSTANTS (Define these at the top of your script block) ---
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
 const MAIN_URL = 'https://xsmashx88x.github.io/test.shift/';
 const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/test.shift/main/code_version.txt';
 const POLLING_INTERVAL_MS = 60000; 
+// ----------------------------------------------------------------------
 
-// --- MISSING FUNCTION: THIS UPDATES THE BUTTON'S TEXT/STYLE ---
+
+// --- FUNCTION 1: Updates the button's text/style based on permission status ---
+// --- FUNCTION 1: Updates the button's text/style based on permission status ---
 function updateButtonDisplay(permission) {
     const button = document.getElementById('notif-permission-btn');
     if (!button) return;
 
+    // Reset classes
+    button.className = 'floating-notif-bell'; 
+    button.disabled = false;
+    button.title = 'Enable Notifications';
+
     if (permission === 'granted') {
-        button.textContent = 'Notif Enabled ✅';
+        button.classList.add('granted');
         button.classList.add('hidden'); // Hide if granted
+        button.title = 'Notifications Enabled (Click to change OS settings)';
     } else if (permission === 'denied') {
-        button.textContent = 'Notif Blocked 🚫';
+        button.classList.add('denied');
         button.disabled = true;
+        button.title = 'Notifications Blocked by your browser/OS settings.';
     } else {
-        button.textContent = 'Enable Notif 🔔';
-        button.classList.remove('hidden'); // Ensure visible if still default/prompting
+        // Default: remains unstyled, showing the simple '🔔'
+        button.title = 'Click to enable real-time new code alerts!';
     }
 }
-// --- END MISSING FUNCTION ---
+// -----------------------------------------------------------------------------
 
 
+// --- FUNCTION 2: Requests permission from the browser ---
 function requestNotificationPermission() {
     if (!("Notification" in window)) {
         console.log("Browser doesn't support notifications.");
         return;
     }
     
-    // Pass the permission result to the display update function
+    // The browser will display a pop-up. The result (permission) is passed to the callback.
     Notification.requestPermission(function (permission) {
-        updateButtonDisplay(permission);
+        updateButtonDisplay(permission); // Update the button immediately after user clicks Allow/Block
     });
 }
 
+
+// --- FUNCTION 3: Checks for new codes and shows the notification ---
 async function checkAndShowNotification() {
     try {
-        // Fetch the latest version number from the external text file
         const response = await fetch(VERSION_FILE_URL + '?nocache=' + new Date().getTime());
         const latestVersionString = (await response.text()).trim();
         const LATEST_VERSION = parseInt(latestVersionString) || 0;
@@ -4354,7 +4391,7 @@ async function checkAndShowNotification() {
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
                     body: 'Vault Hunter! New codes are here! Click to view.',
                     icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png', 
-                    requireInteraction: true 
+                    requireInteraction: true // Stays open until dismissed
                 });
                 
                 newCodeNotif.onclick = function() {
@@ -4364,29 +4401,34 @@ async function checkAndShowNotification() {
                 
                 localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
                 
-            } else {
-                // If not granted, the button will remain visible to prompt the user
-            }
+            } 
         }
     } catch (error) {
         console.error("Error during version check:", error);
     }
 }
 
-// --- VITAL: START POLLING ---
+
+// --- FINAL EXECUTION BLOCK (Runs everything on page load) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial button status check (This now works because updateButtonDisplay is defined)
-    if ("Notification" in window && document.getElementById('notif-permission-btn')) {
+    // 1. Check if notifications are supported and if the button element exists
+    const notifButton = document.getElementById('notif-permission-btn');
+
+    if ("Notification" in window && notifButton) {
+        // A. Set the button's text based on current permission status
         updateButtonDisplay(Notification.permission);
+        
+        // B. Attach the click handler to the button
+        notifButton.onclick = requestNotificationPermission; 
     }
     
-    // 2. Run the check once immediately (with a short delay to load)
+    // 2. Start the Polling check
+    // Run the check once immediately (with a short delay to load)
     setTimeout(checkAndShowNotification, 3000); 
     
-    // 3. Start the continuous polling loop
+    // Start the continuous polling loop
     setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
 });
-
 /* =================================================== */
 /*          END: FINAL WORKING NOTIFICATION LOGIC      */
 /* =================================================== */ 
@@ -7038,6 +7080,33 @@ document.addEventListener('DOMContentLoaded', () => {
         reportForm.addEventListener('submit', handleReportSubmit);
     }
 });
+
+// --- FINAL, SELF-CONTAINED EXECUTION BLOCK ---
+(function() {
+    // We attach to the DOMContentLoaded event to ensure the button is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. Initial button status check
+        const notifButton = document.getElementById('notif-permission-btn');
+
+        if ("Notification" in window && notifButton) {
+            
+            // The updateButtonDisplay function must be called once the button exists
+            // and the permission is known.
+            updateButtonDisplay(Notification.permission);
+            
+            // VITAL: Attach the click handler ONLY if the button is found
+            notifButton.onclick = requestNotificationPermission; 
+        }
+        
+        // 2. Run the code check once immediately (with a short delay to load)
+        setTimeout(checkAndShowNotification, 3000); 
+        
+        // 3. Start the continuous polling loop
+        setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
+    });
+})();
+// --- END FINAL, SELF-CONTAINED EXECUTION BLOCK ---
 </script>
 
 </body>
