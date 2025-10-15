@@ -3626,6 +3626,33 @@ body.stealth-mode {
 /*    END: CONSOLIDATED COLOR & LAYOUT MODE STYLES     */
 /* =================================================== */
 
+/* START: Notification Permission Button Style */
+.floating-notif-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* Position on the opposite side of the screen */
+    z-index: 1003;
+    background: #FF5722; /* Orange color */
+    color: white;
+    border: 1px solid #E64A19;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease-in-out;
+}
+.floating-notif-btn:hover {
+    background: #F4511E;
+    transform: scale(1.05);
+}
+.floating-notif-btn.hidden {
+    display: none !important;
+}
+/* END: Notification Permission Button Style */
+
     </style>
 </head>
 
@@ -4246,40 +4273,60 @@ body.stealth-mode {
 </div>
 <!-- END: COMBINED LAYOUT & COLOR MODE PANEL -->
 
+<!-- START: Notification Permission Button -->
+<button class="floating-notif-btn" onclick="requestNotificationPermission()" id="notif-permission-btn">
+    Enable Notif 🔔
+</button>
+<!-- END: Notification Permission Button -->
+
     <script>
 
 /* =================================================== */
-/*        START: REAL-TIME POLLING NOTIFICATION LOGIC  */
+/*        START: FINAL, WORKING NOTIFICATION LOGIC     */
 /* =================================================== */
 
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
-const MAIN_URL = 'https://xsmashx88x.io/Shift-Codes/'; // Your main page URL
-// VITAL: This URL points to the separate file you must update
+const MAIN_URL = 'https://xsmashx88x.github.io/test.shift/';
 const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/test.shift/main/code_version.txt';
-const POLLING_INTERVAL_MS = 60000; // Check every 60 seconds (1 minute)
+const POLLING_INTERVAL_MS = 60000; // Check every 60 seconds
+
+function updateButtonDisplay(permission) {
+    const button = document.getElementById('notif-permission-btn');
+    if (!button) return;
+
+    if (permission === 'granted') {
+        button.textContent = 'Notif Enabled ✅';
+        button.classList.add('hidden');
+    } else if (permission === 'denied') {
+        button.textContent = 'Notif Blocked 🚫';
+        button.disabled = true;
+    } else {
+        button.textContent = 'Enable Notif 🔔';
+        button.classList.remove('hidden');
+    }
+}
 
 function requestNotificationPermission() {
     if (!("Notification" in window)) {
-        console.log("This browser does not support desktop notification");
-    } else if (Notification.permission !== "denied") {
-        Notification.requestPermission();
+        console.log("Browser doesn't support notifications.");
+        return;
     }
+    
+    Notification.requestPermission(function (permission) {
+        updateButtonDisplay(permission);
+    });
 }
 
 async function checkAndShowNotification() {
     try {
-        // 1. Fetch the latest version number from the external text file
-        // The '?nocache=' part is VITAL to force the browser/CDN to download the *new* file
         const response = await fetch(VERSION_FILE_URL + '?nocache=' + new Date().getTime());
         const latestVersionString = (await response.text()).trim();
         const LATEST_VERSION = parseInt(latestVersionString) || 0;
         
         const lastNotifiedVersion = parseInt(localStorage.getItem(NOTIFICATION_STORAGE_KEY)) || 0;
         
-        // Check 1: Has the version number been incremented?
         if (LATEST_VERSION > lastNotifiedVersion) {
             
-            // Check 2: Does the browser support notifications and is permission granted?
             if (Notification.permission === "granted") {
                 
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
@@ -4287,29 +4334,28 @@ async function checkAndShowNotification() {
                     icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png'
                 });
                 
-                // Add onclick handler
                 newCodeNotif.onclick = function() {
-                    window.open(MAIN_URL, '_self'); // Navigates to the new version/refreshes
+                    window.open(MAIN_URL, '_self');
                     this.close();
                 };
                 
-                // Update the stored version so the user doesn't get notified again
                 localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
                 
-            } else if (Notification.permission !== "denied") {
-                requestNotificationPermission();
+            } else {
+                // If permission is not granted, we do nothing and let the user click the button.
             }
         }
     } catch (error) {
-        // Only log errors if the user is actively debugging
         console.error("Error during version check:", error);
     }
 }
 
 // --- VITAL: START POLLING ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Request permission immediately
-    requestNotificationPermission();
+    // 1. Initial button status check
+    if ("Notification" in window) {
+        updateButtonDisplay(Notification.permission);
+    }
     
     // 2. Run the check once immediately (with a short delay to load)
     setTimeout(checkAndShowNotification, 3000); 
@@ -4317,6 +4363,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Start the continuous polling loop
     setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
 });
+
+/* =================================================== */
+/*          END: FINAL, WORKING NOTIFICATION LOGIC     */
+/* =================================================== */
 
 /* =================================================== */
 /*          END: REAL-TIME POLLING NOTIFICATION LOGIC  */
