@@ -4323,28 +4323,29 @@ body.stealth-mode {
     <script>
 
 /* =================================================== */
-/*        START: FINAL WORKING NOTIFICATION LOGIC      */
+/* START: FINAL WORKING NOTIFICATION LOGIC (MODIFIED FOR TAB ALERT) */
 /* =================================================== */
-
 // --- VITAL CONSTANTS (Define these at the top of your script block) ---
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
 const MAIN_URL = 'https://xsmashx88x.github.io/test.shift/';
 const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/test.shift/main/code_version.txt';
-const POLLING_INTERVAL_MS = 60000; 
+const POLLING_INTERVAL_MS = 60000; // 60 seconds (1 minute)
+
+// --- NEW GLOBAL STATE FOR TAB ALERTING ---
+// Store the original title so we can revert it later
+const ORIGINAL_TITLE = document.title; 
+// Flag to track if we've detected a new code but the user hasn't seen it yet
+let hasPendingAlert = false; 
 // ----------------------------------------------------------------------
 
-
-// --- FUNCTION 1: Updates the button's text/style based on permission status ---
 // --- FUNCTION 1: Updates the button's text/style based on permission status ---
 function updateButtonDisplay(permission) {
     const button = document.getElementById('notif-permission-btn');
     if (!button) return;
-
     // Reset classes
-    button.className = 'floating-notif-bell'; 
+    button.className = 'floating-notif-bell';
     button.disabled = false;
     button.title = 'Enable Notifications';
-
     if (permission === 'granted') {
         button.classList.add('granted');
         button.classList.add('hidden'); // Hide if granted
@@ -4358,80 +4359,101 @@ function updateButtonDisplay(permission) {
         button.title = 'Click to enable real-time new code alerts!';
     }
 }
+
 // -----------------------------------------------------------------------------
-
-
 // --- FUNCTION 2: Requests permission from the browser ---
 function requestNotificationPermission() {
     if (!("Notification" in window)) {
         console.log("Browser doesn't support notifications.");
         return;
     }
-    
-    // The browser will display a pop-up. The result (permission) is passed to the callback.
     Notification.requestPermission(function (permission) {
-        updateButtonDisplay(permission); // Update the button immediately after user clicks Allow/Block
+        updateButtonDisplay(permission); 
     });
 }
 
-
-// --- FUNCTION 3: Checks for new codes and shows the notification ---
+// -----------------------------------------------------------------------------
+// --- FUNCTION 3: Checks for new codes and shows the notification (CORE LOGIC) ---
 async function checkAndShowNotification() {
     try {
         const response = await fetch(VERSION_FILE_URL + '?nocache=' + new Date().getTime());
         const latestVersionString = (await response.text()).trim();
         const LATEST_VERSION = parseInt(latestVersionString) || 0;
-        
         const lastNotifiedVersion = parseInt(localStorage.getItem(NOTIFICATION_STORAGE_KEY)) || 0;
-        
+
         if (LATEST_VERSION > lastNotifiedVersion) {
             
+            // Set flag to true to track that a new code has dropped
+            hasPendingAlert = true; 
+            
+            // 1. Show Desktop Notification (The OS-level alert)
             if (Notification.permission === "granted") {
-                
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
                     body: 'Vault Hunter! New codes are here! Click to view.',
-                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png', 
+                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png',
                     requireInteraction: true // Stays open until dismissed
                 });
-                
+                // When the user clicks the notification, switch to the tab and reload.
                 newCodeNotif.onclick = function() {
                     window.open(MAIN_URL, '_self');
                     this.close();
                 };
-                
-                localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
-                
-            } 
+            }
+            
+            // 2. Change the Tab Title (The fix for out-of-focus tabs)
+            // This works whether the tab is in the background or just in focus but not active.
+            document.title = '🚨 NEW CODE ALERT! 🚨 - ' + ORIGINAL_TITLE;
+
+            // 3. Update the version to prevent repeated alerts on the next poll cycle
+            localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
         }
     } catch (error) {
         console.error("Error during version check:", error);
     }
 }
+// -----------------------------------------------------------------------------
 
+// --- NEW FUNCTION 4: Handles tab focusing to revert the title and alert the user ---
+function handleVisibilityChange() {
+    // Check if the tab became active (document.hidden is false) and there is a pending alert
+    if (!document.hidden && hasPendingAlert) {
+        
+        // **This is the main change: Show a visible, blocking alert.**
+        alert('NEW CODE ALERT! New SHiFT codes are available!'); 
+
+        // Restore the original title
+        document.title = ORIGINAL_TITLE;
+        
+        // Reset the flag
+        hasPendingAlert = false;
+        
+        // Optional: You can choose to reload the page here to show the new codes immediately.
+        // location.reload(); 
+        // I have commented out the reload so the alert is more noticeable first.
+    }
+}
+// -----------------------------------------------------------------------------
 
 // --- FINAL EXECUTION BLOCK (Runs everything on page load) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Check if notifications are supported and if the button element exists
+    
+    // 1. Set up the notification button
     const notifButton = document.getElementById('notif-permission-btn');
-
     if ("Notification" in window && notifButton) {
-        // A. Set the button's text based on current permission status
         updateButtonDisplay(Notification.permission);
-        
-        // B. Attach the click handler to the button
-        notifButton.onclick = requestNotificationPermission; 
+        notifButton.onclick = requestNotificationPermission;
     }
     
     // 2. Start the Polling check
-    // Run the check once immediately (with a short delay to load)
-    setTimeout(checkAndShowNotification, 3000); 
-    
-    // Start the continuous polling loop
-    setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
+    setTimeout(checkAndShowNotification, 3000); // Run once immediately
+    setInterval(checkAndShowNotification, POLLING_INTERVAL_MS); // Start the continuous polling loop
+
+    // 3. Add event listener to detect when the tab comes back into focus
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 });
 /* =================================================== */
-/*          END: FINAL WORKING NOTIFICATION LOGIC      */
-/* =================================================== */ 
+/* END: FINAL WORKING NOTIFICATION LOGIC (MODIFIED FOR TAB ALERT) */
+/* =================================================== */
 
 /* =================================================== */
 /*    START: UNIFIED COLOR & LAYOUT MODE SCRIPT        */
