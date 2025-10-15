@@ -7082,30 +7082,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- FINAL, SELF-CONTAINED EXECUTION BLOCK ---
-(function() {
-    // We attach to the DOMContentLoaded event to ensure the button is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // 1. Initial button status check
-        const notifButton = document.getElementById('notif-permission-btn');
+// --- VITAL: START POLLING ---
+document.addEventListener('DOMContentLoaded', () => {
+    
+    let pollingIntervalId = null; // Variable to hold the ID of the running timer
 
-        if ("Notification" in window && notifButton) {
-            
-            // The updateButtonDisplay function must be called once the button exists
-            // and the permission is known.
-            updateButtonDisplay(Notification.permission);
-            
-            // VITAL: Attach the click handler ONLY if the button is found
-            notifButton.onclick = requestNotificationPermission; 
+    // --- FUNCTION 1: STOP POLLING ---
+    const stopPolling = () => {
+        if (pollingIntervalId !== null) {
+            clearInterval(pollingIntervalId);
+            pollingIntervalId = null;
         }
-        
-        // 2. Run the code check once immediately (with a short delay to load)
-        setTimeout(checkAndShowNotification, 3000); 
-        
-        // 3. Start the continuous polling loop
-        setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
+    };
+
+    // --- FUNCTION 2: START POLLING (Only runs when the tab is focused) ---
+    const startPolling = () => {
+        if (pollingIntervalId === null) {
+            // Run the check once immediately
+            checkAndShowNotification();
+            
+            // Start the continuous polling loop and save its ID
+            pollingIntervalId = setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
+        }
+    };
+    
+    // --- Initial setup (unchanged) ---
+    const notifButton = document.getElementById('notif-permission-btn');
+
+    if ("Notification" in window && notifButton) {
+        updateButtonDisplay(Notification.permission);
+        notifButton.onclick = requestNotificationPermission; 
+    }
+    // ------------------------------------
+
+    // 1. Initial check (Run when the page is first loaded/refreshed)
+    startPolling();
+
+    // 2. Attach Visibility Change Listeners (THE CORE FIX)
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            startPolling(); // Tab is now focused/visible, resume polling
+        } else {
+            stopPolling();  // Tab is now in the background, stop polling
+        }
     });
-})();
+});
 // --- END FINAL, SELF-CONTAINED EXECUTION BLOCK ---
 </script>
 
