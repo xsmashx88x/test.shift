@@ -4249,15 +4249,13 @@ body.stealth-mode {
     <script>
 
 /* =================================================== */
-/*        START: IN-FILE CONSTANT POLLING LOGIC        */
+/*        START: REAL-TIME POLLING NOTIFICATION LOGIC  */
 /* =================================================== */
 
-// --- VITAL: UPDATE THIS NUMBER TO TRIGGER A NEW CODE NOTIFICATION ---
-const NEW_CODE_VERSION = 30; // <-- EDIT THIS NUMBER to trigger a push
-// --- END OF NEW CODE VERSION FLAG ---
-
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
-const MAIN_URL = 'https://xsmashx88x.github.io/Shift-Codes/';
+const MAIN_URL = 'https://xsmashx88x.io/Shift-Codes/'; // Your main page URL
+// VITAL: This URL points to the separate file you must update
+const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/test.shift/main/code_version.txt';
 const POLLING_INTERVAL_MS = 60000; // Check every 60 seconds (1 minute)
 
 function requestNotificationPermission() {
@@ -4268,37 +4266,43 @@ function requestNotificationPermission() {
     }
 }
 
-function checkAndShowNotification() {
-    const LATEST_VERSION = NEW_CODE_VERSION; // Get version from the constant
-    const lastNotifiedVersion = parseInt(localStorage.getItem(NOTIFICATION_STORAGE_KEY)) || 0;
-    
-    // Check 1: Has the version number been incremented?
-    if (LATEST_VERSION > lastNotifiedVersion) {
+async function checkAndShowNotification() {
+    try {
+        // 1. Fetch the latest version number from the external text file
+        // The '?nocache=' part is VITAL to force the browser/CDN to download the *new* file
+        const response = await fetch(VERSION_FILE_URL + '?nocache=' + new Date().getTime());
+        const latestVersionString = (await response.text()).trim();
+        const LATEST_VERSION = parseInt(latestVersionString) || 0;
         
-        // Check 2: Does the browser support notifications and is permission granted?
-        if (Notification.permission === "granted") {
+        const lastNotifiedVersion = parseInt(localStorage.getItem(NOTIFICATION_STORAGE_KEY)) || 0;
+        
+        // Check 1: Has the version number been incremented?
+        if (LATEST_VERSION > lastNotifiedVersion) {
             
-            // Create the notification object
-            const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
-                body: 'Vault Hunter! New codes are here! Click to view.',
-                icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png'
-            });
-            
-            // Add onclick handler
-            newCodeNotif.onclick = function() {
-                window.open(MAIN_URL, '_self'); // Refreshes the current tab to show changes
-                this.close();
-            };
-            
-            // Update the stored version so the user doesn't get notified again
-            localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
-            
-            // Stop polling once the notification is sent for this session
-            clearInterval(window.notificationPolling);
-            
-        } else if (Notification.permission !== "denied") {
-            requestNotificationPermission();
+            // Check 2: Does the browser support notifications and is permission granted?
+            if (Notification.permission === "granted") {
+                
+                const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
+                    body: 'Vault Hunter! New codes are here! Click to view.',
+                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png'
+                });
+                
+                // Add onclick handler
+                newCodeNotif.onclick = function() {
+                    window.open(MAIN_URL, '_self'); // Navigates to the new version/refreshes
+                    this.close();
+                };
+                
+                // Update the stored version so the user doesn't get notified again
+                localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
+                
+            } else if (Notification.permission !== "denied") {
+                requestNotificationPermission();
+            }
         }
+    } catch (error) {
+        // Only log errors if the user is actively debugging
+        console.error("Error during version check:", error);
     }
 }
 
@@ -4310,31 +4314,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Run the check once immediately (with a short delay to load)
     setTimeout(checkAndShowNotification, 3000); 
     
-    // 3. Start the continuous polling loop on the *current DOM content*
-    // This is the CRITICAL change to achieve real-time checks on the current page content
-    window.notificationPolling = setInterval(() => {
-        // Since we cannot load the *new* file, we have to trust the user's
-        // browser cache will eventually update the file for us on the next session.
-        // For this specific requirement (instant push on the *same* page load without external file),
-        // we'll revert to the previous simple logic and explain the limitation:
-        // No simple JS can check for updates to its own source file without refresh.
-        
-        // We will keep the refresh-based logic as it is the only one that works simply.
-        // The previous code was correct for the 'on refresh' event.
-        // I will not add an ineffective setInterval here.
-        
-        // Final decision: The current simple code is correct for an update check on page load.
-        // The polling solution with a constant is ineffective, as the constant cannot change 
-        // without a refresh. The external file is the only true way to get real-time.
-        
-        // STICKING TO THE SIMPLEST, MOST EFFECTIVE CODE: The current 'on load' check.
-        // Any other solution requires an external server or file (which you don't want).
-    }, 100000000); // Setting to a huge number to disable polling, sticking to the simple 'on load' logic
+    // 3. Start the continuous polling loop
+    setInterval(checkAndShowNotification, POLLING_INTERVAL_MS);
 });
 
 /* =================================================== */
-/*          END: IN-FILE CONSTANT POLLING LOGIC        */
-/* =================================================== */    
+/*          END: REAL-TIME POLLING NOTIFICATION LOGIC  */
+/* =================================================== */ 
 
 /* =================================================== */
 /*    START: UNIFIED COLOR & LAYOUT MODE SCRIPT        */
