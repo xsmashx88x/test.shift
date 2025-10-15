@@ -4253,10 +4253,15 @@ body.stealth-mode {
 /* =================================================== */
 
 // --- VITAL: UPDATE THIS NUMBER TO TRIGGER A NEW CODE NOTIFICATION ---
-const NEW_CODE_VERSION = 21; 
+const NEW_CODE_VERSION = 22; 
 // --- END OF NEW CODE VERSION FLAG ---
 
+/* =================================================== */
+/*        START: BROWSER NOTIFICATION SCRIPT (FINAL)   */
+/* =================================================== */
+
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
+const MAIN_URL = 'https://xsmashx88x.github.io/Shift-Codes/';
 
 function requestNotificationPermission() {
     if (!("Notification" in window)) {
@@ -4275,10 +4280,18 @@ function showNewCodeNotification() {
         // Check 2: Does the browser support notifications and is permission granted?
         if (Notification.permission === "granted") {
             
-            new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
+            // Create the notification object
+            const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
                 body: 'Vault Hunter! We just added new codes to the tracker. Click to view!',
                 icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png'
             });
+            
+            // --- VITAL: ADD ONCLICK HANDLER ---
+            newCodeNotif.onclick = function() {
+                window.open(MAIN_URL, '_self'); // Opens the URL in the current tab
+                this.close(); // Closes the notification after clicking
+            };
+            // --- END ONCLICK HANDLER ---
             
             // Update the stored version so the user doesn't get notified again
             localStorage.setItem(NOTIFICATION_STORAGE_KEY, NEW_CODE_VERSION);
@@ -4300,8 +4313,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =================================================== */
-/*          END: BROWSER NOTIFICATION SCRIPT           */
-/* =================================================== */        
+/*          END: BROWSER NOTIFICATION SCRIPT (FINAL)   */
+/* =================================================== */       
 
 /* =================================================== */
 /*    START: UNIFIED COLOR & LAYOUT MODE SCRIPT        */
