@@ -3626,35 +3626,44 @@ body.stealth-mode {
 /*    END: CONSOLIDATED COLOR & LAYOUT MODE STYLES     */
 /* =================================================== */
 
-/* START: Notification Permission Button Style */
-.floating-notif-btn {
-    /* *** CHANGES ARE HERE *** */
-    position: fixed;
-    bottom: 70px; /* Moves it up 50px above the main floating panel */
-    left: 20px; /* Aligns it with the left edge of the screen */
-    /* *** END CHANGES *** */
-    
-    z-index: 1003;
-    background: #FF5722; /* Orange color */
+/* START: Custom Sticky Notification Bar Styles */
+#custom-notification-bar {
+    position: sticky; /* Makes it stick just below the title bar on scroll */
+    top: 0;
+    width: 100%;
+    margin-top: -20px; /* Pulls it up to sit just below the header */
+    background: linear-gradient(90deg, #ff4444, #cc0000);
     color: white;
-    border: 1px solid #E64A19;
-    border-radius: 4px;
-    padding: 8px 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-family: 'Chakra Petch', sans-serif;
-    font-size: 14px;
+}
+#custom-notification-bar p {
+    margin: 0;
+}
+#custom-notification-bar a {
+    color: #ffff00;
+    text-decoration: underline;
+    margin-left: 10px;
+    cursor: pointer;
+}
+#custom-notification-bar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    transition: all 0.2s ease-in-out;
+    line-height: 1;
 }
-.floating-notif-btn:hover {
-    background: #F4511E;
-    transform: scale(1.05);
-}
-.floating-notif-btn.hidden {
-    display: none !important;
-}
-/* END: Notification Permission Button Style */
+/* END: Custom Sticky Notification Bar Styles */
 
     </style>
 </head>
@@ -4276,11 +4285,15 @@ body.stealth-mode {
 </div>
 <!-- END: COMBINED LAYOUT & COLOR MODE PANEL -->
 
-<!-- START: Notification Permission Button -->
-<button class="floating-notif-btn" onclick="requestNotificationPermission()" id="notif-permission-btn">
-    Enable Notif 🔔
-</button>
-<!-- END: Notification Permission Button -->
+<!-- START: CUSTOM STICKY NOTIFICATION BAR -->
+<div id="custom-notification-bar" style="display: none;">
+    <p>
+        🚨 New SHiFT Codes Dropped! Click to view!
+        <a href="https://xsmashx88x.github.io/Shift-Codes/" target="_self" onclick="this.parentNode.style.display='none';">REFRESH NOW</a>
+    </p>
+    <button onclick="document.getElementById('custom-notification-bar').style.display='none';">X</button>
+</div>
+<!-- END: CUSTOM STICKY NOTIFICATION BAR -->
 
     <script>
 
@@ -4330,18 +4343,15 @@ async function checkAndShowNotification() {
         
         if (LATEST_VERSION > lastNotifiedVersion) {
             
-if (Notification.permission === "granted") {
+            if (Notification.permission === "granted") {
                 
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
                     body: 'Vault Hunter! New codes are here! Click to view.',
-                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png', // <--- ADD COMMA HERE
-                    
-                    // <<< ADD THIS LINE >>>
-                    requireInteraction: true // This forces the notification to stay visible
+                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png', 
+                    requireInteraction: true // <<< CORRECTED LINE WITH COMMA ADDED ABOVE >>>
                 });
     
-    // Add onclick handler
-
+                // Add onclick handler
                 newCodeNotif.onclick = function() {
                     window.open(MAIN_URL, '_self');
                     this.close();
