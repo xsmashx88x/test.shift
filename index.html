@@ -4248,17 +4248,13 @@ body.stealth-mode {
 
     <script>
 
-/* =================================================== */
-/*        START: BROWSER NOTIFICATION SCRIPT           */
+//* =================================================== */
+/*        START: IN-FILE VERSION NOTIFICATION LOGIC    */
 /* =================================================== */
 
 // --- VITAL: UPDATE THIS NUMBER TO TRIGGER A NEW CODE NOTIFICATION ---
-const NEW_CODE_VERSION = 22; 
+const NEW_CODE_VERSION = 20; // <-- EDIT THIS NUMBER to trigger a push
 // --- END OF NEW CODE VERSION FLAG ---
-
-/* =================================================== */
-/*        START: BROWSER NOTIFICATION SCRIPT (FINAL)   */
-/* =================================================== */
 
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
 const MAIN_URL = 'https://xsmashx88x.github.io/Shift-Codes/';
@@ -4271,30 +4267,30 @@ function requestNotificationPermission() {
     }
 }
 
-function showNewCodeNotification() {
+function checkAndShowNotification() {
+    const LATEST_VERSION = NEW_CODE_VERSION; // Get version from the constant
     const lastNotifiedVersion = parseInt(localStorage.getItem(NOTIFICATION_STORAGE_KEY)) || 0;
     
     // Check 1: Has the version number been incremented?
-    if (NEW_CODE_VERSION > lastNotifiedVersion) {
+    if (LATEST_VERSION > lastNotifiedVersion) {
         
         // Check 2: Does the browser support notifications and is permission granted?
         if (Notification.permission === "granted") {
             
             // Create the notification object
             const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
-                body: 'Vault Hunter! We just added new codes to the tracker. Click to view!',
+                body: 'Vault Hunter! New codes are here! Click to view.',
                 icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png'
             });
             
-            // --- VITAL: ADD ONCLICK HANDLER ---
+            // Add onclick handler
             newCodeNotif.onclick = function() {
-                window.open(MAIN_URL, '_self'); // Opens the URL in the current tab
-                this.close(); // Closes the notification after clicking
+                window.open(MAIN_URL, '_self'); // Refreshes the current tab to show changes
+                this.close();
             };
-            // --- END ONCLICK HANDLER ---
             
             // Update the stored version so the user doesn't get notified again
-            localStorage.setItem(NOTIFICATION_STORAGE_KEY, NEW_CODE_VERSION);
+            localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
             
         } else if (Notification.permission !== "denied") {
             // Permission is default/unknown. Request it now.
@@ -4305,16 +4301,16 @@ function showNewCodeNotification() {
 
 // --- VITAL: RUN NOTIFICATION LOGIC AFTER INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
-    // We request permission when the page loads (best practice)
+    // 1. Request permission immediately
     requestNotificationPermission();
     
-    // We check for new codes shortly after the page has rendered
-    setTimeout(showNewCodeNotification, 3000); // 3 seconds delay
+    // 2. Run the check once immediately (with a short delay to load)
+    setTimeout(checkAndShowNotification, 3000); 
 });
 
 /* =================================================== */
-/*          END: BROWSER NOTIFICATION SCRIPT (FINAL)   */
-/* =================================================== */       
+/*          END: IN-FILE VERSION NOTIFICATION LOGIC    */
+/* =================================================== */    
 
 /* =================================================== */
 /*    START: UNIFIED COLOR & LAYOUT MODE SCRIPT        */
