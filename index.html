@@ -4298,29 +4298,33 @@ body.stealth-mode {
     <script>
 
 /* =================================================== */
-/*        START: FINAL, WORKING NOTIFICATION LOGIC     */
+/*        START: FINAL WORKING NOTIFICATION LOGIC      */
 /* =================================================== */
 
+// --- VITAL CONSTANTS (Ensure these are defined) ---
 const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
 const MAIN_URL = 'https://xsmashx88x.github.io/test.shift/';
 const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/test.shift/main/code_version.txt';
-const POLLING_INTERVAL_MS = 60000; // Check every 60 seconds
+const POLLING_INTERVAL_MS = 60000; 
 
+// --- MISSING FUNCTION: THIS UPDATES THE BUTTON'S TEXT/STYLE ---
 function updateButtonDisplay(permission) {
     const button = document.getElementById('notif-permission-btn');
     if (!button) return;
 
     if (permission === 'granted') {
         button.textContent = 'Notif Enabled ✅';
-        button.classList.add('hidden');
+        button.classList.add('hidden'); // Hide if granted
     } else if (permission === 'denied') {
         button.textContent = 'Notif Blocked 🚫';
         button.disabled = true;
     } else {
         button.textContent = 'Enable Notif 🔔';
-        button.classList.remove('hidden');
+        button.classList.remove('hidden'); // Ensure visible if still default/prompting
     }
 }
+// --- END MISSING FUNCTION ---
+
 
 function requestNotificationPermission() {
     if (!("Notification" in window)) {
@@ -4328,6 +4332,7 @@ function requestNotificationPermission() {
         return;
     }
     
+    // Pass the permission result to the display update function
     Notification.requestPermission(function (permission) {
         updateButtonDisplay(permission);
     });
@@ -4335,6 +4340,7 @@ function requestNotificationPermission() {
 
 async function checkAndShowNotification() {
     try {
+        // Fetch the latest version number from the external text file
         const response = await fetch(VERSION_FILE_URL + '?nocache=' + new Date().getTime());
         const latestVersionString = (await response.text()).trim();
         const LATEST_VERSION = parseInt(latestVersionString) || 0;
@@ -4348,10 +4354,9 @@ async function checkAndShowNotification() {
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
                     body: 'Vault Hunter! New codes are here! Click to view.',
                     icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png', 
-                    requireInteraction: true // <<< CORRECTED LINE WITH COMMA ADDED ABOVE >>>
+                    requireInteraction: true 
                 });
-    
-                // Add onclick handler
+                
                 newCodeNotif.onclick = function() {
                     window.open(MAIN_URL, '_self');
                     this.close();
@@ -4360,7 +4365,7 @@ async function checkAndShowNotification() {
                 localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
                 
             } else {
-                // If permission is not granted, we do nothing and let the user click the button.
+                // If not granted, the button will remain visible to prompt the user
             }
         }
     } catch (error) {
@@ -4370,8 +4375,8 @@ async function checkAndShowNotification() {
 
 // --- VITAL: START POLLING ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial button status check
-    if ("Notification" in window) {
+    // 1. Initial button status check (This now works because updateButtonDisplay is defined)
+    if ("Notification" in window && document.getElementById('notif-permission-btn')) {
         updateButtonDisplay(Notification.permission);
     }
     
@@ -4383,11 +4388,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =================================================== */
-/*          END: FINAL, WORKING NOTIFICATION LOGIC     */
-/* =================================================== */
-
-/* =================================================== */
-/*          END: REAL-TIME POLLING NOTIFICATION LOGIC  */
+/*          END: FINAL WORKING NOTIFICATION LOGIC      */
 /* =================================================== */ 
 
 /* =================================================== */
