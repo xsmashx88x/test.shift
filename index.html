@@ -4330,13 +4330,18 @@ async function checkAndShowNotification() {
         
         if (LATEST_VERSION > lastNotifiedVersion) {
             
-            if (Notification.permission === "granted") {
+if (Notification.permission === "granted") {
                 
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
                     body: 'Vault Hunter! New codes are here! Click to view.',
-                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png'
+                    icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png', // <--- ADD COMMA HERE
+                    
+                    // <<< ADD THIS LINE >>>
+                    requireInteraction: true // This forces the notification to stay visible
                 });
-                
+    
+    // Add onclick handler
+
                 newCodeNotif.onclick = function() {
                     window.open(MAIN_URL, '_self');
                     this.close();
