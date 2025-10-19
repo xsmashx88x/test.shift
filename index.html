@@ -5028,8 +5028,6 @@ hr.form-separator {
 /* ============================================== */
 
 
-
-
 /* =================================================== */
 /*    MOBILE STYLES FOR CUSTOM MODALS (FIT + SCROLL)  */
 /* =================================================== */
@@ -5054,39 +5052,42 @@ hr.form-separator {
         max-width: 500px !important;
         max-height: 90vh !important;
         margin: auto !important;
-        overflow: hidden !important;
+        overflow-y: auto !important; /* Changed from hidden to auto */
+        -webkit-overflow-scrolling: touch !important;
         display: flex !important;
         flex-direction: column !important;
     }
     
-    /* Scrollable content area */
+    /* Remove scroll from content areas - let modal handle it */
     .modal-body,
     .feedback-modal-content > form,
     .poll-modal-content > form,
     .submit-modal-content > div:not(.submit-action-btn) {
         flex-grow: 1 !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        max-height: calc(90vh - 120px) !important; /* Reserve space for header/footer */
+        overflow: visible !important; /* Changed from auto to visible */
+        max-height: none !important; /* Remove max-height constraint */
     }
     
-    /* Ensure close buttons are always visible */
+    /* Make close buttons larger and more accessible */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
     .close-submit-modal {
-        position: absolute !important;
-        top: -15px !important;
-        right: -15px !important;
-        z-index: 1060 !important;
-        width: 30px !important;
-        height: 30px !important;
+        position: fixed !important; /* Changed from absolute to fixed */
+        top: 10px !important; /* Position from top of screen */
+        right: 10px !important; /* Position from right of screen */
+        z-index: 9999 !important; /* Higher z-index to ensure it's on top */
+        width: 44px !important; /* Minimum touch target size */
+        height: 44px !important; /* Minimum touch target size */
         background: #ff4444 !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 20px !important;
+        font-size: 24px !important; /* Larger font for better visibility */
+        color: white !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important; /* Add shadow for visibility */
+        border: 2px solid white !important; /* Add border for contrast */
     }
     
     /* Make buttons more touch-friendly */
@@ -5111,20 +5112,41 @@ hr.form-separator {
         padding: 12px !important;
     }
     
-    /* Specific fix for feedback modal form scrolling */
-    #feedback-form {
-        max-height: calc(90vh - 150px) !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
+    /* Remove scroll from form containers */
+    #feedback-form,
+    #poll-form {
+        max-height: none !important;
+        overflow: visible !important;
     }
     
-    /* Specific fix for poll modal form scrolling */
-    #poll-form {
-        max-height: calc(90vh - 150px) !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
+    /* Ensure modal header stays visible when scrolling */
+    .modal-header,
+    .feedback-modal-header,
+    .poll-modal-header,
+    .submit-modal-header {
+        position: sticky !important;
+        top: 0 !important;
+        background: white !important;
+        z-index: 10 !important;
+        padding: 15px 20px !important;
+        border-bottom: 1px solid #eee !important;
+    }
+    
+    /* Ensure modal footer stays visible when scrolling */
+    .modal-footer,
+    .feedback-modal-footer,
+    .poll-modal-footer,
+    .submit-modal-footer {
+        position: sticky !important;
+        bottom: 0 !important;
+        background: white !important;
+        z-index: 10 !important;
+        padding: 15px 20px !important;
+        border-top: 1px solid #eee !important;
     }
 }
+
+
     
     </style>
 </head>
