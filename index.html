@@ -5048,52 +5048,72 @@ hr.form-separator {
         -webkit-overflow-scrolling: touch !important;
     }
     
-    /* Make modal content fit naturally with max dimensions */
+    /* Make modal content consistent size with proper spacing */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content {
         width: 95vw !important;
         max-width: 500px !important;
-        max-height: 85vh !important;
+        max-height: 80vh !important; /* Consistent max height */
         margin: auto !important;
-        overflow-y: auto !important;
+        overflow-y: scroll !important; /* Always show scrollbar */
         -webkit-overflow-scrolling: touch !important;
         display: flex !important;
         flex-direction: column !important;
+        border: 2px solid #333 !important; /* Clear border for X positioning */
+        position: relative !important; /* For X positioning */
     }
     
-    /* Scrollable content area */
+    /* Force white scrollbars to always be visible */
+    .modal-content::-webkit-scrollbar,
+    .feedback-modal-content::-webkit-scrollbar,
+    .poll-modal-content::-webkit-scrollbar,
+    .submit-modal-content::-webkit-scrollbar {
+        width: 8px !important;
+        background: transparent !important;
+    }
+    
+    .modal-content::-webkit-scrollbar-thumb,
+    .feedback-modal-content::-webkit-scrollbar-thumb,
+    .poll-modal-content::-webkit-scrollbar-thumb,
+    .submit-modal-content::-webkit-scrollbar-thumb {
+        background: #ffffff !important; /* WHITE scrollbar */
+        border-radius: 4px !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    /* Remove scroll from content areas - modal handles scrolling */
     .modal-body,
     .feedback-modal-content > form,
     .poll-modal-content > form,
     .submit-modal-content > div:not(.submit-action-btn) {
         flex-grow: 1 !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        max-height: calc(90vh - 120px) !important;
+        overflow: visible !important; /* No internal scrolling */
+        max-height: none !important; /* Remove height limits */
+        padding: 20px !important;
     }
     
-    /* Ensure close buttons are always visible and clickable */
+    /* Ensure close buttons are on modal border, not overlay */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
     .close-submit-modal {
-        position: fixed !important;
-        top: 20px !important;
-        right: 20px !important;
-        z-index: 9999 !important;
-        width: 44px !important;
-        height: 44px !important;
+        position: absolute !important; /* Relative to modal */
+        top: -15px !important; /* Half outside modal */
+        right: -15px !important; /* Half outside modal */
+        z-index: 1060 !important;
+        width: 44px !important; /* Larger touch target */
+        height: 44px !important; /* Larger touch target */
         background: #ff4444 !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 24px !important;
+        font-size: 20px !important;
         color: white !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
-        border: 2px solid white !important;
+        border: 3px solid white !important; /* White border for contrast */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
     }
     
     /* Make buttons more touch-friendly */
@@ -5116,20 +5136,78 @@ hr.form-separator {
         font-size: 16px !important;
         min-height: 44px !important;
         padding: 12px !important;
+        margin-bottom: 15px !important;
     }
     
-    /* Specific fix for feedback modal form scrolling */
-    #feedback-form {
-        max-height: calc(90vh - 150px) !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
-    
-    /* Specific fix for poll modal form scrolling */
+    /* Remove internal form scrolling */
+    #feedback-form,
     #poll-form {
-        max-height: calc(90vh - 150px) !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    
+    /* Specific height adjustments for different modal types */
+    
+    /* Feedback modal - keep current good size */
+    .feedback-modal-content {
+        max-height: 75vh !important; /* Slightly smaller for good proportions */
+    }
+    
+    /* Submit shift code modal - match feedback modal size */
+    .submit-modal-content {
+        max-height: 75vh !important; /* Same as feedback modal */
+    }
+    
+    /* Poll modal - can be slightly larger if needed */
+    .poll-modal-content {
+        max-height: 78vh !important;
+    }
+}
+
+/* =================================================== */
+/*    EXTRA SMALL DEVICES (Phones)                    */
+/* =================================================== */
+@media (max-width: 575.98px) {
+    .modal-overlay,
+    .feedback-modal-overlay,
+    .poll-modal-overlay,
+    .submit-modal-overlay {
+        padding: 30px 8px !important; /* Slightly less padding on small screens */
+    }
+    
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        width: 98vw !important;
+        max-height: 82vh !important; /* Slightly taller on small screens */
+    }
+    
+    .feedback-modal-content,
+    .submit-modal-content {
+        max-height: 78vh !important; /* Adjusted for small screens */
+    }
+    
+    .modal-body,
+    .feedback-modal-content > form,
+    .poll-modal-content > form,
+    .submit-modal-content > div:not(.submit-action-btn) {
+        padding: 15px !important;
+    }
+}
+
+/* =================================================== */
+/*    FIREFOX SCROLLBAR FIX (non-WebKit browsers)     */
+/* =================================================== */
+@supports not (-webkit-overflow-scrolling: touch) {
+    @media (max-width: 767.98px) {
+        .modal-content,
+        .feedback-modal-content,
+        .poll-modal-content,
+        .submit-modal-content {
+            scrollbar-width: thin !important;
+            scrollbar-color: white transparent !important;
+        }
     }
 }
 /* =================================================== */    
