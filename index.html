@@ -5227,6 +5227,9 @@ hr.form-separator {
 /* =================================================== */
 /*    EXTRA SMALL DEVICES (Phones)                    */
 /* =================================================== */
+/* =================================================== */
+/* MOBILE STYLES (Screen sizes up to 575.98px)     */
+/* =================================================== */
 @media (max-width: 575.98px) {
     .modal-overlay,
     .feedback-modal-overlay,
@@ -5234,7 +5237,7 @@ hr.form-separator {
     .submit-modal-overlay {
         padding: 30px 8px !important;
     }
-    
+
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
@@ -5243,20 +5246,25 @@ hr.form-separator {
         max-height: 82vh !important;
         /* Slightly less zoom-out on very small screens */
         transform: translate(-50%, -50%) scale(0.98) !important;
+        
+        /* === FIX 1: Ensure the modal container itself can scroll if its content overflows === */
+        /* 'auto' allows scrolling when necessary. 'scroll' forces the scrollbar always on. */
+        overflow-y: scroll !important; /* Forces the vertical scrollbar to always show up */
+        -webkit-overflow-scrolling: touch; /* Improves scrolling performance on iOS */
     }
-    
+
     .feedback-modal-content,
     .submit-modal-content {
         max-height: 78vh !important;
     }
-    
+
     .modal-body,
     .feedback-modal-content > form,
     .poll-modal-content > form,
     .submit-modal-content > div:not(.submit-action-btn) {
         padding: 15px !important;
     }
-    
+
     /* Adjust close button scale for small screens */
     .close-btn,
     .feedback-close-btn,
@@ -5267,7 +5275,7 @@ hr.form-separator {
 }
 
 /* =================================================== */
-/*    BODY LOCK WHEN MODAL OPEN                       */
+/* BODY LOCK WHEN MODAL OPEN (Screen sizes up to 767.98px) */
 /* =================================================== */
 @media (max-width: 767.98px) {
     body.modal-open {
@@ -5277,8 +5285,11 @@ hr.form-separator {
         overflow: hidden !important;
         /* FIX: Prevent body scroll but allow modal scroll */
         touch-action: none !important;
+        
+        /* Optional: Add padding-right to body to prevent content shift when scrollbar is hidden */
+        /* padding-right: 15px !important; */ 
     }
-    
+
     /* FIX: Ensure modal content can still be scrolled */
     body.modal-open .modal-content,
     body.modal-open .feedback-modal-content,
@@ -5289,7 +5300,7 @@ hr.form-separator {
 }
 
 /* =================================================== */
-/*    VIEWPORT ZOOM PREVENTION                        */
+/* VIEWPORT ZOOM PREVENTION                        */
 /* =================================================== */
 /* Add this to your HTML head for maximum zoom prevention */
 /*
