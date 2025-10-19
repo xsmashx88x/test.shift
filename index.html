@@ -5055,23 +5055,26 @@ hr.form-separator {
     .submit-modal-content {
         width: 95vw !important;
         max-width: 500px !important;
-        max-height: 80vh !important; /* Consistent max height */
+        max-height: 80vh !important;
         margin: auto !important;
-        overflow-y: scroll !important; /* Always show scrollbar */
+        overflow-y: scroll !important; /* FORCE scrollbar always */
         -webkit-overflow-scrolling: touch !important;
         display: flex !important;
         flex-direction: column !important;
-        border: 2px solid #333 !important; /* Clear border for X positioning */
-        position: relative !important; /* For X positioning */
+        border: 2px solid #333 !important;
+        position: relative !important;
     }
     
-    /* Force white scrollbars to always be visible */
+    /* ALWAYS show white scrollbars - WebKit browsers */
     .modal-content::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
     .submit-modal-content::-webkit-scrollbar {
-        width: 8px !important;
-        background: transparent !important;
+        width: 10px !important; /* Thicker so it's always visible */
+        background: #f0f0f0 !important; /* Light background track */
+        border-radius: 5px !important;
+        display: block !important; /* Force display */
+        visibility: visible !important; /* Force visibility */
     }
     
     .modal-content::-webkit-scrollbar-thumb,
@@ -5079,8 +5082,29 @@ hr.form-separator {
     .poll-modal-content::-webkit-scrollbar-thumb,
     .submit-modal-content::-webkit-scrollbar-thumb {
         background: #ffffff !important; /* WHITE scrollbar */
-        border-radius: 4px !important;
-        border: 1px solid #ccc !important;
+        border-radius: 5px !important;
+        border: 2px solid #ccc !important; /* Border for visibility */
+        box-shadow: 0 0 4px rgba(0,0,0,0.3) !important; /* Shadow for visibility */
+    }
+    
+    /* ALWAYS show scrollbars - even when not scrolling */
+    .modal-content::-webkit-scrollbar-track,
+    .feedback-modal-content::-webkit-scrollbar-track,
+    .poll-modal-content::-webkit-scrollbar-track,
+    .submit-modal-content::-webkit-scrollbar-track {
+        background: #f0f0f0 !important; /* Always visible track */
+        border-radius: 5px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* FIREFOX - Force scrollbars always visible */
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        scrollbar-width: thin !important; /* Force thin scrollbar */
+        scrollbar-color: white #f0f0f0 !important; /* White thumb, gray track */
     }
     
     /* Remove scroll from content areas - modal handles scrolling */
@@ -5089,22 +5113,22 @@ hr.form-separator {
     .poll-modal-content > form,
     .submit-modal-content > div:not(.submit-action-btn) {
         flex-grow: 1 !important;
-        overflow: visible !important; /* No internal scrolling */
-        max-height: none !important; /* Remove height limits */
+        overflow: visible !important;
+        max-height: none !important;
         padding: 20px !important;
     }
     
-    /* Ensure close buttons are on modal border, not overlay */
+    /* Ensure close buttons are on modal border */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
     .close-submit-modal {
-        position: absolute !important; /* Relative to modal */
-        top: -15px !important; /* Half outside modal */
-        right: -15px !important; /* Half outside modal */
+        position: absolute !important;
+        top: -15px !important;
+        right: -15px !important;
         z-index: 1060 !important;
-        width: 44px !important; /* Larger touch target */
-        height: 44px !important; /* Larger touch target */
+        width: 44px !important;
+        height: 44px !important;
         background: #ff4444 !important;
         border-radius: 50% !important;
         display: flex !important;
@@ -5112,7 +5136,7 @@ hr.form-separator {
         justify-content: center !important;
         font-size: 20px !important;
         color: white !important;
-        border: 3px solid white !important; /* White border for contrast */
+        border: 3px solid white !important;
         box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
     }
     
@@ -5146,19 +5170,15 @@ hr.form-separator {
         overflow: visible !important;
     }
     
-    /* Specific height adjustments for different modal types */
-    
-    /* Feedback modal - keep current good size */
+    /* Specific height adjustments */
     .feedback-modal-content {
-        max-height: 75vh !important; /* Slightly smaller for good proportions */
+        max-height: 75vh !important;
     }
     
-    /* Submit shift code modal - match feedback modal size */
     .submit-modal-content {
-        max-height: 75vh !important; /* Same as feedback modal */
+        max-height: 75vh !important;
     }
     
-    /* Poll modal - can be slightly larger if needed */
     .poll-modal-content {
         max-height: 78vh !important;
     }
@@ -5172,7 +5192,7 @@ hr.form-separator {
     .feedback-modal-overlay,
     .poll-modal-overlay,
     .submit-modal-overlay {
-        padding: 30px 8px !important; /* Slightly less padding on small screens */
+        padding: 30px 8px !important;
     }
     
     .modal-content,
@@ -5180,12 +5200,12 @@ hr.form-separator {
     .poll-modal-content,
     .submit-modal-content {
         width: 98vw !important;
-        max-height: 82vh !important; /* Slightly taller on small screens */
+        max-height: 82vh !important;
     }
     
     .feedback-modal-content,
     .submit-modal-content {
-        max-height: 78vh !important; /* Adjusted for small screens */
+        max-height: 78vh !important;
     }
     
     .modal-body,
@@ -5197,17 +5217,41 @@ hr.form-separator {
 }
 
 /* =================================================== */
-/*    FIREFOX SCROLLBAR FIX (non-WebKit browsers)     */
+/*    FORCE SCROLLBARS ON ALL BROWSERS - NUCLEAR OPTION */
 /* =================================================== */
-@supports not (-webkit-overflow-scrolling: touch) {
-    @media (max-width: 767.98px) {
-        .modal-content,
-        .feedback-modal-content,
-        .poll-modal-content,
-        .submit-modal-content {
-            scrollbar-width: thin !important;
-            scrollbar-color: white transparent !important;
-        }
+@media (max-width: 767.98px) {
+    /* Nuclear option - create fake scrollbar area */
+    .modal-content:after,
+    .feedback-modal-content:after,
+    .poll-modal-content:after,
+    .submit-modal-content:after {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 10px !important;
+        height: 100% !important;
+        background: #f0f0f0 !important;
+        border-radius: 0 5px 5px 0 !important;
+        pointer-events: none !important;
+        z-index: 1 !important;
+    }
+    
+    .modal-content:before,
+    .feedback-modal-content:before,
+    .poll-modal-content:before,
+    .submit-modal-content:before {
+        content: '' !important;
+        position: absolute !important;
+        top: 10% !important;
+        right: 2px !important;
+        width: 6px !important;
+        height: 80% !important;
+        background: white !important;
+        border-radius: 3px !important;
+        border: 1px solid #ccc !important;
+        pointer-events: none !important;
+        z-index: 2 !important;
     }
 }
 /* =================================================== */    
