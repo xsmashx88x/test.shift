@@ -5055,6 +5055,9 @@ hr.form-separator {
         /* PREVENT ZOOM AND BOUNCE */
         touch-action: pan-y !important;
         overscroll-behavior: contain !important;
+        /* FIX: Ensure overlay is above everything */
+        z-index: 9998 !important;
+        background: rgba(0, 0, 0, 0.8) !important;
     }
     
     /* Make modal content consistent size with proper spacing */
@@ -5071,22 +5074,21 @@ hr.form-separator {
         display: flex !important;
         flex-direction: column !important;
         border: 2px solid #333 !important;
-        /* LOCK MODAL POSITION */
+        background: white !important; /* FIX: Ensure background */
+        /* LOCK MODAL POSITION - FIXED VERSION */
         position: fixed !important;
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        /* PREVENT MODAL MOVEMENT - LOCK HORIZONTAL, ALLOW VERTICAL */
+        /* FIX: Higher z-index for modal */
+        z-index: 9999 !important;
+        /* PREVENT MODAL MOVEMENT */
         overscroll-behavior: contain !important;
         /* PREVENT ZOOM */
         touch-action: pan-y !important;
         -webkit-text-size-adjust: 100% !important;
         text-size-adjust: 100% !important;
-        /* REMOVE custom scrollbar padding */
-        padding-right: 0 !important;
     }
-    
-    /* REMOVED the ugly custom scrollbars */
     
     /* FORCE SYSTEM SCROLLBARS TO ALWAYS SHOW - WebKit */
     .modal-content::-webkit-scrollbar,
@@ -5103,7 +5105,6 @@ hr.form-separator {
     .submit-modal-content::-webkit-scrollbar-thumb {
         background: #888 !important;
         border-radius: 4px !important;
-        visibility: visible !important;
     }
     
     .modal-content::-webkit-scrollbar-track,
@@ -5111,16 +5112,6 @@ hr.form-separator {
     .poll-modal-content::-webkit-scrollbar-track,
     .submit-modal-content::-webkit-scrollbar-track {
         background: #f1f1f1 !important;
-        visibility: visible !important;
-    }
-    
-    /* FIREFOX - Force scrollbars */
-    .modal-content,
-    .feedback-modal-content,
-    .poll-modal-content,
-    .submit-modal-content {
-        scrollbar-width: thin !important;
-        scrollbar-color: #888 #f1f1f1 !important;
     }
     
     /* Remove scroll from content areas - modal handles scrolling */
@@ -5132,14 +5123,12 @@ hr.form-separator {
         overflow: visible !important;
         max-height: none !important;
         padding: 20px !important;
-        /* LOCK HORIZONTAL MOVEMENT */
-        overflow-x: hidden !important;
-        width: 100% !important;
-        /* Prevent content movement */
-        overscroll-behavior: contain !important;
+        /* FIX: Ensure content is visible and clickable */
+        position: relative !important;
+        z-index: 1 !important;
     }
     
-    /* Ensure close buttons are on modal border */
+    /* Ensure close buttons are on modal border - FIXED CLICKABILITY */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
@@ -5147,7 +5136,7 @@ hr.form-separator {
         position: absolute !important;
         top: -15px !important;
         right: -15px !important;
-        z-index: 1060 !important;
+        z-index: 10000 !important; /* FIX: Higher z-index */
         width: 44px !important;
         height: 44px !important;
         background: #ff4444 !important;
@@ -5159,9 +5148,12 @@ hr.form-separator {
         color: white !important;
         border: 3px solid white !important;
         box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+        /* FIX: Ensure button is clickable */
+        pointer-events: auto !important;
+        cursor: pointer !important;
     }
     
-    /* Make buttons more touch-friendly */
+    /* Make buttons more touch-friendly - FIXED CLICKABILITY */
     .feedback-nav-btn,
     .poll-nav-btn,
     .poll-submit-btn,
@@ -5171,23 +5163,44 @@ hr.form-separator {
         min-height: 44px !important;
         padding: 12px 20px !important;
         font-size: 16px !important;
+        /* FIX: Ensure buttons are clickable */
+        position: relative !important;
+        z-index: 2 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
     }
     
-    /* Form inputs more touch-friendly */
+    /* Form inputs more touch-friendly - FIXED FUNCTIONALITY */
     input[type="text"],
     input[type="url"],
+    input[type="email"],
+    input[type="password"],
     textarea,
     select {
         font-size: 16px !important;
         min-height: 44px !important;
         padding: 12px !important;
         margin-bottom: 15px !important;
-        /* PREVENT ZOOM */
+        /* FIX: Ensure inputs are functional */
+        position: relative !important;
+        z-index: 2 !important;
+        pointer-events: auto !important;
+        /* PREVENT ZOOM but keep functionality */
         touch-action: manipulation !important;
         transform: scale(1) !important;
-        /* LOCK HORIZONTAL MOVEMENT */
+        /* FIX: Ensure proper sizing */
         width: 100% !important;
         box-sizing: border-box !important;
+        border: 1px solid #ccc !important;
+        background: white !important;
+    }
+    
+    /* FIX: Ensure form elements are focusable */
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: 2px solid #007bff !important;
+        outline-offset: 2px !important;
     }
     
     /* Remove internal form scrolling */
@@ -5195,9 +5208,6 @@ hr.form-separator {
     #poll-form {
         max-height: none !important;
         overflow: visible !important;
-        /* LOCK HORIZONTAL MOVEMENT */
-        overflow-x: hidden !important;
-        width: 100% !important;
     }
     
     /* Specific height adjustments */
@@ -5247,7 +5257,7 @@ hr.form-separator {
 }
 
 /* =================================================== */
-/*    BODY LOCK WHEN MODAL OPEN (Optional)            */
+/*    BODY LOCK WHEN MODAL OPEN                       */
 /* =================================================== */
 @media (max-width: 767.98px) {
     body.modal-open {
@@ -5255,6 +5265,16 @@ hr.form-separator {
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
+        /* FIX: Prevent body scroll but allow modal scroll */
+        touch-action: none !important;
+    }
+    
+    /* FIX: Ensure modal content can still be scrolled */
+    body.modal-open .modal-content,
+    body.modal-open .feedback-modal-content,
+    body.modal-open .poll-modal-content,
+    body.modal-open .submit-modal-content {
+        touch-action: pan-y !important;
     }
 }
 
