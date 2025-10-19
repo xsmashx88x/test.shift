@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png">
     <meta charset="UTF-8">
@@ -5037,19 +5038,18 @@ hr.form-separator {
 /* =================================================== */
 @media (max-width: 767.98px) {
 
-    /* --- 1. BODY SCROLL LOCK: CRITICAL FIX FOR ISSUE #3 --- */
-    /* When any modal is open, this fixes the background page scroll */
+    /* --- 1. CRITICAL: BODY SCROLL LOCK --- */
+    /* This locks the background page when a modal is open. */
     body.modal-open {
         position: fixed !important;
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
-        /* Prevents accidental touch scroll/manipulation */
-        touch-action: none !important; 
+        touch-action: none !important; /* Prevents unwanted touch-scroll/zoom */
     }
 
     /* --- 2. MODAL OVERLAY STYLES --- */
-    /* Target all your modal overlay classes */
+    /* Ensures the dark overlay is fixed and covers the entire viewport. */
     .modal-overlay,
     .feedback-modal-overlay,
     .poll-modal-overlay,
@@ -5061,82 +5061,61 @@ hr.form-separator {
         height: 100% !important;
         z-index: 9998 !important;
         background: rgba(0, 0, 0, 0.85) !important;
-        /* Ensures the overlay handles scroll/zoom gracefully if it has to */
-        touch-action: pan-y !important;
+        /* Ensures the overlay itself can scroll if the content is taller than the viewport */
+        overflow-y: auto !important; 
         -webkit-overflow-scrolling: touch !important;
-        overflow-y: scroll !important; /* Fallback for if modal content is too big */
     }
 
-    /* --- 3. MODAL CONTENT STYLES: CRITICAL FIX FOR ISSUE #1 & #2 --- */
+    /* --- 3. MODAL CONTENT STYLES --- */
+    /* Ensures the inner modal content is fixed, centered, and scrollable. */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content {
-        /* FIX: Use fixed position for perfect centering relative to viewport */
         position: fixed !important; 
         top: 50% !important;
         left: 50% !important;
-        /* FIX: Centers the modal */
+        /* Centers the modal in the viewport */
         transform: translate(-50%, -50%) !important; 
         
         width: 95vw !important;
         max-width: 500px !important;
-        /* FIX: Set a consistent max height and enable internal scrolling (Issue #2) */
+        /* Consistent max height, forcing scroll if content is too large (Issue #2) */
         max-height: 85vh !important; 
         overflow-y: auto !important;
         
-        /* Ensures the modal itself can be scrolled */
-        touch-action: pan-y !important;
+        touch-action: pan-y !important; /* Allows scrolling inside the modal */
         -webkit-overflow-scrolling: touch !important;
         z-index: 9999 !important;
     }
     
-    /* --- 4. SCROLLBAR VISIBILITY (Issue #2) --- */
-    .modal-content::-webkit-scrollbar,
-    .feedback-modal-content::-webkit-scrollbar,
-    .poll-modal-content::-webkit-scrollbar,
-    .submit-modal-content::-webkit-scrollbar {
-        width: 8px !important;
-        display: block !important; /* Force display on WebKit browsers (iOS/Chrome) */
-        background: #333333;
-        border-radius: 4px;
+    /* --- 4. FORM ROW STACKING FIX (Addresses issue in your screenshot) --- */
+    /* Forces the side-by-side 'Name/Username' and 'Platform' inputs to stack vertically. */
+    #report-issues-modal-overlay .form-row {
+        flex-direction: column !important;
+        gap: 0 !important;
     }
-    .modal-content::-webkit-scrollbar-thumb,
-    .feedback-modal-content::-webkit-scrollbar-thumb,
-    .poll-modal-content::-webkit-scrollbar-thumb,
-    .submit-modal-content::-webkit-scrollbar-thumb {
-        background: #888888 !important;
-        border-radius: 4px !important;
+    #report-issues-modal-overlay .form-row .form-group {
+        width: 100% !important;
+        flex: none !important;
+        margin-bottom: 15px !important; 
     }
 
-    /* --- 5. TOUCH/ACCESSIBILITY (Prevents Zoom/Improves Tapping) --- */
-    /* Make inputs and buttons larger for touch targets */
+    /* --- 5. ACCESSIBILITY & ZOOM PREVENTION --- */
+    /* Makes form elements large enough to prevent the browser from zooming in. */
     input[type="text"],
     input[type="url"],
     input[type="email"],
     textarea,
     select {
-        font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
-        min-height: 44px !important; /* Recommended touch-target size */
+        font-size: 16px !important; /* Critical for preventing iOS zoom on focus */
+        min-height: 44px !important; /* Minimum touch-target size */
         padding: 12px !important;
         touch-action: manipulation !important; /* Prevents double-tap to zoom */
         box-sizing: border-box !important;
     }
 
-    /* Ensure form submission buttons are large and accessible */
-    .feedback-nav-btn,
-    .poll-nav-btn,
-    .poll-submit-btn,
-    .submit-action-btn,
-    .btn-submit,
-    .btn-cancel,
-    #report-issues-submit-btn,
-    #report-issues-modal-overlay .checkbox-label {
-        min-height: 44px !important;
-        font-size: 16px !important;
-    }
-
-    /* Ensure the Close button is large and clickable (Issue #1 Fix) */
+    /* Ensure the Close button is large and clickable */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
@@ -5150,15 +5129,25 @@ hr.form-separator {
         height: 44px !important;
         line-height: 44px !important;
         font-size: 20px !important;
-        pointer-events: auto !important; /* Ensures it can be clicked */
-        transform: scale(1) !important; /* Ensures it is full size */
+        pointer-events: auto !important;
     }
     
-    /* Remove any inner scroll properties to ensure the main modal container handles it */
-    #feedback-form, 
-    #poll-form {
-        max-height: none !important;
-        overflow: visible !important;
+    /* Force WebKit scrollbars to show (Issue #2) */
+    .modal-content::-webkit-scrollbar,
+    .feedback-modal-content::-webkit-scrollbar,
+    .poll-modal-content::-webkit-scrollbar,
+    .submit-modal-content::-webkit-scrollbar {
+        width: 8px !important;
+        display: block !important; 
+        background: #333333;
+        border-radius: 4px;
+    }
+    .modal-content::-webkit-scrollbar-thumb,
+    .feedback-modal-content::-webkit-scrollbar-thumb,
+    .poll-modal-content::-webkit-scrollbar-thumb,
+    .submit-modal-content::-webkit-scrollbar-thumb {
+        background: #888888 !important;
+        border-radius: 4px !important;
     }
 }
 /* =================================================== */
