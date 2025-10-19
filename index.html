@@ -5088,6 +5088,8 @@ hr.form-separator {
         touch-action: pan-y !important;
         -webkit-text-size-adjust: 100% !important;
         text-size-adjust: 100% !important;
+        /* FORCE ZOOMED-OUT VIEW */
+        transform: translate(-50%, -50%) scale(0.95) !important; /* Added zoom-out */
     }
     
     /* FORCE SYSTEM SCROLLBARS TO ALWAYS SHOW - WebKit */
@@ -5151,6 +5153,8 @@ hr.form-separator {
         /* FIX: Ensure button is clickable */
         pointer-events: auto !important;
         cursor: pointer !important;
+        /* Compensate for zoom-out scale */
+        transform: scale(1.05) !important; /* Makes X appear normal size */
     }
     
     /* Make buttons more touch-friendly - FIXED CLICKABILITY */
@@ -5192,7 +5196,6 @@ hr.form-separator {
         width: 100% !important;
         box-sizing: border-box !important;
         border: 1px solid #ccc !important;
-        background: white !important;
     }
     
     /* FIX: Ensure form elements are focusable */
@@ -5241,6 +5244,8 @@ hr.form-separator {
     .submit-modal-content {
         width: 98vw !important;
         max-height: 82vh !important;
+        /* Slightly less zoom-out on very small screens */
+        transform: translate(-50%, -50%) scale(0.98) !important;
     }
     
     .feedback-modal-content,
@@ -5253,6 +5258,14 @@ hr.form-separator {
     .poll-modal-content > form,
     .submit-modal-content > div:not(.submit-action-btn) {
         padding: 15px !important;
+    }
+    
+    /* Adjust close button scale for small screens */
+    .close-btn,
+    .feedback-close-btn,
+    .poll-close-btn,
+    .close-submit-modal {
+        transform: scale(1.02) !important;
     }
 }
 
@@ -5277,6 +5290,14 @@ hr.form-separator {
         touch-action: pan-y !important;
     }
 }
+
+/* =================================================== */
+/*    VIEWPORT ZOOM PREVENTION                        */
+/* =================================================== */
+/* Add this to your HTML head for maximum zoom prevention */
+/*
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+*/
 
     </style>
 </head>
