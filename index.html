@@ -5028,6 +5028,11 @@ hr.form-separator {
 /* ============================================== */
 
 
+
+
+/* =================================================== */
+/* =================================================== */        
+/* =================================================== */
 /* =================================================== */
 /*    MOBILE STYLES FOR CUSTOM MODALS (FIT + SCROLL)  */
 /* =================================================== */
@@ -5037,25 +5042,46 @@ hr.form-separator {
     .feedback-modal-overlay,
     .poll-modal-overlay,
     .submit-modal-overlay {
-        padding: 20px 10px !important;
-        align-items: flex-start !important;
+        padding: 0 !important; /* Remove padding to use full screen */
+        align-items: stretch !important; /* Stretch to fill screen */
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
+        background: rgba(0, 0, 0, 0.8) !important; /* Ensure backdrop is visible */
     }
     
-    /* Make modal content fit naturally with max dimensions */
+    /* Make modal content auto-adjust to screen size */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content {
-        width: 100% !important;
-        max-width: 500px !important;
-        max-height: 90vh !important;
+        width: 95vw !important; /* Use viewport width */
+        height: 95vh !important; /* Use viewport height */
+        max-width: none !important; /* Remove max-width constraint */
+        max-height: none !important; /* Remove max-height constraint */
         margin: auto !important;
-        overflow-y: auto !important; /* Changed from hidden to auto */
+        overflow-y: scroll !important; /* Always show scrollbar */
         -webkit-overflow-scrolling: touch !important;
         display: flex !important;
         flex-direction: column !important;
+        border-radius: 12px !important; /* Optional: keep rounded corners */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Force scrollbar to always be visible on WebKit browsers */
+    .modal-content::-webkit-scrollbar,
+    .feedback-modal-content::-webkit-scrollbar,
+    .poll-modal-content::-webkit-scrollbar,
+    .submit-modal-content::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 8px;
+    }
+    
+    .modal-content::-webkit-scrollbar-thumb,
+    .feedback-modal-content::-webkit-scrollbar-thumb,
+    .poll-modal-content::-webkit-scrollbar-thumb,
+    .submit-modal-content::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
     }
     
     /* Remove scroll from content areas - let modal handle it */
@@ -5064,30 +5090,55 @@ hr.form-separator {
     .poll-modal-content > form,
     .submit-modal-content > div:not(.submit-action-btn) {
         flex-grow: 1 !important;
-        overflow: visible !important; /* Changed from auto to visible */
-        max-height: none !important; /* Remove max-height constraint */
+        overflow: visible !important;
+        max-height: none !important;
+        padding: 15px !important;
     }
     
-    /* Make close buttons larger and more accessible */
+    /* Fixed close button that's always accessible */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
     .close-submit-modal {
-        position: fixed !important; /* Changed from absolute to fixed */
-        top: 10px !important; /* Position from top of screen */
-        right: 10px !important; /* Position from right of screen */
-        z-index: 9999 !important; /* Higher z-index to ensure it's on top */
-        width: 44px !important; /* Minimum touch target size */
-        height: 44px !important; /* Minimum touch target size */
+        position: fixed !important;
+        top: 15px !important;
+        right: 15px !important;
+        z-index: 9999 !important;
+        width: 44px !important;
+        height: 44px !important;
         background: #ff4444 !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 24px !important; /* Larger font for better visibility */
+        font-size: 24px !important;
         color: white !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important; /* Add shadow for visibility */
-        border: 2px solid white !important; /* Add border for contrast */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+        border: 2px solid white !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+    }
+    
+    /* Remove white background from headers */
+    .modal-header,
+    .feedback-modal-header,
+    .poll-modal-header,
+    .submit-modal-header {
+        background: transparent !important; /* Remove white background */
+        border-bottom: none !important; /* Remove border */
+        padding: 20px 20px 10px 20px !important;
+        position: relative !important; /* Remove sticky positioning */
+    }
+    
+    /* Remove white background from footers */
+    .modal-footer,
+    .feedback-modal-footer,
+    .poll-modal-footer,
+    .submit-modal-footer {
+        background: transparent !important; /* Remove white background */
+        border-top: none !important; /* Remove border */
+        padding: 10px 20px 20px 20px !important;
+        position: relative !important; /* Remove sticky positioning */
     }
     
     /* Make buttons more touch-friendly */
@@ -5100,6 +5151,7 @@ hr.form-separator {
         min-height: 44px !important;
         padding: 12px 20px !important;
         font-size: 16px !important;
+        margin: 5px !important;
     }
     
     /* Form inputs more touch-friendly */
@@ -5110,6 +5162,9 @@ hr.form-separator {
         font-size: 16px !important;
         min-height: 44px !important;
         padding: 12px !important;
+        margin-bottom: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
     
     /* Remove scroll from form containers */
@@ -5117,37 +5172,98 @@ hr.form-separator {
     #poll-form {
         max-height: none !important;
         overflow: visible !important;
+        padding: 0 !important;
     }
     
-    /* Ensure modal header stays visible when scrolling */
-    .modal-header,
-    .feedback-modal-header,
-    .poll-modal-header,
-    .submit-modal-header {
-        position: sticky !important;
-        top: 0 !important;
-        background: white !important;
-        z-index: 10 !important;
-        padding: 15px 20px !important;
-        border-bottom: 1px solid #eee !important;
+    /* Ensure form elements are properly spaced */
+    form > * {
+        margin-bottom: 15px !important;
     }
     
-    /* Ensure modal footer stays visible when scrolling */
-    .modal-footer,
-    .feedback-modal-footer,
-    .poll-modal-footer,
-    .submit-modal-footer {
-        position: sticky !important;
-        bottom: 0 !important;
-        background: white !important;
-        z-index: 10 !important;
-        padding: 15px 20px !important;
-        border-top: 1px solid #eee !important;
+    /* Style for labels to improve readability */
+    label {
+        font-size: 16px !important;
+        margin-bottom: 8px !important;
+        display: block !important;
+        font-weight: bold !important;
+    }
+    
+    /* Improve modal title appearance */
+    .modal-title,
+    .feedback-modal-title,
+    .poll-modal-title,
+    .submit-modal-title {
+        font-size: 1.4em !important;
+        text-align: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #333 !important;
     }
 }
 
-
+/* =================================================== */
+/*    EXTRA SMALL DEVICES (Phones in landscape)        */
+/* =================================================== */
+@media (max-width: 575.98px) {
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        width: 98vw !important;
+        height: 98vh !important;
+        border-radius: 8px !important;
+    }
     
+    .close-btn,
+    .feedback-close-btn,
+    .poll-close-btn,
+    .close-submit-modal {
+        top: 10px !important;
+        right: 10px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .modal-body,
+    .feedback-modal-content > form,
+    .poll-modal-content > form,
+    .submit-modal-content > div:not(.submit-action-btn) {
+        padding: 10px !important;
+    }
+}
+
+/* =================================================== */
+/*    SMALL DEVICES (Tablets)                          */
+/* =================================================== */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        width: 90vw !important;
+        height: 90vh !important;
+    }
+    
+    .modal-body,
+    .feedback-modal-content > form,
+    .poll-modal-content > form,
+    .submit-modal-content > div:not(.submit-action-btn) {
+        padding: 20px !important;
+    }
+}
+
+/* =================================================== */
+/*    MEDIUM DEVICES AND ABOVE (Reset to normal)       */
+/* =================================================== */
+@media (min-width: 768px) {
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        overflow-y: auto !important; /* Ensure scrollbars on desktop when needed */
+    }
+}
+/* =================================================== */    
     </style>
 </head>
 
