@@ -5031,81 +5031,73 @@ hr.form-separator {
 
 
 /* FORCEFUL MOBILE STYLES FOR BOOTSTRAP MODALS */
-@media (max-width: 767.98px) { /* Standard Bootstrap 'sm' breakpoint */
-
-    /* Force the modal dialog to be full width/height and properly aligned */
-    .modal-dialog {
-        margin: 0.5rem !important; /* Reduce margin around the modal dialog */
-        max-width: none !important; /* Override Bootstrap's max-width */
-        width: calc(100% - 1rem) !important; /* Almost full width */
-        height: calc(100% - 1rem) !important; /* Almost full height */
-        display: flex !important; /* Enable flexbox for alignment */
-        align-items: center !important; /* Center content vertically */
-        justify-content: center !important; /* Center content horizontally */
+@media (max-width: 767.98px) {
+    /* Target modal when it's actually shown */
+    .modal.show .modal-dialog {
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 100% !important;
+        display: flex !important;
+        align-items: stretch !important; /* Changed from center */
+        justify-content: center !important;
+    }
+    
+    /* Override any inline styles added by JavaScript */
+    .modal.show .modal-dialog[style] {
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        transform: none !important;
     }
 
-    /* Force the modal content itself to fill the dialog and be scrollable */
-    .modal-content {
-        height: 100% !important; /* Make content fill the dialog height */
-        max-height: 100% !important; /* Ensure it doesn't exceed */
-        overflow-y: auto !important; /* CRITICAL: Add scrollbar if content overflows vertically */
-        border-radius: 0.3rem !important; /* Keep default rounded corners */
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important; /* Enhance shadow */
-        display: flex !important; /* Make modal-content a flex container */
-        flex-direction: column !important; /* Stack header, body, footer vertically */
+    /* Make modal content fill the screen */
+    .modal.show .modal-content {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important; /* Remove rounded corners for full screen */
+        display: flex !important;
+        flex-direction: column !important;
     }
 
-    /* Make modal header sticky for the close button */
-    .modal-header {
+    /* Sticky header */
+    .modal.show .modal-header {
         position: sticky !important;
         top: 0 !important;
-        z-index: 1050 !important; /* Bootstrap's modal z-index for header */
-        background-color: #212529 !important; /* Match your modal background */
+        z-index: 1055 !important;
+        background-color: #212529 !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        padding-bottom: 0.75rem !important;
-        flex-shrink: 0 !important; /* Prevent shrinking when content overflows */
-    }
-
-    /* Allow modal body to grow and handle its own content without scrolling the whole modal-content */
-    .modal-body {
-        flex-grow: 1 !important; /* Allow the body to take up available space */
-        overflow-y: auto !important; /* Add scrollbar to the body itself if its content overflows */
+        flex-shrink: 0 !important;
         padding: 1rem !important;
     }
 
-    /* Make modal footer sticky if present */
-    .modal-footer {
+    /* Scrollable body */
+    .modal.show .modal-body {
+        flex-grow: 1 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding: 1rem !important;
+    }
+
+    /* Sticky footer */
+    .modal.show .modal-footer {
         position: sticky !important;
         bottom: 0 !important;
-        z-index: 1050 !important;
-        background-color: #212529 !important; /* Match your modal background */
+        z-index: 1055 !important;
+        background-color: #212529 !important;
         border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        padding-top: 0.75rem !important;
-        flex-shrink: 0 !important; /* Prevent shrinking when content overflows */
+        flex-shrink: 0 !important;
+        padding: 1rem !important;
     }
 
-    /* Prevent page zoom on input focus */
-    input[type="text"],
-    input[type="email"],
-    input[type="url"],
-    textarea,
-    select {
-        font-size: 16px !important;
-        -webkit-text-size-adjust: 100% !important;
+    /* Ensure close button is visible */
+    .modal.show .modal-header .btn-close {
+        margin: 0 !important;
+        padding: 0.5rem !important;
     }
-
-    /* Ensure form groups don't create horizontal scroll */
-    .form-group, .mb-3 {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    /* Specific to your X button within the modal header if it's styled differently */
-    .modal-header .btn-close {
-        margin: -0.5rem -0.5rem -0.5rem auto !important; /* Bootstrap's default position */
-        /* If it's still not visible, you might need to adjust padding-right on modal-header or its parent */
-    }
-}
+} 
     
     </style>
 </head>
