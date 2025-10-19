@@ -5031,110 +5031,62 @@ hr.form-separator {
 
 
 /* =================================================== */
-/*           FORCEFUL MOBILE STYLES FOR CUSTOM MODALS  */
+/*    MOBILE STYLES FOR CUSTOM MODALS (FIT + SCROLL)  */
 /* =================================================== */
 @media (max-width: 767.98px) {
     /* Target all your custom modal overlays */
     .modal-overlay,
     .feedback-modal-overlay,
     .poll-modal-overlay,
-    .submit-modal-overlay,
-    .image-preview-modal {
-        padding: 0 !important;
-        align-items: stretch !important;
+    .submit-modal-overlay {
+        padding: 20px 10px !important;
+        align-items: flex-start !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
     }
     
-    /* Make modal content full screen */
+    /* Make modal content fit naturally with max dimensions */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
-    .submit-modal-content,
-    .image-preview-content {
+    .submit-modal-content {
         width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
-        border-radius: 0 !important;
-        margin: 0 !important;
+        max-width: 500px !important;
+        max-height: 90vh !important;
+        margin: auto !important;
+        overflow: hidden !important;
         display: flex !important;
         flex-direction: column !important;
     }
     
-    /* Sticky header for modals that have headers */
-    .modal-header,
-    .feedback-modal-header,
-    .poll-modal-header {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 1055 !important;
-        background-color: #1f1f1f !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        flex-shrink: 0 !important;
-        padding: 1rem !important;
-    }
-    
-    /* Scrollable body */
+    /* Scrollable content area */
     .modal-body,
-    .feedback-page,
-    .poll-page,
-    .form-group {
+    .feedback-modal-content > form,
+    .poll-modal-content > form,
+    .submit-modal-content > div:not(.submit-action-btn) {
         flex-grow: 1 !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        padding: 1rem !important;
+        max-height: calc(90vh - 120px) !important; /* Reserve space for header/footer */
     }
     
-    /* Sticky footer for navigation */
-    .feedback-navigation,
-    .form-actions {
-        position: sticky !important;
-        bottom: 0 !important;
-        z-index: 1055 !important;
-        background-color: #1f1f1f !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        flex-shrink: 0 !important;
-        padding: 1rem !important;
-        margin-bottom: 0 !important;
-    }
-    
-    /* Ensure close buttons are visible and accessible */
+    /* Ensure close buttons are always visible */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
-    .close-submit-modal,
-    .close-preview {
-        position: fixed !important;
-        top: 10px !important;
-        right: 10px !important;
+    .close-submit-modal {
+        position: absolute !important;
+        top: -15px !important;
+        right: -15px !important;
         z-index: 1060 !important;
-        width: 40px !important;
-        height: 40px !important;
+        width: 30px !important;
+        height: 30px !important;
         background: #ff4444 !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         font-size: 20px !important;
-    }
-    
-    /* Full screen image preview */
-    .image-preview-content img {
-        width: 100% !important;
-        height: auto !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
-        border: none !important;
-        border-radius: 0 !important;
-    }
-    
-    /* Adjust controls for mobile */
-    #image-preview-controls {
-        position: fixed !important;
-        bottom: 20px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 90% !important;
-        justify-content: space-around !important;
     }
     
     /* Make buttons more touch-friendly */
@@ -5146,7 +5098,7 @@ hr.form-separator {
     .btn-cancel {
         min-height: 44px !important;
         padding: 12px 20px !important;
-        font-size: 16px !important; /* Prevents zoom on iOS */
+        font-size: 16px !important;
     }
     
     /* Form inputs more touch-friendly */
@@ -5154,9 +5106,23 @@ hr.form-separator {
     input[type="url"],
     textarea,
     select {
-        font-size: 16px !important; /* Prevents zoom on iOS */
+        font-size: 16px !important;
         min-height: 44px !important;
         padding: 12px !important;
+    }
+    
+    /* Specific fix for feedback modal form scrolling */
+    #feedback-form {
+        max-height: calc(90vh - 150px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Specific fix for poll modal form scrolling */
+    #poll-form {
+        max-height: calc(90vh - 150px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
     }
 }
     
