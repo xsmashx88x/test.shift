@@ -6164,6 +6164,124 @@ hr.form-separator {
     <script>
 // Hook into existing functions to add 'modal-open' to <html> element
 document.addEventListener('DOMContentLoaded', function() {
+    
+    /**
+     * Universally toggles the modal-open class on both <body> and <html>.
+     * This ensures the CSS fixed-position scroll lock is fully activated.
+     * Note: Your core modal functions (like closeKofiModal) still need to be updated 
+     * to call this, which is handled by the wrapModalFunction below.
+     * @param {boolean} lock - true to lock, false to unlock.
+     */
+    function toggleGlobalScrollLock(lock) {
+        const action = lock ? 'add' : 'remove';
+        // Targetting <html> is the CRITICAL, final fix for mobile scroll lock
+        document.documentElement.classList[action]('modal-open');
+        // Targeting <body> is standard practice and keeps your existing code happy
+        document.body.classList[action]('modal-open'); 
+    }
+
+    /**
+     * Helper to wrap existing modal open/close functions with the scroll lock logic.
+     * This is safer than rewriting each function manually.
+     * @param {string} funcName - The name of the global function to wrap (e.g., 'openKofiModal').
+     * @param {boolean} isOpener - True if it's an opening function, false if closing.
+     */
+    function wrapModalFunction(funcName, isOpener) {
+        const originalFunc = window[funcName];
+        if (typeof originalFunc === 'function') {
+            window[funcName] = function() {
+                toggleGlobalScrollLock(isOpener);
+                return originalFunc.apply(this, arguments);
+            };
+        }
+    }
+
+    // --- APPLY SCROLL LOCK TO ALL GLOBAL MODAL FUNCTIONS ---
+
+    // 1. Kofi Modal (Needs to be wrapped as it doesn't use the simple DOMContentLoaded listener)
+    wrapModalFunction('openKofiModal', true);
+    wrapModalFunction('closeKofiModal', false);
+    
+    // 2. Original SHiFT Code Report Modal (#report-modal)
+    wrapModalFunction('openReportModal', true);
+    wrapModalFunction('closeReportModal', false);
+
+    // 3. Code Submission Modal
+    wrapModalFunction('openCodeSubmitModal', true);
+    wrapModalFunction('closeCodeSubmitModal', false);
+
+    // 4. Black Market Submission Modal
+    wrapModalFunction('openBmSubmitModal', true);
+    wrapModalFunction('closeBmSubmitModal', false);
+
+    // 5. Drops Submission Modal
+    wrapModalFunction('openDropsSubmitModal', true);
+    wrapModalFunction('closeDropsSubmitModal', false);
+
+    // 6. Share Modal
+    wrapModalFunction('openShareModal', true);
+    wrapModalFunction('closeShareModal', false);
+
+    // 7. Hide Ish Options Modal
+    wrapModalFunction('openHideIshModal', true);
+    wrapModalFunction('closeHideIshModal', false);
+
+    // 8. Image Preview Modal (for generic image/video/iframe previews)
+    wrapModalFunction('openImagePreview', true);
+    wrapModalFunction('closeImagePreview', false);
+
+    // --- Special Handlers for Event-Driven Modals ---
+    
+    // 9. Report Issues Modal (Report Bug) - Hooks into the original onclick logic
+    const openReportIssuesBtn = document.getElementById('open-report-issues-btn');
+    if (openReportIssuesBtn) {
+        // Wrap the existing anonymous function bound to onclick
+        const originalOpenReportIssuesModal = openReportIssuesBtn.onclick;
+        openReportIssuesBtn.onclick = function() {
+            toggleGlobalScrollLock(true);
+            originalOpenReportIssuesModal.apply(this, arguments);
+        };
+    }
+    const closeReportIssuesBtn = document.getElementById('report-issues-close-btn');
+    if (closeReportIssuesBtn) {
+        // Hook into the close button's action
+        closeReportIssuesBtn.addEventListener('click', () => toggleGlobalScrollLock(false));
+    }
+
+    // 10. Poll Modal (EH! Poll Time)
+    document.getElementById('openPollBtn')?.addEventListener('click', () => {
+        toggleGlobalScrollLock(true);
+    });
+    document.getElementById('closePollBtn')?.addEventListener('click', () => {
+        toggleGlobalScrollLock(false);
+    });
+    
+    // 11. Feedback Forum Modal (Floating button opens modal, not simple function call)
+    document.querySelector('.floating-feedback-btn')?.addEventListener('click', () => {
+        // Assuming your Feedback modal's opening logic happens instantly after this click
+        toggleGlobalScrollLock(true);
+    });
+    // The Feedback Modal's close button relies on a close function, 
+    // so we hook into the inner close button element if possible.
+    document.querySelector('#feedback-modal-overlay .feedback-close-btn')?.addEventListener('click', () => {
+        toggleGlobalScrollLock(false);
+    });
+    
+    // 12. Reset Global Scroll on Modal Overlay Click (for modals that are not closed by a button inside)
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            // Check if the click was on the overlay itself, not the modal content
+            if (e.target === overlay) {
+                // Assuming all modals follow the same pattern for an X button
+                // We run the unlock function when the overlay is clicked
+                toggleGlobalScrollLock(false);
+                // Optionally call the close function for that specific modal type
+                // e.g. closeModal(); or closeReportModal(); etc.
+            }
+        });
+    });
+
+    // --- Your original hook that should still be in your code block ---
     const originalOpenReportIssuesModal = document.getElementById('open-report-issues-btn')?.onclick;
     if (originalOpenReportIssuesModal) {
         document.getElementById('open-report-issues-btn').onclick = function() {
@@ -6180,9 +6298,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // Repeat for ALL your modal open/close functions (poll, feedback, submit, etc.)
-    // Your modals currently toggle the class on <body>, now ensure it's also done on <html>.
-    
     // Example hook for Poll modal:
     const openPollBtn = document.getElementById('openPollBtn');
     if (openPollBtn) {
@@ -6196,7 +6311,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.documentElement.classList.remove('modal-open');
         });
     }
-    // ... and so on for every custom modal you have.
 });
 
 
