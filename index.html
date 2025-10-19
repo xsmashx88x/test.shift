@@ -5041,16 +5041,16 @@ hr.form-separator {
     /* --- 1. CRITICAL: BODY & HTML SCROLL LOCK AND ANTI-BOUNCE --- */
     /* This aggressively locks the entire document scroll on all platforms. */
     body.modal-open, 
-    html.modal-open { /* <-- ADDED HTML LOCK FOR iOS/Safari */
+    html.modal-open { 
         position: fixed !important;
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
-        touch-action: none !important; 
-        overscroll-behavior-y: none !important; 
+        touch-action: none !important; /* Disables all touch actions on the root */
+        overscroll-behavior-y: none !important; /* CRITICAL: Stops background page bounce */
     }
     
-    /* Ensure only the modal overlay itself scrolls, and its bounce is contained */
+    /* Ensure the modal overlay itself cannot be dragged or bounced */
     .modal-overlay,
     .feedback-modal-overlay,
     .poll-modal-overlay,
@@ -5063,13 +5063,13 @@ hr.form-separator {
         z-index: 9998 !important;
         background: rgba(0, 0, 0, 0.85) !important;
         
-        overflow-y: auto !important; 
-        -webkit-overflow-scrolling: touch !important;
-        overscroll-behavior-y: contain !important; 
+        /* The overlay must not scroll, as content scroll is handled by modal-content */
+        overflow-y: hidden !important;
+        touch-action: none !important; /* CRITICAL: Prevents dragging the whole fixed overlay */
+        overscroll-behavior-y: none !important; 
     }
 
     /* --- 2. MODAL CONTENT STYLES (Fixed, Centered, Scrollable) --- */
-    /* The modal content is fixed in the viewport. */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
@@ -5082,22 +5082,24 @@ hr.form-separator {
         width: 95vw !important;
         max-width: 500px !important;
         max-height: 85vh !important; 
-        overflow-y: auto !important;
         
-        touch-action: pan-y !important; /* Allows scrolling inside the modal */
+        /* Re-enabling internal vertical scroll (only pan-y allowed) */
+        overflow-y: auto !important; 
+        touch-action: pan-y !important; 
         -webkit-overflow-scrolling: touch !important;
+        
         z-index: 9999 !important;
     }
     
     /* --- 3. FORM ROW STACKING FIXES (FOR ALL MODALS) --- */
     
-    /* Generic fix for any row attempting side-by-side buttons/inputs in footers */
+    /* Fix for button groups in footers */
     #report-modal .form-actions,
     .feedback-navigation {
         flex-direction: column !important;
     }
     
-    /* Generic fix for custom form rows like in the Report Issues modal */
+    /* Fix for custom form rows like in the Report Issues modal */
     #report-issues-modal-overlay .form-row {
         flex-direction: column !important;
         gap: 0 !important;
@@ -6230,6 +6232,9 @@ document.addEventListener('DOMContentLoaded', function() {
     wrapModalFunction('openImagePreview', true);
     wrapModalFunction('closeImagePreview', false);
 
+        wrapModalFunction('openPollModal', true);
+    wrapModalFunction('closePollModal', false);
+
     // --- Special Handlers for Event-Driven Modals ---
     
     // 9. Report Issues Modal (Report Bug) - Hooks into the original onclick logic
@@ -6323,7 +6328,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-        
+
 /* =================================================== */
 /*   START: Drops Submission MODAL SCRIPT           */
 /* =================================================== */
