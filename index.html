@@ -5157,6 +5157,19 @@ hr.form-separator {
         background: #888888 !important;
         border-radius: 4px !important;
     }
+    
+    /* --- FINAL CRITICAL INJECTION FOR INNER CONTENT LOCK --- */
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content,
+    #report-issues-form,
+    #report-form {
+        /* Prevents horizontal movement (pan-x) and horizontal scrolling/bouncing */
+        overflow-x: hidden !important; 
+        width: 100% !important;
+        max-width: 100% !important;
+    }
 }
 /* =================================================== */
 /*   END: FINAL, DEFINITIVE MOBILE MODAL FIX   */
