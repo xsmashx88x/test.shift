@@ -5026,6 +5026,9 @@ hr.form-separator {
     }
 }
 /* ============================================== */
+/* ============================================== */
+/* ============================================== */
+/* ============================================== */
 
 
 /* =================================================== */
@@ -5073,69 +5076,51 @@ hr.form-separator {
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        /* PREVENT MODAL MOVEMENT */
+        /* PREVENT MODAL MOVEMENT - LOCK HORIZONTAL, ALLOW VERTICAL */
         overscroll-behavior: contain !important;
         /* PREVENT ZOOM */
         touch-action: pan-y !important;
         -webkit-text-size-adjust: 100% !important;
         text-size-adjust: 100% !important;
-        /* Create permanent scrollbar space */
-        padding-right: 12px !important;
+        /* REMOVE custom scrollbar padding */
+        padding-right: 0 !important;
     }
     
-    /* CUSTOM PERMANENT SCROLLBAR - No more relying on system */
-    .modal-content::after,
-    .feedback-modal-content::after,
-    .poll-modal-content::after,
-    .submit-modal-content::after {
-        content: '' !important;
-        position: absolute !important;
-        top: 10px !important;
-        right: 4px !important;
-        bottom: 10px !important;
-        width: 6px !important;
-        background: #e0e0e0 !important; /* Scrollbar track */
-        border-radius: 3px !important;
-        pointer-events: none !important;
-        z-index: 100 !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
+    /* REMOVED the ugly custom scrollbars */
     
-    /* Custom scrollbar thumb */
-    .modal-content::before,
-    .feedback-modal-content::before,
-    .poll-modal-content::before,
-    .submit-modal-content::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 10px !important;
-        right: 4px !important;
-        width: 6px !important;
-        height: 50% !important;
-        background: #888 !important; /* Scrollbar thumb */
-        border-radius: 3px !important;
-        pointer-events: none !important;
-        z-index: 101 !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0%);
-    }
-    
-    /* Hide system scrollbars but keep functionality */
+    /* FORCE SYSTEM SCROLLBARS TO ALWAYS SHOW - WebKit */
     .modal-content::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
     .submit-modal-content::-webkit-scrollbar {
-        width: 12px !important;
+        width: 8px !important;
+        display: block !important;
     }
     
-    .modal-content::-webkit-scrollbar-thumb {
-        background: transparent !important;
+    .modal-content::-webkit-scrollbar-thumb,
+    .feedback-modal-content::-webkit-scrollbar-thumb,
+    .poll-modal-content::-webkit-scrollbar-thumb,
+    .submit-modal-content::-webkit-scrollbar-thumb {
+        background: #888 !important;
+        border-radius: 4px !important;
+        visibility: visible !important;
     }
     
-    .modal-content::-webkit-scrollbar-track {
-        background: transparent !important;
+    .modal-content::-webkit-scrollbar-track,
+    .feedback-modal-content::-webkit-scrollbar-track,
+    .poll-modal-content::-webkit-scrollbar-track,
+    .submit-modal-content::-webkit-scrollbar-track {
+        background: #f1f1f1 !important;
+        visibility: visible !important;
+    }
+    
+    /* FIREFOX - Force scrollbars */
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        scrollbar-width: thin !important;
+        scrollbar-color: #888 #f1f1f1 !important;
     }
     
     /* Remove scroll from content areas - modal handles scrolling */
@@ -5147,6 +5132,9 @@ hr.form-separator {
         overflow: visible !important;
         max-height: none !important;
         padding: 20px !important;
+        /* LOCK HORIZONTAL MOVEMENT */
+        overflow-x: hidden !important;
+        width: 100% !important;
         /* Prevent content movement */
         overscroll-behavior: contain !important;
     }
@@ -5197,6 +5185,9 @@ hr.form-separator {
         /* PREVENT ZOOM */
         touch-action: manipulation !important;
         transform: scale(1) !important;
+        /* LOCK HORIZONTAL MOVEMENT */
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
     
     /* Remove internal form scrolling */
@@ -5204,6 +5195,9 @@ hr.form-separator {
     #poll-form {
         max-height: none !important;
         overflow: visible !important;
+        /* LOCK HORIZONTAL MOVEMENT */
+        overflow-x: hidden !important;
+        width: 100% !important;
     }
     
     /* Specific height adjustments */
