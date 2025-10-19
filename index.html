@@ -5066,39 +5066,40 @@ hr.form-separator {
         flex-direction: column !important;
         border: 2px solid #333 !important;
         position: relative !important;
-        /* Force scrollbar space */
-        padding-right: 8px !important; /* Reserve space for scrollbar */
     }
     
-    /* ALWAYS show native scrollbars - WebKit browsers */
+    /* FORCE NATIVE SCROLLBAR THUMB TO ALWAYS BE VISIBLE - WebKit */
     .modal-content::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
     .submit-modal-content::-webkit-scrollbar {
-        width: 8px !important; /* Normal thickness */
-        display: block !important; /* Force display */
+        width: 10px !important;
+        display: block !important;
+        visibility: visible !important;
     }
     
     .modal-content::-webkit-scrollbar-thumb,
     .feedback-modal-content::-webkit-scrollbar-thumb,
     .poll-modal-content::-webkit-scrollbar-thumb,
     .submit-modal-content::-webkit-scrollbar-thumb {
-        background: #888 !important; /* Native gray color */
-        border-radius: 4px !important;
+        background: #888 !important;
+        border-radius: 5px !important;
+        border: 2px solid transparent !important;
+        background-clip: content-box !important;
+        min-height: 40px !important; /* Force minimum thumb size */
+        visibility: visible !important;
+        opacity: 1 !important; /* Force full opacity */
     }
     
-    .modal-content::-webkit-scrollbar-thumb:hover,
-    .feedback-modal-content::-webkit-scrollbar-thumb:hover,
-    .poll-modal-content::-webkit-scrollbar-thumb:hover,
-    .submit-modal-content::-webkit-scrollbar-thumb:hover {
-        background: #555 !important; /* Darker on hover */
-    }
-    
+    /* Make scrollbar track always visible too */
     .modal-content::-webkit-scrollbar-track,
     .feedback-modal-content::-webkit-scrollbar-track,
     .poll-modal-content::-webkit-scrollbar-track,
     .submit-modal-content::-webkit-scrollbar-track {
-        background: transparent !important; /* Transparent track */
+        background: #f1f1f1 !important; /* Light gray track */
+        border-radius: 5px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     /* FIREFOX - Force scrollbars always visible */
@@ -5106,8 +5107,8 @@ hr.form-separator {
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content {
-        scrollbar-width: thin !important;
-        scrollbar-color: #888 transparent !important; /* Gray thumb, transparent track */
+        scrollbar-width: auto !important; /* Force scrollbar */
+        scrollbar-color: #888 #f1f1f1 !important; /* Gray thumb, light gray track - ALWAYS */
     }
     
     /* Remove scroll from content areas - modal handles scrolling */
@@ -5218,8 +5219,6 @@ hr.form-separator {
         padding: 15px !important;
     }
 }
-
-/* REMOVED the nuclear option with fake white lines */
 /* =================================================== */    
     </style>
 </head>
