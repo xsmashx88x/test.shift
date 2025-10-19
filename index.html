@@ -5038,18 +5038,18 @@ hr.form-separator {
 /* =================================================== */
 @media (max-width: 767.98px) {
 
-    /* --- 1. CRITICAL: BODY SCROLL LOCK --- */
-    /* This locks the background page when a modal is open. */
+    /* --- 1. CRITICAL: BODY SCROLL LOCK AND ANTI-BOUNCE (DEFINITIVE FIX) --- */
+    /* This locks the background page and prevents overscroll/bounce from inside the modal. */
     body.modal-open {
         position: fixed !important;
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
         touch-action: none !important; /* Prevents unwanted touch-scroll/zoom */
+        overscroll-behavior-y: none !important; /* CRITICAL: Stops background page bounce */
     }
 
-    /* --- 2. MODAL OVERLAY STYLES --- */
-    /* Ensures the dark overlay is fixed and covers the entire viewport. */
+    /* Also ensure the modal content itself doesn't bounce in a way that affects the background */
     .modal-overlay,
     .feedback-modal-overlay,
     .poll-modal-overlay,
@@ -5061,13 +5061,13 @@ hr.form-separator {
         height: 100% !important;
         z-index: 9998 !important;
         background: rgba(0, 0, 0, 0.85) !important;
-        /* Ensures the overlay itself can scroll if the content is taller than the viewport */
+        
         overflow-y: auto !important; 
         -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-y: contain !important; /* CRITICAL: Contains scroll bounce within the overlay */
     }
 
-    /* --- 3. MODAL CONTENT STYLES --- */
-    /* Ensures the inner modal content is fixed, centered, and scrollable. */
+    /* --- 2. MODAL CONTENT STYLES (Fixed, Centered, Scrollable) --- */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
@@ -5075,12 +5075,10 @@ hr.form-separator {
         position: fixed !important; 
         top: 50% !important;
         left: 50% !important;
-        /* Centers the modal in the viewport */
         transform: translate(-50%, -50%) !important; 
         
         width: 95vw !important;
         max-width: 500px !important;
-        /* Consistent max height, forcing scroll if content is too large (Issue #2) */
         max-height: 85vh !important; 
         overflow-y: auto !important;
         
@@ -5089,8 +5087,14 @@ hr.form-separator {
         z-index: 9999 !important;
     }
     
-    /* --- 4. FORM ROW STACKING FIX (Addresses issue in your screenshot) --- */
-    /* Forces the side-by-side 'Name/Username' and 'Platform' inputs to stack vertically. */
+    /* --- 3. FORM ROW STACKING FIXES (FOR ALL MODALS) --- */
+    
+    /* Fix for the side-by-side buttons in the original report modal's footer */
+    #report-modal .form-actions {
+        flex-direction: column !important;
+    }
+    
+    /* Fix for the side-by-side 'Name/Username' and 'Platform' inputs in the report-issues modal */
     #report-issues-modal-overlay .form-row {
         flex-direction: column !important;
         gap: 0 !important;
@@ -5101,17 +5105,16 @@ hr.form-separator {
         margin-bottom: 15px !important; 
     }
 
-    /* --- 5. ACCESSIBILITY & ZOOM PREVENTION --- */
-    /* Makes form elements large enough to prevent the browser from zooming in. */
+    /* --- 4. ACCESSIBILITY & ZOOM PREVENTION --- */
     input[type="text"],
     input[type="url"],
     input[type="email"],
     textarea,
     select {
-        font-size: 16px !important; /* Critical for preventing iOS zoom on focus */
-        min-height: 44px !important; /* Minimum touch-target size */
+        font-size: 16px !important; /* Prevents iOS zoom */
+        min-height: 44px !important; 
         padding: 12px !important;
-        touch-action: manipulation !important; /* Prevents double-tap to zoom */
+        touch-action: manipulation !important; 
         box-sizing: border-box !important;
     }
 
