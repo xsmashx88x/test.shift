@@ -5036,6 +5036,9 @@ hr.form-separator {
 /* =================================================== */
 /*    MOBILE STYLES FOR CUSTOM MODALS (FIT + SCROLL)  */
 /* =================================================== */
+/* =================================================== */
+/*    MOBILE STYLES FOR CUSTOM MODALS (FIT + SCROLL)  */
+/* =================================================== */
 @media (max-width: 767.98px) {
     /* Target all your custom modal overlays */
     .modal-overlay,
@@ -5063,39 +5066,39 @@ hr.form-separator {
         flex-direction: column !important;
         border: 2px solid #333 !important;
         position: relative !important;
+        /* Force scrollbar space */
+        padding-right: 8px !important; /* Reserve space for scrollbar */
     }
     
-    /* ALWAYS show white scrollbars - WebKit browsers */
+    /* ALWAYS show native scrollbars - WebKit browsers */
     .modal-content::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
     .submit-modal-content::-webkit-scrollbar {
-        width: 10px !important; /* Thicker so it's always visible */
-        background: #f0f0f0 !important; /* Light background track */
-        border-radius: 5px !important;
+        width: 8px !important; /* Normal thickness */
         display: block !important; /* Force display */
-        visibility: visible !important; /* Force visibility */
     }
     
     .modal-content::-webkit-scrollbar-thumb,
     .feedback-modal-content::-webkit-scrollbar-thumb,
     .poll-modal-content::-webkit-scrollbar-thumb,
     .submit-modal-content::-webkit-scrollbar-thumb {
-        background: #ffffff !important; /* WHITE scrollbar */
-        border-radius: 5px !important;
-        border: 2px solid #ccc !important; /* Border for visibility */
-        box-shadow: 0 0 4px rgba(0,0,0,0.3) !important; /* Shadow for visibility */
+        background: #888 !important; /* Native gray color */
+        border-radius: 4px !important;
     }
     
-    /* ALWAYS show scrollbars - even when not scrolling */
+    .modal-content::-webkit-scrollbar-thumb:hover,
+    .feedback-modal-content::-webkit-scrollbar-thumb:hover,
+    .poll-modal-content::-webkit-scrollbar-thumb:hover,
+    .submit-modal-content::-webkit-scrollbar-thumb:hover {
+        background: #555 !important; /* Darker on hover */
+    }
+    
     .modal-content::-webkit-scrollbar-track,
     .feedback-modal-content::-webkit-scrollbar-track,
     .poll-modal-content::-webkit-scrollbar-track,
     .submit-modal-content::-webkit-scrollbar-track {
-        background: #f0f0f0 !important; /* Always visible track */
-        border-radius: 5px !important;
-        display: block !important;
-        visibility: visible !important;
+        background: transparent !important; /* Transparent track */
     }
     
     /* FIREFOX - Force scrollbars always visible */
@@ -5103,8 +5106,8 @@ hr.form-separator {
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content {
-        scrollbar-width: thin !important; /* Force thin scrollbar */
-        scrollbar-color: white #f0f0f0 !important; /* White thumb, gray track */
+        scrollbar-width: thin !important;
+        scrollbar-color: #888 transparent !important; /* Gray thumb, transparent track */
     }
     
     /* Remove scroll from content areas - modal handles scrolling */
@@ -5216,44 +5219,7 @@ hr.form-separator {
     }
 }
 
-/* =================================================== */
-/*    FORCE SCROLLBARS ON ALL BROWSERS - NUCLEAR OPTION */
-/* =================================================== */
-@media (max-width: 767.98px) {
-    /* Nuclear option - create fake scrollbar area */
-    .modal-content:after,
-    .feedback-modal-content:after,
-    .poll-modal-content:after,
-    .submit-modal-content:after {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        right: 0 !important;
-        width: 10px !important;
-        height: 100% !important;
-        background: #f0f0f0 !important;
-        border-radius: 0 5px 5px 0 !important;
-        pointer-events: none !important;
-        z-index: 1 !important;
-    }
-    
-    .modal-content:before,
-    .feedback-modal-content:before,
-    .poll-modal-content:before,
-    .submit-modal-content:before {
-        content: '' !important;
-        position: absolute !important;
-        top: 10% !important;
-        right: 2px !important;
-        width: 6px !important;
-        height: 80% !important;
-        background: white !important;
-        border-radius: 3px !important;
-        border: 1px solid #ccc !important;
-        pointer-events: none !important;
-        z-index: 2 !important;
-    }
-}
+/* REMOVED the nuclear option with fake white lines */
 /* =================================================== */    
     </style>
 </head>
