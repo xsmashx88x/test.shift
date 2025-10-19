@@ -5310,33 +5310,50 @@ hr.form-separator {
 /* UNIVERSAL MODAL FIXES */
 /* =================================================== */
 
+/* =================================================== */
+/* UNIVERSAL MODAL FIXES (Scroll Lock & Scrollbar)     */
+/* =================================================== */
+
 /* 1. Force Scrollbar and Ensure Scrollability on the Modal Content */
 .modal-content,
 .feedback-modal-content,
 .poll-modal-content,
 .submit-modal-content {
-    /* CRITICAL: Forces the vertical scrollbar to always appear (your request) */
     overflow-y: scroll !important;
-    /* Improves scrolling performance on iOS devices */
     -webkit-overflow-scrolling: touch;
+    /* CRITICAL: Set position: relative so the close button (position: absolute) anchors correctly */
+    position: relative; 
 }
 
 /* 2. Lock Body Scroll When Modal is Open (Requires JS to add 'modal-open' to <body>) */
 body.modal-open {
-    /* CRITICAL: Stops the main page content from scrolling */
     overflow: hidden !important;
-    /* Fixes the viewport to prevent content jump/shift */
     position: fixed !important;
     width: 100% !important;
     height: 100% !important;
 }
 
+/* 3. CRITICAL FIX: Ensure Close Button is Clickable and On Top */
+.close-btn,
+.feedback-close-btn,
+.poll-close-btn,
+.close-submit-modal {
+    /* CRITICAL: Ensures the button renders above all other modal elements and layers */
+    z-index: 10000 !important; 
+    /* Allows positioning relative to the .modal-content container */
+    position: absolute !important; 
+    
+    /* OPTIONAL: You may need to adjust these values if the 'x' is visually misplaced. */
+    /* top: -10px !important;  */
+    /* right: -10px !important; */
+}
+
 /* =================================================== */
-/* MOBILE-SPECIFIC STYLES (Based on your provided code) */
+/* MOBILE-SPECIFIC STYLES (Includes your original code) */
 /* =================================================== */
 
 @media (max-width: 767.98px) {
-    /* Ensures the modal itself can still be scrolled on touch devices while the body is locked */
+    /* Allows the modal itself to still be scrolled on touch devices */
     body.modal-open .modal-content,
     body.modal-open .feedback-modal-content,
     body.modal-open .poll-modal-content,
@@ -5358,9 +5375,8 @@ body.modal-open {
     .poll-modal-content,
     .submit-modal-content {
         width: 98vw !important;
-        /* These max-heights ensure the content overflows, triggering the scrollbar we forced above */
         max-height: 82vh !important;
-        /* Slightly less zoom-out on very small screens */
+        /* The scale(0.98) slightly shrinks the modal for fit */
         transform: translate(-50%, -50%) scale(0.98) !important;
     }
     
@@ -5376,7 +5392,7 @@ body.modal-open {
         padding: 15px !important;
     }
     
-    /* Adjust close button scale for small screens */
+    /* Retain and refine close button adjustments */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
@@ -5384,6 +5400,7 @@ body.modal-open {
         transform: scale(1.02) !important;
     }
 }
+
         
 
     </style>
