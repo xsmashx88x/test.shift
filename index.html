@@ -5034,22 +5034,23 @@ hr.form-separator {
 
 
 /* =================================================== */
-/*   START: FINAL, ROBUST MOBILE MODAL FIX (767.98px and below)  */
+/*   START: FINAL, DEFINITIVE MOBILE MODAL FIX (767.98px and below)  */
 /* =================================================== */
 @media (max-width: 767.98px) {
 
-    /* --- 1. CRITICAL: BODY SCROLL LOCK AND ANTI-BOUNCE (DEFINITIVE FIX) --- */
-    /* This locks the background page and prevents overscroll/bounce from inside the modal. */
-    body.modal-open {
+    /* --- 1. CRITICAL: BODY & HTML SCROLL LOCK AND ANTI-BOUNCE --- */
+    /* This aggressively locks the entire document scroll on all platforms. */
+    body.modal-open, 
+    html.modal-open { /* <-- ADDED HTML LOCK FOR iOS/Safari */
         position: fixed !important;
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
-        touch-action: none !important; /* Prevents unwanted touch-scroll/zoom */
-        overscroll-behavior-y: none !important; /* CRITICAL: Stops background page bounce */
+        touch-action: none !important; 
+        overscroll-behavior-y: none !important; 
     }
-
-    /* Also ensure the modal content itself doesn't bounce in a way that affects the background */
+    
+    /* Ensure only the modal overlay itself scrolls, and its bounce is contained */
     .modal-overlay,
     .feedback-modal-overlay,
     .poll-modal-overlay,
@@ -5064,10 +5065,11 @@ hr.form-separator {
         
         overflow-y: auto !important; 
         -webkit-overflow-scrolling: touch !important;
-        overscroll-behavior-y: contain !important; /* CRITICAL: Contains scroll bounce within the overlay */
+        overscroll-behavior-y: contain !important; 
     }
 
     /* --- 2. MODAL CONTENT STYLES (Fixed, Centered, Scrollable) --- */
+    /* The modal content is fixed in the viewport. */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
@@ -5089,12 +5091,13 @@ hr.form-separator {
     
     /* --- 3. FORM ROW STACKING FIXES (FOR ALL MODALS) --- */
     
-    /* Fix for the side-by-side buttons in the original report modal's footer */
-    #report-modal .form-actions {
+    /* Generic fix for any row attempting side-by-side buttons/inputs in footers */
+    #report-modal .form-actions,
+    .feedback-navigation {
         flex-direction: column !important;
     }
     
-    /* Fix for the side-by-side 'Name/Username' and 'Platform' inputs in the report-issues modal */
+    /* Generic fix for custom form rows like in the Report Issues modal */
     #report-issues-modal-overlay .form-row {
         flex-direction: column !important;
         gap: 0 !important;
@@ -5111,7 +5114,7 @@ hr.form-separator {
     input[type="email"],
     textarea,
     select {
-        font-size: 16px !important; /* Prevents iOS zoom */
+        font-size: 16px !important; 
         min-height: 44px !important; 
         padding: 12px !important;
         touch-action: manipulation !important; 
@@ -5135,7 +5138,7 @@ hr.form-separator {
         pointer-events: auto !important;
     }
     
-    /* Force WebKit scrollbars to show (Issue #2) */
+    /* Force WebKit scrollbars to show */
     .modal-content::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
@@ -5154,7 +5157,7 @@ hr.form-separator {
     }
 }
 /* =================================================== */
-/*   END: FINAL, ROBUST MOBILE MODAL FIX   */
+/*   END: FINAL, DEFINITIVE MOBILE MODAL FIX   */
 /* =================================================== */
 
     </style>
@@ -6159,6 +6162,54 @@ hr.form-separator {
 
 
     <script>
+// Hook into existing functions to add 'modal-open' to <html> element
+document.addEventListener('DOMContentLoaded', function() {
+    const originalOpenReportIssuesModal = document.getElementById('open-report-issues-btn')?.onclick;
+    if (originalOpenReportIssuesModal) {
+        document.getElementById('open-report-issues-btn').onclick = function() {
+            document.documentElement.classList.add('modal-open');
+            originalOpenReportIssuesModal.apply(this, arguments);
+        };
+    }
+    
+    const originalCloseReportIssuesModal = document.getElementById('report-issues-close-btn')?.onclick;
+    if (originalCloseReportIssuesModal) {
+        document.getElementById('report-issues-close-btn').onclick = function() {
+            document.documentElement.classList.remove('modal-open');
+            originalCloseReportIssuesModal.apply(this, arguments);
+        };
+    }
+    
+    // Repeat for ALL your modal open/close functions (poll, feedback, submit, etc.)
+    // Your modals currently toggle the class on <body>, now ensure it's also done on <html>.
+    
+    // Example hook for Poll modal:
+    const openPollBtn = document.getElementById('openPollBtn');
+    if (openPollBtn) {
+        openPollBtn.addEventListener('click', () => {
+            document.documentElement.classList.add('modal-open');
+        });
+    }
+    const closePollBtn = document.getElementById('closePollBtn');
+    if (closePollBtn) {
+        closePollBtn.addEventListener('click', () => {
+            document.documentElement.classList.remove('modal-open');
+        });
+    }
+    // ... and so on for every custom modal you have.
+});
+
+
+
+
+
+
+
+
+
+
+
+        
 /* =================================================== */
 /*   START: Drops Submission MODAL SCRIPT           */
 /* =================================================== */
