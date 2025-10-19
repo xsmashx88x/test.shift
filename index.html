@@ -5030,74 +5030,135 @@ hr.form-separator {
 
 
 
-/* FORCEFUL MOBILE STYLES FOR BOOTSTRAP MODALS */
+/* =================================================== */
+/*           FORCEFUL MOBILE STYLES FOR CUSTOM MODALS  */
+/* =================================================== */
 @media (max-width: 767.98px) {
-    /* Target modal when it's actually shown */
-    .modal.show .modal-dialog {
-        margin: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        min-height: 100% !important;
-        display: flex !important;
-        align-items: stretch !important; /* Changed from center */
-        justify-content: center !important;
+    /* Target all your custom modal overlays */
+    .modal-overlay,
+    .feedback-modal-overlay,
+    .poll-modal-overlay,
+    .submit-modal-overlay,
+    .image-preview-modal {
+        padding: 0 !important;
+        align-items: stretch !important;
     }
     
-    /* Override any inline styles added by JavaScript */
-    .modal.show .modal-dialog[style] {
-        margin: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
-        transform: none !important;
-    }
-
-    /* Make modal content fill the screen */
-    .modal.show .modal-content {
+    /* Make modal content full screen */
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content,
+    .image-preview-content {
         width: 100% !important;
         height: 100% !important;
+        max-width: 100% !important;
         max-height: 100% !important;
-        border-radius: 0 !important; /* Remove rounded corners for full screen */
+        border-radius: 0 !important;
+        margin: 0 !important;
         display: flex !important;
         flex-direction: column !important;
     }
-
-    /* Sticky header */
-    .modal.show .modal-header {
+    
+    /* Sticky header for modals that have headers */
+    .modal-header,
+    .feedback-modal-header,
+    .poll-modal-header {
         position: sticky !important;
         top: 0 !important;
         z-index: 1055 !important;
-        background-color: #212529 !important;
+        background-color: #1f1f1f !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
         flex-shrink: 0 !important;
         padding: 1rem !important;
     }
-
+    
     /* Scrollable body */
-    .modal.show .modal-body {
+    .modal-body,
+    .feedback-page,
+    .poll-page,
+    .form-group {
         flex-grow: 1 !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
         padding: 1rem !important;
     }
-
-    /* Sticky footer */
-    .modal.show .modal-footer {
+    
+    /* Sticky footer for navigation */
+    .feedback-navigation,
+    .form-actions {
         position: sticky !important;
         bottom: 0 !important;
         z-index: 1055 !important;
-        background-color: #212529 !important;
+        background-color: #1f1f1f !important;
         border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
         flex-shrink: 0 !important;
         padding: 1rem !important;
+        margin-bottom: 0 !important;
     }
-
-    /* Ensure close button is visible */
-    .modal.show .modal-header .btn-close {
-        margin: 0 !important;
-        padding: 0.5rem !important;
+    
+    /* Ensure close buttons are visible and accessible */
+    .close-btn,
+    .feedback-close-btn,
+    .poll-close-btn,
+    .close-submit-modal,
+    .close-preview {
+        position: fixed !important;
+        top: 10px !important;
+        right: 10px !important;
+        z-index: 1060 !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: #ff4444 !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
     }
-} 
+    
+    /* Full screen image preview */
+    .image-preview-content img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+    
+    /* Adjust controls for mobile */
+    #image-preview-controls {
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+        justify-content: space-around !important;
+    }
+    
+    /* Make buttons more touch-friendly */
+    .feedback-nav-btn,
+    .poll-nav-btn,
+    .poll-submit-btn,
+    .submit-action-btn,
+    .btn-submit,
+    .btn-cancel {
+        min-height: 44px !important;
+        padding: 12px 20px !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    /* Form inputs more touch-friendly */
+    input[type="text"],
+    input[type="url"],
+    textarea,
+    select {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        min-height: 44px !important;
+        padding: 12px !important;
+    }
+}
     
     </style>
 </head>
