@@ -2987,42 +2987,33 @@ iframe#kofi-chat-widget { display: none !important; }
     background: #1f1f1f;
     border: 2px solid #ffc600;
     border-radius: 8px;
-    
-    /* === KEY FIX: Ensure Modal Content is Tightly Constrained === */
-    box-sizing: border-box;            /* CRITICAL: Ensure border/padding are inside width */
-    padding: 0 !important;             /* Remove all internal padding */
-    overflow: hidden !important;       /* Prevents scrollbars on the modal wrapper */
-    
-    /* Optimal size for Ko-fi widget: */
-    width: 95% !important;             /* Takes 95% of its parent's width */
-    max-width: 400px !important;       /* Reduced from 420px to prevent double border */
-    
-    /* Responsive height */
-    height: auto !important;           /* Changed from fixed 600px */
-    max-height: 85vh !important;       /* More reasonable max height */
-    /* === END KEY FIX === */
+    box-sizing: border-box;
+    padding: 0 !important;
+    overflow: hidden !important;
+    width: 95% !important;
+    max-width: 400px !important;
+    height: auto !important;
+    max-height: 85vh !important;
 }
 
-/* Ensure the close button is correctly positioned relative to the modal-content */
 #kofi-modal-overlay .close-modal {
     position: absolute;
-    top: -8px;                        /* Changed from -15px (more visible) */
-    right: -8px;                      /* Changed from -15px (more visible) */
+    top: -8px;
+    right: -8px;
     background: #ff4444;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 35px;                      /* Increased from 30px (more clickable) */
-    height: 35px;                     /* Increased from 30px (more clickable) */
-    font-size: 22px;                  /* Increased from 20px (more visible) */
+    width: 35px;
+    height: 35px;
+    font-size: 22px;
     cursor: pointer;
     font-weight: bold;
-    line-height: 32px;                /* Adjusted for larger button */
+    line-height: 32px;
     z-index: 10007; 
 }
 
 #kofi-iframe-container {
-    /* Container fills the content box */
     width: 100% !important;
     height: 100% !important; 
     display: flex !important;
@@ -3031,10 +3022,9 @@ iframe#kofi-chat-widget { display: none !important; }
 }
 
 #kofi-iframe-container iframe {
-    /* Iframe fills the container */
     width: 100% !important;  
     height: 600px !important; 
-    max-height: 80vh !important;  /* Added max-height for mobile */
+    max-height: 80vh !important;
     border: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -3042,16 +3032,22 @@ iframe#kofi-chat-widget { display: none !important; }
     border-radius: 8px !important;
 }
 
-/* Mobile specific fix */
+/* MOBILE FIX ONLY - doesn't break anything */
 @media (max-width: 768px) {
+    #kofi-modal-overlay {
+        padding: 20px !important;
+        box-sizing: border-box !important;
+    }
+    
     #kofi-modal-overlay .modal-content {
-        width: 85% !important;        /* 5px less wide (changed from 90%) */
-        max-width: 375px !important;  /* 5px less wide (changed from 380px) */
+        width: 85% !important;
+        max-width: 340px !important;
+        margin: 0 auto !important;
     }
     
     #kofi-iframe-container iframe {
-        height: 580px !important;     /* Increased height to reduce scrolling */
-        max-height: 78vh !important;  /* Increased max-height */
+        height: 700px !important;
+        max-height: 75vh !important;
     }
 }
 /* END: Styles for the new Ko-fi Modal */
