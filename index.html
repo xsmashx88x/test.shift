@@ -2977,50 +2977,59 @@ iframe#kofi-chat-widget { display: none !important; }
 /* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* START: Specific Ko-fi Modal Styles - Ensures proper sizing */
 #kofi-modal-overlay {
+    /* Ensure the full screen is covered */
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important;
+    width: 100% !important; 
+    height: 100% !important;
     z-index: 10006 !important;
-    justify-content: center; 
-    align-items: center; 
+    display: flex !important;
+    justify-content: center !important; 
+    align-items: center !important; 
 }
 
 #kofi-modal-overlay .modal-content {
-    position: relative;
-    background: #1f1f1f;
-    border: 2px solid #ffc600;
-    border-radius: 8px;
+    /* CRITICAL CENTERING AND POSITIONING FIX */
+    position: absolute !important; /* Use absolute to position relative to the centered overlay */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; 
     
-    /* === KEY FIX: Ensure Modal Content is Tightly Constrained === */
-    box-sizing: border-box;            /* CRITICAL: Ensure border/padding are inside width */
-    padding: 0 !important;             /* Remove all internal padding */
-    overflow: hidden !important;       /* Prevents scrollbars on the modal wrapper */
+    /* === CRITICAL SIZING FOR MOBILE CONTAINMENT === */
+    box-sizing: border-box !important;            
+    padding: 0 !important;                        
+    overflow: hidden !important;                  
     
-    /* Optimal size for Ko-fi widget: */
-    width: 95% !important;             /* Takes 95% of its parent's width */
-    max-width: 420px !important;       /* Optimal width for Ko-fi widget on large screens */
-    
-    /* Forcing height to match widget/screen */
-    height: 600px !important;
-    max-height: 95vh !important;       /* Shrinks height on small screens */
-    /* === END KEY FIX === */
+    /* Set max size based on viewport */
+    width: 95vw !important;                      /* MUST be 95% of screen width */
+    max-width: 420px !important;                 /* PC max width */
+    height: 600px !important;                    
+    max-height: 95vh !important;                 /* Vertical constraint */
+
+    /* General appearance */
+    background: #1f1f1f !important;
+    border: 2px solid #ffc600 !important;
+    border-radius: 8px !important;
 }
 
-/* Ensure the close button is correctly positioned relative to the modal-content */
+/* Ensure the close button is correctly positioned */
 #kofi-modal-overlay .close-modal {
-    position: absolute;
-    top: -15px; 
-    right: -15px; 
-    background: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    line-height: 28px;
-    z-index: 10007; 
+    position: absolute !important;
+    top: -15px !important; 
+    right: -15px !important; 
+    background: #ff4444 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    line-height: 28px !important;
+    z-index: 10007 !important; 
 }
-
 
 #kofi-iframe-container {
     /* Container fills the content box */
