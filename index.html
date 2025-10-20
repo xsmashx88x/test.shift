@@ -2929,6 +2929,7 @@ iframe#kofi-chat-widget { display: none !important; }
 /* END: FINAL, OVERRIDING SHARE BUTTON CSS */
 
 
+/* START: Styles for the new Ko-fi Modal */
 .modal-overlay {
     display: none; /* Hidden by default */
     position: fixed;
@@ -2937,7 +2938,7 @@ iframe#kofi-chat-widget { display: none !important; }
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    z-index: 10005 !important;
+    z-index: 3000;
     justify-content: center;
     align-items: center;
 }
@@ -2965,93 +2966,57 @@ iframe#kofi-chat-widget { display: none !important; }
     line-height: 28px;
 }
 
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* START: Specific Ko-fi Modal Styles - Ensures proper sizing */
-#kofi-modal-overlay {
-    /* This sets the VISIBLE state, ensuring the size/positioning you liked */
-    position: fixed !important; 
-    top: 0 !important; 
-    left: 0 !important;
-    width: 100% !important; 
-    height: 100% !important;
-    z-index: 10006 !important;
-    display: flex !important; /* The correct display mode */
-    justify-content: center !important; 
-    align-items: center !important; 
-    background: rgba(0, 0, 0, 0.85); /* Ensure background is visible */
-}
-
-/* NEW: Class to force the modal HIDDEN */
-#kofi-modal-overlay.hidden {
-    display: none !important;
-}
-
-#kofi-modal-overlay .modal-content {
-    /* CRITICAL CENTERING AND POSITIONING FIX */
-    position: absolute !important; 
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important; 
-    
-    /* === CRITICAL SIZING FOR MOBILE CONTAINMENT (The perfect size) === */
-    box-sizing: border-box !important;            
-    padding: 0 !important;                        
-    overflow: hidden !important;                  
-    width: 95vw !important;                      
-    max-width: 420px !important;                 
-    height: 600px !important;                    
-    max-height: 95vh !important;                 
-
-    /* General appearance */
-    background: #1f1f1f !important;
-    border: 2px solid #ffc600 !important;
-    border-radius: 8px !important;
-}
-
-/* Ensure the close button is correctly positioned */
-#kofi-modal-overlay .close-modal {
-    position: absolute !important;
-    top: -15px !important; 
-    right: -15px !important; 
-    background: #ff4444 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 50% !important;
-    width: 30px !important;
-    height: 30px !important;
-    font-size: 20px !important;
-    cursor: pointer !important;
-    font-weight: bold !important;
-    line-height: 28px !important;
-    z-index: 10007 !important; 
-}
-
-#kofi-iframe-container {
-    width: 100% !important;
-    height: 100% !important; 
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
 #kofi-iframe-container iframe {
-    width: 100% !important;  
-    height: 100% !important; 
-    border: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 3px solid #ffc600 !important; 
-    border-radius: 8px !important;
-}/* END: Styles for the new Ko-fi Modal */
+    max-width: 80vw;
+    max-height: 80vh;
+}    
+/* END: Styles for the new Ko-fi Modal */    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5424,36 +5389,6 @@ hr.form-separator {
 /* =================================================== */
 /* =================================================== */
 
-/* =================================================== */
-/*   KO-FI MODAL MOBILE-ONLY CONTAINMENT FIX (FINAL)   */
-/* =================================================== */
-@media (max-width: 767.98px) {
-    
-    /* 1. Force the Modal-Content to center and contain safely */
-    #kofi-modal-overlay .modal-content {
-        /* Centering overrides to ensure it's not stuck to the left */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important; 
-        
-        /* The critical sizing constraints for mobile */
-        width: 95vw !important; /* Force to 95% of screen width */
-        max-width: 95vw !important; /* Cap at 95% of screen width */
-        max-height: 95vh !important; 
-        
-        /* Ensure no extra padding pushes the iframe out */
-        padding: 0 !important;
-        overflow: hidden !important; 
-    }
-
-    /* 2. Ensure the inner iframe fills the container */
-    #kofi-iframe-container,
-    #kofi-iframe-container iframe {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
-/* =================================================== */
 
     </style>
 </head>
@@ -5561,11 +5496,11 @@ hr.form-separator {
 <!-- DELETE your old action-buttons-container and REPLACE it with this one -->
 <div class="action-buttons-container">
 
-<button class="action-btn kofi-button" onclick="openKofiModal()">
-    <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi donations" class="kofi-icon"/>
-    Support This via Dono
-    <small>Means Alot If You Do</small>
-</button>
+        <button class="action-btn kofi-button" onclick="openKofiModal()">
+        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi donations" class="kofi-icon"/>
+        Support This via Dono
+        <small>Means Alot If You Do</small>
+    </button>
 
 <button class="action-btn floating-feedback-btn">
     Feedback<br>Forum<br><small>Updated 10/14/2025</small>
@@ -6242,7 +6177,7 @@ hr.form-separator {
             <!-- Checkboxes will be rendered here by JavaScript -->
         </div>
 
-        <div style="margin-top: 0px; text-align: center;">
+        <div style="margin-top: 2px; text-align: center;">
             <button class="submit-action-btn" onclick="closeHideIshModal()" style="width: auto; padding: 10px 30px;">
                 Save & Close
             </button>
@@ -9049,46 +8984,41 @@ async function submitDetailedReport(formData) {
 
 // Your existing openKofiModal function
 function openKofiModal() {
-    const kofiModal = document.getElementById('kofi-modal-overlay');
-    const kofiModalContent = kofiModal ? kofiModal.querySelector('.modal-content') : null;
-    const kofiIframeContainer = document.getElementById('kofi-iframe-container');
+    const container = document.getElementById('kofi-iframe-container');
+    // Add the iframe content ONLY when the modal is opened
+    container.innerHTML = `<iframe id='kofiframe' src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&embed=true&preview=true' style='border:none;width:100%;padding:4px;background:#f9f9f9;' height='712' title='xsmashx88x'></iframe>`;
     
-    if (!kofiModal || !kofiIframeContainer || !kofiModalContent) return;
-
-    // 1. Set the correct Ko-fi dimensions
-    kofiModalContent.style.minWidth = '400px'; 
-    kofiModalContent.style.minHeight = '350px'; 
-
-    // 2. Inject the iframe 
-    kofiIframeContainer.innerHTML = `
-        <iframe 
-            id='kofiframe' 
-            src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&frame=true' 
-            style='border:none;width:100%;height:100%;padding:0;margin:0;' 
-            title='xsmashx88x'
-            allow='clipboard-write'>
-        </iframe>`;
-            
-    // 3. Display the modal by REMOVING the hidden class
-    kofiModal.classList.remove('hidden'); 
+    const modal = document.getElementById('kofi-modal-overlay');
+    modal.style.display = 'flex';
 }
 
 function closeKofiModal() {
-    const kofiModal = document.getElementById('kofi-modal-overlay');
-    if (kofiModal) {
-        // HIDE the modal by ADDING the hidden class
-        kofiModal.classList.add('hidden'); 
-        // Optional: Remove iframe content to stop playback/save memory
-        document.getElementById('kofi-iframe-container').innerHTML = '';
-    }
+    const modal = document.getElementById('kofi-modal-overlay');
+    modal.style.display = 'none';
+    
+    // Remove the iframe content to stop any potential background activity
+    const container = document.getElementById('kofi-iframe-container');
+    container.innerHTML = '';
 }
 
-// And ensure the aggressive closing logic on DOMContentLoaded uses the class:
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof closeKofiModal === 'function') {
-        closeKofiModal(); // This will add the 'hidden' class on load
-    }
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // NEW, DEDICATED function to clear Black Market statuses
@@ -11722,7 +11652,7 @@ async function submitFeedback() {
     </script>
 
 <!-- START: New Ko-fi Modal -->
-<div id="kofi-modal-overlay" class="modal-overlay hidden">
+<div id="kofi-modal-overlay" class="modal-overlay">
     <div class="modal-content">
         <button class="close-modal" onclick="closeKofiModal()">&times;</button>
         <div id="kofi-iframe-container">
@@ -11731,22 +11661,22 @@ async function submitFeedback() {
     </div>
 </div>
 
-<!-- This is your image preview modal from your original HTML -->
-<div id="image-preview-modal" class="image-preview-modal">
-    <div class="image-preview-content">
-        <div id="preview-container" style="display: none;">
-            <!-- Iframe or video will be injected here by JavaScript -->
-        </div>
-        <img id="preview-image" src="" alt="Preview" style="display: none;">
-    </div>
-    <!-- These are the new controls for zooming and closing -->
-    <div id="image-preview-controls">
-        <button class="control-btn" id="zoom-in-btn" title="Zoom In">+</button>
-        <button class="control-btn" id="zoom-out-btn" title="Zoom Out">-</button>
-        <button class="control-btn" id="reset-zoom-btn" title="Reset Zoom">⟲</button>
-        <button class="control-btn" id="close-preview-btn" title="Close">×</button>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- END: New Ko-fi Modal -->
 <script>
 
