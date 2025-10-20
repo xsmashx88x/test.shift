@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png">
     <meta charset="UTF-8">
@@ -5250,15 +5251,15 @@ hr.form-separator {
 @media (max-width: 767.98px) {
 
     /* --- 1. CRITICAL: BODY & HTML SCROLL LOCK AND ANTI-BOUNCE --- */
-    /* This must remain universal to lock the background for all modals. */
+    /* Must be universal to lock the background for ALL modals. */
     body.modal-open, 
     html.modal-open { 
         position: fixed !important;
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
-        touch-action: none !important; /* Disables all touch actions on the root */
-        overscroll-behavior-y: none !important; /* CRITICAL: Stops background page bounce */
+        touch-action: none !important; 
+        overscroll-behavior-y: none !important; 
     }
     
     /* Ensure the modal overlay itself cannot be dragged or bounced */
@@ -5267,6 +5268,43 @@ hr.form-separator {
     .feedback-modal-overlay,
     .poll-modal-overlay,
     .submit-modal-overlay {
+        /* ... (Original Overlay Styles) ... */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: 9998 !important;
+        background: rgba(0, 0, 0, 0.85) !important;
+        overflow-y: hidden !important;
+        touch-action: none !important; 
+        overscroll-behavior-y: none !important; 
+    }
+
+    /* --- 2. MODAL CONTENT STYLES (Fixed, Centered, Scrollable) --- */
+    /* Normal modals get these styles */
+    .modal-content,
+    .feedback-modal-content,
+    .poll-modal-content,
+    .submit-modal-content {
+        /* ... (Original Content Styles) ... */
+        position: fixed !important; 
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important; 
+        width: 95vw !important;
+        max-width: 500px !important;
+        max-height: 85vh !important; 
+        overflow-y: auto !important; 
+        touch-action: pan-y !important; 
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 9999 !important;
+    }
+    
+    /* --- KO-FI MODAL-SPECIFIC STYLES (using its IDs) --- */
+    
+    /* 2a. Ko-fi Overlay Styling */
+    #kofi-modal-overlay {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
@@ -5275,54 +5313,10 @@ hr.form-separator {
         z-index: 9998 !important;
         background: rgba(0, 0, 0, 0.85) !important;
         
-        /* The overlay must not scroll, as content scroll is handled by modal-content */
-        overflow-y: hidden !important;
-        touch-action: none !important; /* CRITICAL: Prevents dragging the whole fixed overlay */
-        overscroll-behavior-y: none !important; 
-    }
-
-    /* --- 2. MODAL CONTENT STYLES (Fixed, Centered, Scrollable) --- */
-    /* EXCLUSION: #kofi-iframe-container is a container, likely not using .modal-content, but excluding generic classes */
-    .modal-content,
-    .feedback-modal-content,
-    .poll-modal-content,
-    .submit-modal-content {
-        position: fixed !important; 
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important; 
-        
-        width: 95vw !important;
-        max-width: 500px !important;
-        max-height: 85vh !important; 
-        
-        /* Re-enabling internal vertical scroll (only pan-y allowed) */
-        overflow-y: auto !important; 
-        touch-action: pan-y !important; 
-        -webkit-overflow-scrolling: touch !important;
-        
-        z-index: 9999 !important;
-    }
-    
-    /* --- KO-FI MODAL-SPECIFIC STYLES (using its IDs) --- */
-    
-    /* 2a. Ko-fi Overlay Styling */
-    #kofi-modal-overlay {
-        /* Ensure it's fixed and full screen, but you likely handle display:flex/none in JS */
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        z-index: 9998 !important; /* Below the content */
-        background: rgba(0, 0, 0, 0.85) !important;
-        
-        /* Ensure it can center the content */
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
         
-        /* Lock down touch behavior to prevent bounce/scroll on the overlay */
         overflow: hidden !important;
         touch-action: none !important;
         overscroll-behavior: none !important;
@@ -5330,70 +5324,49 @@ hr.form-separator {
 
     /* 2b. Ko-fi Iframe Container Styling (The "content" box) */
     #kofi-iframe-container {
-        /* This is the element that needs to be properly sized on mobile */
-        position: relative !important; /* Allows absolute positioning for the close button if used */
-        width: 95vw !important; /* Nearly full width */
-        max-width: 400px !important; /* Limit max width */
-        height: 85vh !important; /* Nearly full height */
-        max-height: 600px !important; /* Limit max height */
+        position: relative !important; 
+        width: 95vw !important; 
+        max-width: 400px !important; 
+        height: 90vh !important; /* Allow more height on mobile */
+        max-height: 600px !important; 
         
-        /* Ensure background/border match the visual style in the image */
-        background: white !important; /* Ko-fi usually has a white background */
+        background: white !important; /* Ensure a clean white box */
         border-radius: 8px !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 
-        /* Prevents the container itself from scrolling, the iframe inside does that */
-        overflow: hidden !important; 
-        
-        /* Positioning (already centered by parent #kofi-modal-overlay) */
+        overflow: hidden !important; /* Prevents the container from scrolling */
         z-index: 9999 !important;
     }
 
     /* 2c. Ko-fi Iframe Styling */
     #kofiframe {
-        /* Force the iframe to perfectly fill its container (#kofi-iframe-container) */
         width: 100% !important;
         height: 100% !important;
-        border: none !important;
-        /* The inline styles on #kofiframe (e.g., padding:4px) 
-           will still apply, but this ensures it fills the space. */
+        display: block !important;
+    }
+
+    /* 2d. Ko-fi Close Button Fix (Assumes an ID for the button) */
+    #kofi-close-button {
+        position: absolute !important;
+        top: -15px !important;
+        right: -15px !important;
+        z-index: 10000 !important; /* CRITICAL: Must be higher than #kofi-iframe-container (9999) */
+        width: 44px !important;
+        height: 44px !important;
+        line-height: 44px !important;
+        font-size: 20px !important;
+        pointer-events: auto !important; /* Ensure it is clickable */
+        cursor: pointer !important;
+        /* Add other close button styles like background/icon if needed */
     }
     
     /* --- 3. FORM ROW STACKING FIXES (FOR ALL MODALS) --- */
     /* ... (Existing form fixes) ... */
-    #report-modal .form-actions,
-    .feedback-navigation {
-        flex-direction: column !important;
-    }
-    
-    #report-issues-modal-overlay .form-row {
-        flex-direction: column !important;
-        gap: 0 !important;
-    }
-    #report-issues-modal-overlay .form-row .form-group {
-        width: 100% !important;
-        flex: none !important;
-        margin-bottom: 15px !important; 
-    }
 
     /* --- 4. ACCESSIBILITY & ZOOM PREVENTION (Universal) --- */
-    input[type="text"],
-    input[type="url"],
-    input[type="email"],
-    textarea,
-    select {
-        font-size: 16px !important; 
-        min-height: 44px !important; 
-        padding: 12px !important;
-        touch-action: manipulation !important; 
-        box-sizing: border-box !important;
-    }
+    /* ... (Existing input fixes) ... */
 
-    /* Ensure the Close button is large and clickable */
-    /* If your Ko-fi modal uses a close button inside #kofi-iframe-container, 
-       you'll need a unique class for it to position it correctly. 
-       If it uses a generic .close-btn, you may need a separate rule. 
-       Assuming it uses a unique class like .kofi-close-btn: */
+    /* Ensure other Close buttons are still clickable (assuming they are not the kofi one) */
     .close-btn,
     .feedback-close-btn,
     .poll-close-btn,
@@ -5409,9 +5382,10 @@ hr.form-separator {
         font-size: 20px !important;
         pointer-events: auto !important;
     }
+    
+    /* ... (Rest of the original fixes for scrollbars and content lock) ... */
 
     /* Force WebKit scrollbars to show */
-    /* EXCLUSION: #kofi-iframe-container (as the iframe handles its own scrollbars) */
     .modal-content::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
@@ -5430,22 +5404,17 @@ hr.form-separator {
     }
     
     /* --- FINAL CRITICAL INJECTION FOR INNER CONTENT LOCK --- */
-    /* EXCLUSION: #kofi-iframe-container */
+    /* EXCLUSION: We don't want to affect #kofi-iframe-container here, 
+       but we ensure the other modals are clean. */
     .modal-content,
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content,
     #report-issues-form,
     #report-form {
-        /* Prevents horizontal movement (pan-x) and horizontal scrolling/bouncing */
         overflow-x: hidden !important; 
         width: 100% !important;
         max-width: 100% !important;
-    }
-
-    /* Also apply this to the Ko-fi container to be safe, but keep its width at 95vw */
-    #kofi-iframe-container {
-         overflow-x: hidden !important; 
     }
 }
 /* =================================================== */
@@ -9050,16 +9019,32 @@ async function submitDetailedReport(formData) {
 // Your existing openKofiModal function
 function openKofiModal() {
     const container = document.getElementById('kofi-iframe-container');
-    // Add the iframe content ONLY when the modal is opened
-    container.innerHTML = `<iframe id='kofiframe' src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&embed=true&preview=true' style='border:none;width:100%;padding:4px;background:#f9f9f9;' height='712' title='xsmashx88x'></iframe>`;
+    
+    // **CRITICAL CHANGE:** Removed inline 'style' and 'height' attributes from the iframe.
+    // CSS will now control width and height.
+    container.innerHTML = `<iframe 
+        id='kofiframe' 
+        src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&embed=true&preview=true' 
+        frameborder='0' 
+        title='xsmashx88x'>
+    </iframe>`;
     
     const modal = document.getElementById('kofi-modal-overlay');
+    
+    // **IMPORTANT:** Ensure you add the global scroll-lock class here!
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open'); 
+    
     modal.style.display = 'flex';
 }
 
 function closeKofiModal() {
     const modal = document.getElementById('kofi-modal-overlay');
     modal.style.display = 'none';
+    
+    // **IMPORTANT:** Ensure you remove the global scroll-lock class here!
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
     
     // Remove the iframe content to stop any potential background activity
     const container = document.getElementById('kofi-iframe-container');
