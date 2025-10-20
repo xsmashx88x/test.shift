@@ -2977,9 +2977,6 @@ iframe#kofi-chat-widget { display: none !important; }
 /* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* START: Specific Ko-fi Modal Styles - Ensures proper sizing */
 #kofi-modal-overlay {
-    /* CRITICAL FIX: Ensures modal is hidden by default. Use a class if this fails. */
-    display: none; 
-    
     /* Ensure the full screen is covered */
     position: fixed !important; 
     top: 0 !important; 
@@ -2987,30 +2984,29 @@ iframe#kofi-chat-widget { display: none !important; }
     width: 100% !important; 
     height: 100% !important;
     z-index: 10006 !important;
-    
-    /* Use flex for centering the internal modal-content */
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    display: flex !important;
+    justify-content: center !important; 
+    align-items: center !important; 
 }
 
 #kofi-modal-overlay .modal-content {
-    /* CRITICAL SIZING FOR MOBILE CONTAINMENT */
+    /* CRITICAL CENTERING AND POSITIONING FIX */
+    position: absolute !important; /* Use absolute to position relative to the centered overlay */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; 
+    
+    /* === CRITICAL SIZING FOR MOBILE CONTAINMENT === */
     box-sizing: border-box !important;            
     padding: 0 !important;                        
     overflow: hidden !important;                  
     
-    /* === THE CORRECT "SKINNY" SIZING (FOR PC & MOBILE) === */
-    width: 95vw !important;                      /* Takes 95% of screen width */
-    max-width: 420px !important;                 /* PC size cap (the "skinny" part) */
-    
+    /* Set max size based on viewport */
+    width: 95vw !important;                      /* MUST be 95% of screen width */
+    max-width: 420px !important;                 /* PC max width */
     height: 600px !important;                    
     max-height: 95vh !important;                 /* Vertical constraint */
 
-    /* CRITICAL CENTERING FIX (If flex/justify-content fails on the overlay) */
-    position: relative; /* Make absolute positioning below relative to this */
-    margin: auto;       /* This classic centering technique works inside the flex container */
-    
     /* General appearance */
     background: #1f1f1f !important;
     border: 2px solid #ffc600 !important;
@@ -3036,6 +3032,7 @@ iframe#kofi-chat-widget { display: none !important; }
 }
 
 #kofi-iframe-container {
+    /* Container fills the content box */
     width: 100% !important;
     height: 100% !important; 
     display: flex !important;
@@ -3044,6 +3041,7 @@ iframe#kofi-chat-widget { display: none !important; }
 }
 
 #kofi-iframe-container iframe {
+    /* Iframe fills the container */
     width: 100% !important;  
     height: 100% !important; 
     border: none !important;
