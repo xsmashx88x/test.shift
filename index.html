@@ -3043,39 +3043,7 @@ iframe#kofi-chat-widget { display: none !important; }
 }
 /* END: Styles for the new Ko-fi Modal */
 
-/* =================================================== */
-/*   START: FINAL FIX FOR KO-FI MOBILE CONTAINMENT     */
-/* =================================================== */
-@media (max-width: 767.98px) {
-    
-    /* Overrides general modal-content styles specifically for Ko-fi to ensure safe sizing */
-    #kofi-modal-overlay .modal-content {
-        /* Crucial centering logic */
-        position: fixed !important; 
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important; 
-        
-        /* Enforce a safe maximum size for mobile */
-        width: 90vw !important; /* Take 90% of the screen width */
-        max-width: 450px !important; /* Prevent it from getting too big on tablets */
-        max-height: 90vh !important; /* Allow vertical shrinking */
-        
-        /* Ensure no extra padding pushes the iframe out */
-        padding: 0 !important;
-        overflow: hidden !important; /* Clip any content that still runs over */
-    }
 
-    /* Ensure the iframe itself fills the new container */
-    #kofi-iframe-container,
-    #kofi-iframe-container iframe {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
-/* =================================================== */
-/*    END: FINAL FIX FOR KO-FI MOBILE CONTAINMENT      */
-/* =================================================== */
 
 
 
@@ -5446,6 +5414,36 @@ hr.form-separator {
 /* =================================================== */
 /* =================================================== */
 
+/* =================================================== */
+/*   KO-FI MODAL MOBILE-ONLY CONTAINMENT FIX (FINAL)   */
+/* =================================================== */
+@media (max-width: 767.98px) {
+    
+    /* 1. Force the Modal-Content to center and contain safely */
+    #kofi-modal-overlay .modal-content {
+        /* Centering overrides to ensure it's not stuck to the left */
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important; 
+        
+        /* The critical sizing constraints for mobile */
+        width: 95vw !important; /* Force to 95% of screen width */
+        max-width: 95vw !important; /* Cap at 95% of screen width */
+        max-height: 95vh !important; 
+        
+        /* Ensure no extra padding pushes the iframe out */
+        padding: 0 !important;
+        overflow: hidden !important; 
+    }
+
+    /* 2. Ensure the inner iframe fills the container */
+    #kofi-iframe-container,
+    #kofi-iframe-container iframe {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+/* =================================================== */
 
     </style>
 </head>
