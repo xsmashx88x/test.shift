@@ -5251,7 +5251,7 @@ hr.form-separator {
 @media (max-width: 767.98px) {
 
     /* --- 1. CRITICAL: BODY & HTML SCROLL LOCK AND ANTI-BOUNCE --- */
-    /* This aggressively locks the entire document scroll on all platforms. */
+    /* This must remain universal to lock the background for all modals. */
     body.modal-open, 
     html.modal-open { 
         position: fixed !important;
@@ -5263,7 +5263,8 @@ hr.form-separator {
     }
     
     /* Ensure the modal overlay itself cannot be dragged or bounced */
-    .modal-overlay,
+    /* EXCLUSION: .kofo-modal-overlay */
+    .modal-overlay:not(.kofo-modal-overlay),
     .feedback-modal-overlay,
     .poll-modal-overlay,
     .submit-modal-overlay {
@@ -5282,7 +5283,8 @@ hr.form-separator {
     }
 
     /* --- 2. MODAL CONTENT STYLES (Fixed, Centered, Scrollable) --- */
-    .modal-content,
+    /* EXCLUSION: .kofo-modal-content */
+    .modal-content:not(.kofo-modal-content),
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content {
@@ -5336,7 +5338,8 @@ hr.form-separator {
     }
 
     /* Ensure the Close button is large and clickable */
-    .close-btn,
+    /* EXCLUSION: .kofo-modal-close-btn (covers both generic and specific kofo close button classes) */
+    .close-btn:not(.kofo-modal-close-btn),
     .feedback-close-btn,
     .poll-close-btn,
     .close-submit-modal,
@@ -5353,7 +5356,8 @@ hr.form-separator {
     }
     
     /* Force WebKit scrollbars to show */
-    .modal-content::-webkit-scrollbar,
+    /* EXCLUSION: .kofo-modal-content */
+    .modal-content:not(.kofo-modal-content)::-webkit-scrollbar,
     .feedback-modal-content::-webkit-scrollbar,
     .poll-modal-content::-webkit-scrollbar,
     .submit-modal-content::-webkit-scrollbar {
@@ -5362,7 +5366,8 @@ hr.form-separator {
         background: #333333;
         border-radius: 4px;
     }
-    .modal-content::-webkit-scrollbar-thumb,
+    /* EXCLUSION: .kofo-modal-content */
+    .modal-content:not(.kofo-modal-content)::-webkit-scrollbar-thumb,
     .feedback-modal-content::-webkit-scrollbar-thumb,
     .poll-modal-content::-webkit-scrollbar-thumb,
     .submit-modal-content::-webkit-scrollbar-thumb {
@@ -5371,7 +5376,8 @@ hr.form-separator {
     }
     
     /* --- FINAL CRITICAL INJECTION FOR INNER CONTENT LOCK --- */
-    .modal-content,
+    /* EXCLUSION: .kofo-modal-content */
+    .modal-content:not(.kofo-modal-content),
     .feedback-modal-content,
     .poll-modal-content,
     .submit-modal-content,
