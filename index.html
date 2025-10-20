@@ -9,13 +9,13 @@
     <title>SHiFT Codes - Tracker + More</title>
     
     <!-- Open Graph tags -->
-    <meta property="og:title" content="Borderlands4 SHiFT Codes - Tracker + More">
-    <meta property="og:description" content="Track and manage Borderlands SHiFT codes + More">
+    <meta property="og:title" content="Borderlands4 SHiFT Codes - Tracker + Info Hub + More">
+    <meta property="og:description" content="Track and manage Borderlands SHiFT codes + Info Hub + More">
     <meta property="og:type" content="website">
     
     <!-- Twitter Card tags -->
-    <meta name="twitter:title" content="Borderlands4 SHiFT Codes - Tracker + More">
-    <meta name="twitter:description" content="Track and manage Borderlands4 SHiFT codes + More">
+    <meta name="twitter:title" content="Borderlands4 SHiFT Codes - Tracker + Info Hub +  More">
+    <meta name="twitter:description" content="Track and manage Borderlands4 SHiFT codes + Info Hub +  More">
         <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <body>
 
@@ -2674,7 +2674,7 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 
 /* --- Quick Update Button Style --- */
 .quick-update-button {
-    background: linear-gradient(to bottom, #2a677a, #541375); /* Custom Purple Gradient */
+    background: linear-gradient(to bottom, #090909, #000000); /* Custom Purple Gradient */
     color: #fff;
     padding: 10px 20px;
     border-radius: 4px;
@@ -2683,23 +2683,24 @@ body.modal-open .floating-share-container { /* ...and the Share button container
     transition: all 0.3s;
     font-size: 14px;
     text-transform: uppercase;
-    border: 1px solid #ff54a5; /* Pink border */
+ /* border: 1px solid #ff54a5; /* Pink border */
     text-shadow: 1px 1px 0 #000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     display: block;
     width: fit-content;
     margin: 10px auto; 
 }
-.quick-update-button:hover {
+/* .quick-update-button:hover {
     background: linear-gradient(to bottom, #2a677a, #7a2a7a);
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(255, 84, 165, 0.7); 
-}
+}*/
+
 
 /* --- Quick Update Content Style (Reuses other section styling) --- */
 #quick-update-section .info-content {
-    background: linear-gradient(to bottom, #272727, #171717);
-    border: 2px solid #ff54a5;
+    background: linear-gradient(to bottom, #090909, #000000);
+    /*  border: 2px solid #ff54a5;   */
     padding: 15px;
     border-radius: 4px;
     text-align: left;
@@ -2928,7 +2929,6 @@ iframe#kofi-chat-widget { display: none !important; }
 /* END: FINAL, OVERRIDING SHARE BUTTON CSS */
 
 
-/* START: Styles for the new Ko-fi Modal */
 .modal-overlay {
     display: none; /* Hidden by default */
     position: fixed;
@@ -2937,7 +2937,7 @@ iframe#kofi-chat-widget { display: none !important; }
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    z-index: 3000;
+    z-index: 10005 !important;
     justify-content: center;
     align-items: center;
 }
@@ -2964,11 +2964,128 @@ iframe#kofi-chat-widget { display: none !important; }
     font-weight: bold;
     line-height: 28px;
 }
+
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* START: Specific Ko-fi Modal Styles - Ensures proper sizing */
+#kofi-modal-overlay {
+    z-index: 10006 !important;
+    justify-content: center; 
+    align-items: center; 
+}
+
+#kofi-modal-overlay .modal-content {
+    position: relative;
+    background: #1f1f1f;
+    border: 2px solid #ffc600;
+    border-radius: 8px;
+    
+    /* === KEY FIX: Ensure Modal Content is Tightly Constrained === */
+    box-sizing: border-box;            /* CRITICAL: Ensure border/padding are inside width */
+    padding: 0 !important;             /* Remove all internal padding */
+    overflow: hidden !important;       /* Prevents scrollbars on the modal wrapper */
+    
+    /* Optimal size for Ko-fi widget: */
+    width: 95% !important;             /* Takes 95% of its parent's width */
+    max-width: 420px !important;       /* Optimal width for Ko-fi widget on large screens */
+    
+    /* Forcing height to match widget/screen */
+    height: 600px !important;
+    max-height: 95vh !important;       /* Shrinks height on small screens */
+    /* === END KEY FIX === */
+}
+
+/* Ensure the close button is correctly positioned relative to the modal-content */
+#kofi-modal-overlay .close-modal {
+    position: absolute;
+    top: -15px; 
+    right: -15px; 
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 28px;
+    z-index: 10007; 
+}
+
+
+#kofi-iframe-container {
+    /* Container fills the content box */
+    width: 100% !important;
+    height: 100% !important; 
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
 #kofi-iframe-container iframe {
-    max-width: 80vw;
-    max-height: 80vh;
+    /* Iframe fills the container */
+    width: 100% !important;  
+    height: 100% !important; 
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 3px solid #ffc600 !important; 
+    border-radius: 8px !important;
 }
 /* END: Styles for the new Ko-fi Modal */
+
+/* =================================================== */
+/*   START: FINAL FIX FOR KO-FI MOBILE CONTAINMENT     */
+/* =================================================== */
+@media (max-width: 767.98px) {
+    
+    /* Overrides general modal-content styles specifically for Ko-fi to ensure safe sizing */
+    #kofi-modal-overlay .modal-content {
+        /* Crucial centering logic */
+        position: fixed !important; 
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important; 
+        
+        /* Enforce a safe maximum size for mobile */
+        width: 90vw !important; /* Take 90% of the screen width */
+        max-width: 450px !important; /* Prevent it from getting too big on tablets */
+        max-height: 90vh !important; /* Allow vertical shrinking */
+        
+        /* Ensure no extra padding pushes the iframe out */
+        padding: 0 !important;
+        overflow: hidden !important; /* Clip any content that still runs over */
+    }
+
+    /* Ensure the iframe itself fills the new container */
+    #kofi-iframe-container,
+    #kofi-iframe-container iframe {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+/* =================================================== */
+/*    END: FINAL FIX FOR KO-FI MOBILE CONTAINMENT      */
+/* =================================================== */
+
+
+
+
+
+
+
+
+
+
 
 /* START: FINAL MOBILE BUTTON BAR FIX - PASTE AT END OF <style> TAG */
 
@@ -4199,6 +4316,41 @@ body.stealth-mode {
 .poll-nav-btn:disabled {
     background: #555; cursor: not-allowed; transform: none; box-shadow: none;
 }
+
+/* --- TEXT INPUT STYLING --- */
+.form-group input[type="text"] {
+    width: 100%; padding: 10px; background: #111; border: 1px solid var(--poll-bg-light);
+    border-radius: 4px; color: #fff; font-family: 'Chakra Petch', sans-serif;
+    transition: border-color 0.3s;
+}
+.form-group input[type="text"]:focus {
+    outline: none; border-color: var(--poll-accent-color);
+}
+
+/* --- NEW: Textarea styling for radio-with-text questions (Explicitly targeting within poll modal) --- */
+.poll-modal-content textarea.poll-text-input {
+    width: 100%;
+    padding: 10px;
+    background: #111;
+    border: 1px solid var(--poll-accent-color); /* Explicitly set pink border */
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Chakra Petch', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.3); /* Subtle pink glow */
+}
+
+.poll-modal-content textarea.poll-text-input:focus {
+    outline: none;
+    border-color: var(--poll-accent-color); /* Keep pink on focus */
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.6); /* Stronger pink glow on focus */
+}
+
+.poll-modal-content textarea.poll-text-input.invalid {
+    border: 1px solid #ff4444 !important;
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.5) !important;
+}
+
 /* =================================================== */
 /*          END: POLL MODAL ISOLATED STYLES            */
 /* =================================================== */
@@ -5394,7 +5546,7 @@ hr.form-separator {
     <div class="container">
         <div class="title-bar">
             <img src="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png" alt="Left Icon" class="icon">
-            <div class="title-text">SHiFT Code Tracker  + More</div>
+            <div class="title-text">BL 4 SHiFT Code Tracker<br>Info Hub + More</div>
             <img src="https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png" alt="Right Icon" class="icon">
         </div>
 
@@ -5415,7 +5567,9 @@ hr.form-separator {
     Report<br>Issue<br><small>🐞</small>
 </button>
 
-<button class="action-btn floating-poll-btn" id="openPollBtn" style="display: none;">EH! Poll Time<br><small>Updated 10/18/2025</small></button>
+<button class="action-btn floating-poll-btn" id="openPollBtn" style="display: none;">
+    <span class="drops-pulse">EH! New Poll</span><br><small>Oct 20-27th</small>
+</button>
 <!-- =================================================== -->
 <!--         START: SHIFT CODE TRACKER - COMMUNITY POLL (MULTI-PAGE) -->
 <!-- =================================================== -->
@@ -5963,7 +6117,7 @@ hr.form-separator {
 <div class="combined-floating-panel" id="combined-panel">
     
     <!-- The main black circle button (the trigger) - onclick has been removed -->
-    <button id="combined-toggle-btn">⚙️</button>
+    <button id="combined-toggle-btn">❗</button>
 
     <!-- The pop-out control wrapper (hidden by default) -->
     <div id="combined-controls-wrapper">
@@ -6073,14 +6227,14 @@ hr.form-separator {
 <div id="hide-ish-modal" class="modal-overlay" style="z-index: 3001;">
     <div class="modal-content" style="max-width: 450px;">
         <button class="close-modal" onclick="closeHideIshModal()">&times;</button>
-        <h3 style="color: #ffc600; text-align: center; margin-bottom: 20px;">👁️ Hide Ish 🚫</h3>
-        <p style="text-align: center; color: #ccc;">Click To Hide Things.</p>
+        <h3 style="color: #ffc600; text-align: center; margin-bottom: 2px;">👁️ Hide Ish 🚫</h3>
+        <p style="text-align: center; color: #ccc;">Click To Hide Things.<br><small>Based on the view, this might leave gaps/spaces (more on a grid/wide options) I am working on a fix not the most easy thing to fix<small></p>
         
         <div id="hide-options-container" style="max-height: 70vh; overflow-y: auto; padding-right: 15px;">
             <!-- Checkboxes will be rendered here by JavaScript -->
         </div>
 
-        <div style="margin-top: 20px; text-align: center;">
+        <div style="margin-top: 0px; text-align: center;">
             <button class="submit-action-btn" onclick="closeHideIshModal()" style="width: auto; padding: 10px 30px;">
                 Save & Close
             </button>
@@ -6330,7 +6484,11 @@ document.addEventListener('DOMContentLoaded', function() {
      * to call this, which is handled by the wrapModalFunction below.
      * @param {boolean} lock - true to lock, false to unlock.
      */
-    function toggleGlobalScrollLock(lock) {
+function toggleGlobalScrollLock(lock, modalId = '') { // <-- Added modalId parameter
+    // --- NEW: Skip scroll lock for Ko-fi modal ---
+    if (modalId === 'kofi-modal-overlay') {
+        return; // Do NOT apply scroll lock/unlock for Ko-fi
+    }
         const action = lock ? 'add' : 'remove';
         // Targetting <html> is the CRITICAL, final fix for mobile scroll lock
         document.documentElement.classList[action]('modal-open');
@@ -6357,10 +6515,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- APPLY SCROLL LOCK TO ALL GLOBAL MODAL FUNCTIONS ---
 
     // 1. Kofi Modal (Needs to be wrapped as it doesn't use the simple DOMContentLoaded listener)
-    wrapModalFunction('openKofiModal', true);
-    wrapModalFunction('closeKofiModal', false);
     
     // 2. Original SHiFT Code Report Modal (#report-modal)
+    wrapModalFunction('openReportModal', true);
+    wrapModalFunction('closeReportModal', false);
+
     wrapModalFunction('openReportModal', true);
     wrapModalFunction('closeReportModal', false);
 
@@ -6479,7 +6638,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /* =================================================== */
 // --- START: QUICK UPDATE MESSAGE FEATURE (ARRAY-BASED) ---
 
-const UPDATE_FILE_URL = "https://raw.githubusercontent.com/xsmashx88x/test.shift/refs/heads/main/update.json";
+const UPDATE_FILE_URL = "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/update.json";
 
 document.addEventListener('DOMContentLoaded', function() {
     const updateBtn = document.getElementById('quick-update-btn');
@@ -6513,7 +6672,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 1. Update Button Text
                 updateBtn.innerHTML = `
                      ${activeMessage.lastUpdateText} 
-                    <br><small style="opacity: 0.9;"> ${activeMessage.buttonDate}!</small>
+                    <br><small style="opacity: 0.9;">  ${activeMessage.buttonDate}!</small>
                 `;
                 updateBtn.classList.remove('hidden');
 
@@ -8879,24 +9038,45 @@ async function submitDetailedReport(formData) {
     }
 }
 
-// Add these functions to your main script tag
+
+// Your existing openKofiModal function
 function openKofiModal() {
-    const container = document.getElementById('kofi-iframe-container');
-    // Add the iframe content ONLY when the modal is opened
-    container.innerHTML = `<iframe id='kofiframe' src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&embed=true&preview=true' style='border:none;width:100%;padding:4px;background:#f9f9f9;' height='712' title='xsmashx88x'></iframe>`;
+    const kofiModal = document.getElementById('kofi-modal-overlay');
+    const kofiModalContent = kofiModal ? kofiModal.querySelector('.modal-content') : null;
+    const kofiIframeContainer = document.getElementById('kofi-iframe-container');
     
-    const modal = document.getElementById('kofi-modal-overlay');
-    modal.style.display = 'flex';
+    if (!kofiModal || !kofiIframeContainer || !kofiModalContent) return;
+
+    // 1. Manually set a MINIMUM size on the modal-content to ensure the Ko-fi content is visible
+    // These sizes are reasonable for the Ko-fi embedded widget.
+    kofiModalContent.style.minWidth = '400px'; 
+    kofiModalContent.style.minHeight = '350px'; 
+
+    // 2. Inject the iframe
+    kofiIframeContainer.innerHTML = `
+        <iframe 
+            id='kofiframe' 
+            src='https://ko-fi.com/xsmashx88x/?hidefeed=true&widget=true&frame=true' 
+            style='border:none;width:100%;height:100%;padding:0;margin:0;' 
+            title='xsmashx88x'
+            allow='clipboard-write'>
+        </iframe>`;
+            
+    // 3. Display the modal
+    kofiModal.style.display = 'flex'; 
 }
 
+// ... You also need a function to close the modal ...
+
 function closeKofiModal() {
-    const modal = document.getElementById('kofi-modal-overlay');
-    modal.style.display = 'none';
-    
-    // Remove the iframe content to stop any potential background activity
-    const container = document.getElementById('kofi-iframe-container');
-    container.innerHTML = '';
+    const kofiModal = document.getElementById('kofi-modal-overlay');
+    if (kofiModal) {
+        kofiModal.style.display = 'none';
+        // Optional: Remove iframe content to stop playback/save memory
+        document.getElementById('kofi-iframe-container').innerHTML = '';
+    }
 }
+
 
 // NEW, DEDICATED function to clear Black Market statuses
 function clearBlackMarketStatusOnReset() {
@@ -9048,6 +9228,38 @@ function openPollImagePreview(event, url) {
     openImagePreview(url);
 }
 
+// --- NEW FUNCTION: Dynamically show/hide and set 'required' for text input ---
+function handleRadioWithTextChange(questionId) {
+    const radios = document.querySelectorAll(`input[name="${questionId}"]`);
+    // Assuming the text input ID is constructed as: questionId + '_details'
+    const textInputEl = document.getElementById(`${questionId}_details`); 
+    
+    // Find the question config to check if it's requiredIfYes
+    const questionConfig = POLL_QUESTIONS.find(q => q.id === questionId);
+    
+    if (textInputEl && questionConfig && questionConfig.textInput) {
+        let isYesSelected = false;
+        radios.forEach(radio => {
+            if (radio.checked && radio.value === "Yes") { // Check if "Yes" is selected
+                isYesSelected = true;
+            }
+        });
+
+        if (isYesSelected) {
+            textInputEl.style.display = 'block';
+            if (questionConfig.textInput.requiredIfYes) {
+                textInputEl.setAttribute('required', 'true');
+            }
+        } else {
+            textInputEl.style.display = 'none';
+            textInputEl.removeAttribute('required');
+            textInputEl.value = ''; // Clear text if hiding
+            textInputEl.classList.remove('invalid'); // Remove invalid state if cleared/hidden
+        }
+    }
+}
+
+
 /* =================================================== */
 /* START: STANDALONE POLL MODAL SCRIPT (FINAL, ROBUST FIX) */
 /* =================================================== */
@@ -9109,10 +9321,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 pageContentHtml += `<div class="form-group">`;
                 
-                if (q.type === 'radio' && q.options) {
+                // --- MODIFIED BLOCK STARTS HERE ---
+                if (q.type === 'radio' || q.type === 'radio-with-text') { // Check for both types
                     pageContentHtml += `<div class="radio-group vertical" data-required="${q.id}">`;
                     q.options.forEach(opt => {
-                        // This part now correctly calls the new function
                         const imageHtml = opt.image ? 
                             ` <a href="javascript:void(0);" onclick="openPollImagePreview(event, '${opt.image}')">
                                 <img src="${opt.image}" class="poll-thumbnail" alt="${opt.text}">
@@ -9120,13 +9332,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         pageContentHtml += `
                             <label>
-                                <input type="radio" name="${q.id}" value="${opt.value}" ${isRequired}>
+                                <input type="radio" name="${q.id}" value="${opt.value}" ${isRequired} onchange="handleRadioWithTextChange('${q.id}')">
                                 <span>${opt.text}${imageHtml}</span>
                             </label>
                         `;
                     });
                     pageContentHtml += `</div>`;
+
+                    // Add the text input field if the type is "radio-with-text"
+                    if (q.type === 'radio-with-text' && q.textInput) {
+                        // The 'required' attribute will be handled dynamically by handleRadioWithTextChange
+                        pageContentHtml += `
+                            <textarea 
+                                id="${q.textInput.id}" 
+                                name="${q.textInput.id}" 
+                                rows="2" 
+                                placeholder="${q.textInput.placeholder}" 
+                                class="poll-text-input"
+                                style="display: none; margin-top: 10px;" 
+                            ></textarea>
+                        `;
+                    }
+
                 } 
+                // --- MODIFIED BLOCK ENDS HERE ---
                 else if (q.type === 'textarea') {
                     pageContentHtml += `<textarea id="${q.id}" name="${q.id}" rows="3" placeholder="${q.placeholder || ''}" ${isRequired}></textarea>`;
                 }
@@ -9138,8 +9367,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (index === totalPages - 1) {
                 pageContentHtml += `
                     <div class="form-group" style="margin-top: 30px;">
-                        <label for="poll-username">Your Name/Username (Optional)</label>
-                        <input type="text" id="poll-username" name="Username" placeholder="Enter your name (e.g., Smash, u/user)">
+                        <label for="poll-username">List One Username (Optional)<br>Might msg you an talk about layout</label>
+                        <input type="text" id="poll-username" name="Username" placeholder="Enter your Username (e.g., Discord/twitter/reddit)">
                     </div>
                 `;
             } else {
@@ -9180,6 +9409,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 value: `*${answer}*`, 
                 inline: false
             });
+            
+            // --- ADDED: Collect data from the text input if it exists and is relevant ---
+            if (q.type === 'radio-with-text' && q.textInput) {
+                const textInputValue = formData.get(q.textInput.id) || "No additional details provided";
+                // Only add if "Yes" was selected for the radio, or if text was entered anyway
+                if (answer === "Yes" || textInputValue.trim() !== "No additional details provided") {
+                     fields.push({
+                         name: `${q.title} - Details`, // Or a more specific name like "Preferred Layout Details"
+                         value: `*${textInputValue}*`,
+                         inline: false
+                     });
+                }
+            }
+            // --- END ADDED ---
         });
         
         const username = formData.get('Username') || '';
@@ -9232,7 +9475,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(radioGroup) radioGroup.classList.remove('invalid');
                 if (inputElement) inputElement.classList.remove('invalid');
 
-                if (q.type === 'radio') {
+                if (q.type === 'radio' || q.type === 'radio-with-text') { // Check for both radio types
                     if (!pollForm.querySelector(`input[name="${name}"]:checked`)) {
                         const targetElement = pollForm.querySelector(`[data-required="${name}"]`);
                         if(targetElement) targetElement.classList.add('invalid');
@@ -9245,6 +9488,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+            
+            // --- ADDED VALIDATION FOR RADIO-WITH-TEXT TEXT INPUT ---
+            if (q.type === 'radio-with-text' && q.textInput) {
+                const textInputEl = document.getElementById(q.textInput.id);
+                textInputEl.classList.remove('invalid'); // Clear previous invalid state
+
+                if (textInputEl && textInputEl.hasAttribute('required') && textInputEl.value.trim() === '') {
+                    textInputEl.classList.add('invalid');
+                    allValid = false;
+                }
+            }
+            // --- END ADDED VALIDATION ---
         });
         
         return allValid;
@@ -9264,6 +9519,15 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPollPage.style.display = 'block';
             currentPollPage.classList.add('active');
             currentPageIndex = index;
+
+            // --- NEW: Call handleRadioWithTextChange for all radio-with-text questions on the current page ---
+            questionsByPage[pageNumbers[index]]?.forEach(q => {
+                if (q.type === 'radio-with-text') {
+                    handleRadioWithTextChange(q.id);
+                }
+            });
+            // --- END NEW ---
+
         } else if (index >= totalPages) {
             thankYouPage.style.display = 'block';
             thankYouPage.classList.add('active');
@@ -9310,7 +9574,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const closePollModal = () => {
-        if (pollModal) pollModal.style.display = 'none';
+        if (!pollModal) return; // Add null check for pollModal
+        pollModal.style.display = 'none';
     };
     
     const showPollThankYou = () => {
@@ -9475,8 +9740,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
 
-// ==================== CONFIGURATION ====================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* Active codes ||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+// ==================== CONFIGURATION ====================
+
 const ALL_CODES_CONFIG = [
         {
         code: "T9RJB-BFKRR-3RBTW-B33TB-KCZB9",
@@ -9955,7 +10242,7 @@ const BLACK_MARKET_VENDORS = [
 // 🚨 PLACE YOUR CONFIGURATION AND WEBHOOK URL HERE 🚨
 const POLL_CONFIG = {
     isEnabled: true, // Set to true to enable the poll button
-    DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/1427692245708177642/Z2BA4OSlI1gwYKjtpA-tp-OivpipK14qFE5TECtm4xGf89fb9EoThij5crFTexRAhadR' // <--- 🔑 ADD YOUR URL HERE
+    DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/1429844983523053568/7gFdMgkH6t_eLPviW3jHQCfxLIIXnG0oDR9CAeb44vlauUJeFEt1l7Fs8eRRS-RU5Kn1' // <--- 🔑 ADD YOUR URL HERE
 };
 /* =================================================== */
 /*             POLL QUESTION CONFIGURATION             */
@@ -9964,33 +10251,38 @@ const POLL_QUESTIONS = [
     {
         page: 1,
         active: true,
-        id: "q1_Report_button",
-        title: "Do you like the Report Button, An It Being Detailed?",
-        subtitle: " So Lets me know issues an whats fully wrong, as sometimes codes work its user input error",
+        id: "q1_grid",
+        title: "Hide Ish Button Breaks : Mobile Default View/PC Grid View",
+        subtitle: "Leaves nasty/ugly gaps peeps hate.. if i cant have this be fixed where things slide into place and such should i remove the grid layout or keep it?",
         type: "radio",
         required: true,
         options: [
-            { value: "Yes", text: "Yes" },
-            { value: "No", text: "No" }
+            { value: "Remove Grid (I Like To Hide Ish)", text: "Remove Grid (I Like To Hide Ish)" },
+            { value: "Keep it (I Don't Use Hide Ish Button)", text: "Keep it (I Don't Use Hide Ish Button)" }
 
         ]
     },
     {
         page: 2,
         active: true,
-        id: "q2_Submit_Code",
-        title: "Do you like the Submit Code Button?",
-        subtitle: " Lets me add codes to site, or use ones you gamers give to me via smash option",
-        type: "radio",
+        id: "q2_view",
+        title: "I know the normal view works very very good with Hide Ish option",
+        subtitle: "Would you want me to do a diff layout thats not grid/stacking view?",
+        type: "radio-with-text", // <--- NEW TYPE HERE
         required: true,
         options: [
             { value: "Yes", text: "Yes" },
-            { value: "No", text: "No" }
-        ]
+            { value: "No Diff Layout Needed", text: "No Diff Layout Needed" },
+        ],
+                textInput: {
+            id: "q2_view_details",
+            placeholder: "Please describe your preferred layout (e.g., more compact, different sections for specific codes, etc.)",
+            requiredIfYes: true // This will make it required only if "Yes" is selected
+        }
     },
         {
         page: 3,
-        active: true,
+        active: false,
         id: "q3_dark_wide",
         title: "Do you like the Darkmode/Wide Mode Button/Hide ish?",
         subtitle: "Haters/Bashers caused me to make the hide ish that fully allows all to be  hidden",
@@ -10003,7 +10295,7 @@ const POLL_QUESTIONS = [
     },
             {
         page: 4,
-        active: true,
+        active: false,
         id: "q3_notfi",
         title: "Added Notification Alert For Browser, Will You Use It?",
         subtitle: "For this to work, have to leave tab open on browser",
@@ -10016,7 +10308,7 @@ const POLL_QUESTIONS = [
     },
                {
         page: 5,
-        active: true,
+        active: false,
         id: "q4_device",
         title: "What device you view from most?",
         subtitle: "Need to know as will be working on better mobile view",
@@ -10033,7 +10325,7 @@ const POLL_QUESTIONS = [
         { 
         // --- Question 4 (INACTIVE) ---
         page: 6, 
-        active: true, // <-- SET TO FALSE
+        active: false, // <-- SET TO FALSE
         id: "q5_checking",
         title: "How often do you check the site??",
         subtitle: "Daily? Few Times A Day?",
@@ -10044,7 +10336,7 @@ const POLL_QUESTIONS = [
     { 
         // --- Question 3 (INACTIVE) ---
         page: 7, 
-        active: true, // <-- SET TO FALSE (Will be filtered out)
+        active: false, // <-- SET TO FALSE (Will be filtered out)
         id: "q6_gunpic",
         title: "For the BLACK MARKET VENDOR WEAPON/GEAR BUTTONS.. WHAT WOULD YOU WANT TO SEE?",
         subtitle: "Click the image to zoom in (Optional). | Can Skip This If You Want",
@@ -10058,7 +10350,7 @@ const POLL_QUESTIONS = [
         { 
         // --- Question 3 (INACTIVE) ---
         page: 8, 
-        active: true, // <-- SET TO FALSE (Will be filtered out)
+        active: false, // <-- SET TO FALSE (Will be filtered out)
         id: "q7_mobile",
         title: "Mobile Users What Layout Is Better",
         subtitle: "Click the image to zoom in (Optional).",
@@ -10071,7 +10363,7 @@ const POLL_QUESTIONS = [
     },
                    {
         page: 8,
-        active: true,
+        active: false,
         id: "q8_moblayout",
         title: "With new layout should it be default or turn on option?",
         subtitle: "means it will be the old layout, users can toggle new view",
@@ -10140,6 +10432,29 @@ const COMMUNITY_CHALLENGE_CONFIG = {
 const BLACK_MARKET_EXTRA_CONFIG = {
     imageUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/BL4-Black-Market-Location-003-Grindstone-of-the-Worthysep25-oct2.jpg", // <--- !!! REPLACE THIS WITH THE ACTUAL IMAGE URL !!!
 };
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Helper function to format the date added
          // =======================================================
@@ -11394,12 +11709,29 @@ async function submitFeedback() {
     </script>
 
 <!-- START: New Ko-fi Modal -->
-<div id="kofi-modal-overlay" class="modal-overlay">
+<div id="kofi-modal-overlay" class="modal-overlay" style="display:none;">
     <div class="modal-content">
         <button class="close-modal" onclick="closeKofiModal()">&times;</button>
         <div id="kofi-iframe-container">
             <!-- The iframe will be inserted here by JavaScript -->
         </div>
+    </div>
+</div>
+
+<!-- This is your image preview modal from your original HTML -->
+<div id="image-preview-modal" class="image-preview-modal">
+    <div class="image-preview-content">
+        <div id="preview-container" style="display: none;">
+            <!-- Iframe or video will be injected here by JavaScript -->
+        </div>
+        <img id="preview-image" src="" alt="Preview" style="display: none;">
+    </div>
+    <!-- These are the new controls for zooming and closing -->
+    <div id="image-preview-controls">
+        <button class="control-btn" id="zoom-in-btn" title="Zoom In">+</button>
+        <button class="control-btn" id="zoom-out-btn" title="Zoom Out">-</button>
+        <button class="control-btn" id="reset-zoom-btn" title="Reset Zoom">⟲</button>
+        <button class="control-btn" id="close-preview-btn" title="Close">×</button>
     </div>
 </div>
 <!-- END: New Ko-fi Modal -->
