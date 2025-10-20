@@ -2672,6 +2672,121 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 /* END: FINAL & CORRECTED EVENTS DROPDOWN STYLE */
 
 
+/* --- Quick Update Button Style --- */
+.quick-update-button {
+    background: linear-gradient(to bottom, #2a677a, #541375); /* Custom Purple Gradient */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid #ff54a5; /* Pink border */
+    text-shadow: 1px 1px 0 #000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    display: block;
+    width: fit-content;
+    margin: 10px auto; 
+}
+.quick-update-button:hover {
+    background: linear-gradient(to bottom, #2a677a, #7a2a7a);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 84, 165, 0.7); 
+}
+
+/* --- Quick Update Content Style (Reuses other section styling) --- */
+#quick-update-section .info-content {
+    background: linear-gradient(to bottom, #272727, #171717);
+    border: 2px solid #ff54a5;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: left;
+}
+#quick-update-content h4 { 
+    color: #ff54a5; 
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0 #000;
+}
+#quick-update-content p { 
+    color: #cccccc; 
+    line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ||||||||||||||||||||||||||||||||css above not below|||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+/* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* START: COMPLETE & FINAL ACTION BUTTONS CSS - DELETE ALL PREVIOUS VERSIONS */
 
 /* Hides the default Ko-fi floating icon */
@@ -4802,6 +4917,9 @@ hr.form-separator {
 /* =================================================== *
 
 
+/* =================================================== */
+/* =================================================== */
+/* =================================================== */
 /* === START: NEW "HIDE ISH" BUTTON & MENU STYLES === */
 
 /* Style for the new main button in the top button row */
@@ -4822,7 +4940,7 @@ hr.form-separator {
 #hideem-toggle-btn {
     display: none !important;
 }
-
+/* =================================================== */
 
 
 /* =================================================== */
@@ -5030,9 +5148,8 @@ hr.form-separator {
 /* ============================================== */
 /* ============================================== */
 
-
-
-
+/* =================================================== */
+/* =================================================== */
 /* =================================================== */
 /*   START: FINAL, DEFINITIVE MOBILE MODAL FIX (767.98px and below)  */
 /* =================================================== */
@@ -5174,6 +5291,9 @@ hr.form-separator {
 /* =================================================== */
 /*   END: FINAL, DEFINITIVE MOBILE MODAL FIX   */
 /* =================================================== */
+/* =================================================== */
+/* =================================================== */
+
 
     </style>
 </head>
@@ -5551,7 +5671,7 @@ hr.form-separator {
                     <p class="page-title">Feedback On Site and Your Suggestions</p>
                     <div class="form-group">
                         <label for="overall-website">Did You Know, You Can Hide Buttons?</label>
-                        <textarea id="overall-website" name="Did You Knwo You Can Hide Buttons" rows="2" placeholder="For Things You Don't Use" required></textarea>
+                        <textarea id="overall-website" name="Did You know You Can Hide Buttons" rows="2" placeholder="For Things You Don't Use" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="how-to-improve">How can we make this better for you?</label>
@@ -5630,7 +5750,7 @@ hr.form-separator {
 <div class="site-options-container" id="site-options-container">
     <h4 class="site-options-title" onclick="toggleOptionsContainer(this)">
         SITE OPTIONS & INFO
-        <small class="updated-subtitle">UPDATED 10/18/2025</small>
+        <small class="updated-subtitle">UPDATED 10/19/2025</small>
     </h4>
     
     <div class="slide-down-content">
@@ -5640,7 +5760,7 @@ hr.form-separator {
                                 <button class="option-btn option-btn-faq" onclick="toggleOptionPanel('info-section')" id="infofaq-toggle-btn">❗INFO/FAQ❓<br><small>Updated 10/10/2025</small></button>
             </div>
             <div class="button-row">
-                <button class="option-btn option-btn-log" onclick="toggleOptionPanel('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️<br><small>Updated 10/18/2025</small></button>
+                <button class="option-btn option-btn-log" onclick="toggleOptionPanel('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️<br><small>Updated 10/19/2025</small></button>
                 <button class="option-btn option-btn-redeem" onclick="toggleOptionPanel('redeem-section')" id="redeem-toggle-btn">🖥️ HOW TO REDEEM ON CONSOLE 🎮</button>
             </div>
         </div>
@@ -5678,7 +5798,9 @@ hr.form-separator {
                 <div class="info-content">
                     <p><strong>Change Log | Info On Changes/Updates/ An More</strong></p>
                     <ul>
-                        <li>🆕<b>10|18|2025:</b> Lil Fixs/Added : Mobile View is changed, Plz do the poll and let me know what you think.. </li>
+                        <li>🆕<b>10|19|2025:</b> Lil Fixs/Added : Modals AKA when clicking a button and has questions/inputs it should be less buggy/glitchy hopefully.. not moving around as much or glitch and scroll the background and so on.. still testing and will fix more if needed </li>
+                        <li><b>10|18|2025:</b> Lil Fixs/Added : Many layout options/fixes/changes and ya :)  </li>
+                        <li><b>10|18|2025:</b> Lil Fixs/Added : Mobile View is changed, Plz do the poll and let me know what you think.. </li>
                         <li><b>10|17|2025:</b> Lil Fixs/Added : Redid the hide button called "Hide Ish" so you haters can now hide everything pretyt much enjoy.. stop hating an sending me shit now</li>
                         <li><b>10|17|2025:</b> Lil Fixs/Added : Many of you asked for share option, discord/twitter/fb is there discord has two methods, twitter works fine,fb will copy it to clipboard open the page for you then you can paste it in :) enjoy</li>
                         <li><b>10|16|2025:</b> Lil Fixs/Added : So many ask for things, yet so many bash the buttons/options... so for yous who bash turn on (cry babes) mode | smh haters :(</li>
@@ -5787,8 +5909,7 @@ hr.form-separator {
 
 <h1>👍 Active BL4 SHiFT Codes (New At Top) 🗝️ <br> <small style="font-size: 0.6em; opacity: 0.9; "> ⬇ Gold Keys Only ⬇ | ⬆ Drops Button For Skins + Others ⬆</small> 
     <br>
-    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/18/2025!</small><br><small style="color: #33FFFF; font-size: 10px; ">Wow, Thank you all for the kind words. via reddit msg's, forum feedback, poll. I didnt know so many used this that liked every update/change... thank you so much</small><br>
-<small style="color: #FF0000; font-size: 10px; "> MSG TO HATERS : Still hating this even tho, I spent last few days making [2 pc layouts] + [2 mobile layouts] + [Better hide options that removes everything, But The Dono Button] Like forreal, I am not removing that button... Its not a must.. its there cause peeps asked how they can support so fuk off with the hate... Also don't worry i know the modals for the mobile view are kinda buggy when clicking feedback/poll/report/submit buttons.. I will be redoing this all over the next few days to make you happy don't worry I have took note its bad on mobile.. also fuk you so what codes was 1hour late sorry but they got put up.. i have a life and health issues so not always at pc</small>
+    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/18/2025!</small><br>
     
     <!-- === NEW BUTTONS CONTAINER === -->
     <div class="key-info-buttons-container">
@@ -5801,6 +5922,22 @@ hr.form-separator {
     </div>
 
     <button class="submit-code-btn" onclick="openCodeSubmitModal()">📝 Submit a Code</button>
+
+    <!-- === QUICK MESSAGE UPDATE BUTTON INJECTION POINT (Directly below Submit) === -->
+    <button class="quick-update-button hidden" onclick="toggleInfo('quick-update-section')" id="quick-update-btn">
+        <!-- Content injected by JavaScript -->
+    </button>
+    <!-- === END INJECTION POINT === -->
+</h1>
+
+<!-- === QUICK MESSAGE CONTENT INJECTION POINT (Directly below the H1 block) === -->
+<!-- Note: The initial content structure is added here, then JS styles and fills it -->
+<div id="quick-update-section" class="info-section">
+    <div id="quick-update-content" class="info-content">
+        <!-- Message content injected by JavaScript -->
+    </div>
+</div>
+
 </div>
 
 <button class="reset-all-hidden-btn" onclick="resetAllHiddenCodeStates()">Reset All Hidden Codes</button>
@@ -6177,6 +6314,12 @@ hr.form-separator {
 
 
     <script>
+/* =================================================== */
+/* =================================================== */        
+/* =================================================== */
+/*   scroll lock SCRIPT, for modals           */
+/* =================================================== */
+
 // Hook into existing functions to add 'modal-open' to <html> element
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -6330,6 +6473,136 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+/* =================================================== */
+/* =================================================== */
+/* =================================================== */
+/* =================================================== */
+// --- START: QUICK UPDATE MESSAGE FEATURE (ARRAY-BASED) ---
+
+const UPDATE_FILE_URL = "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/update.json";
+
+document.addEventListener('DOMContentLoaded', function() {
+    const updateBtn = document.getElementById('quick-update-btn');
+    const updateContentDiv = document.getElementById('quick-update-content');
+    const updateSection = document.getElementById('quick-update-section');
+
+    if (!updateBtn || !updateContentDiv || !updateSection) return;
+
+    const fetchUrl = UPDATE_FILE_URL + '?t=' + new Date().getTime();
+
+    fetch(fetchUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            let activeMessage = null;
+
+            // --- Robust Check: Is it an Array or a Single Object? ---
+            if (Array.isArray(data)) {
+                // If it's an array, find the first active message
+                activeMessage = data.find(item => item.active === true);
+            } else if (data && data.messageContent) {
+                // If it's a single object (old format), use it directly
+                activeMessage = data;
+            }
+            // --- End Robust Check ---
+
+            if (activeMessage && activeMessage.buttonDate && activeMessage.messageContent) {
+                
+                // 1. Update Button Text
+                updateBtn.innerHTML = `
+                     ${activeMessage.lastUpdateText} 
+                    <br><small style="opacity: 0.9;">!Updated ${activeMessage.buttonDate}!</small>
+                `;
+                updateBtn.classList.remove('hidden');
+
+                // 2. Inject Content (building the message structure)
+                const innerContentHtml = `
+                    <h4>${activeMessage.messageTitle || 'Updates'}</h4>
+                    <hr style="border-top: 1px solid #ff54a5; margin: 10px 0;">
+                    <p>${activeMessage.messageContent}</p>
+                `;
+                
+                // 3. Set the click handler to toggle the display section
+                updateBtn.onclick = () => toggleInfo('quick-update-section');
+                
+                // 4. Wrap the inner HTML in a new div with the 'info-content' class and inject it.
+                updateSection.innerHTML = `
+                    <div class="info-content">
+                        ${innerContentHtml}
+                    </div>
+                `;
+                
+            } else {
+                // If no valid active message (or single message) is found, the button remains hidden
+                console.warn("No active message found in the update file, or file is not configured correctly.");
+            }
+        })
+        .catch(error => {
+            console.error("Failed to fetch or parse quick update file:", error);
+            // Button remains hidden if fetch fails
+        });
+});
+
+
+// --- END: QUICK UPDATE MESSAGE FEATURE ---
+/* =================================================== */
+/* =================================================== */
+/* =================================================== */
+/* =================================================== */
+/* =================================================== */
+/* ============only below stuff goes not above=================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
