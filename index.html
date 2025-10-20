@@ -2977,40 +2977,40 @@ iframe#kofi-chat-widget { display: none !important; }
 /* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* START: Specific Ko-fi Modal Styles - Ensures proper sizing */
 #kofi-modal-overlay {
-    /* CRITICAL FIX: Ensures modal is hidden by default. Use a class if this fails. */
-    display: none; /* Hide by default - NO !important */
-    
-    /* Ensure the full screen is covered */
+    /* This sets the VISIBLE state, ensuring the size/positioning you liked */
     position: fixed !important; 
     top: 0 !important; 
     left: 0 !important;
     width: 100% !important; 
     height: 100% !important;
     z-index: 10006 !important;
-    
-    /* Set the background and centering properties */
-    background: rgba(0, 0, 0, 0.85); /* Ensure a background color */
-    justify-content: center; 
-    align-items: center; 
+    display: flex !important; /* The correct display mode */
+    justify-content: center !important; 
+    align-items: center !important; 
+    background: rgba(0, 0, 0, 0.85); /* Ensure background is visible */
+}
+
+/* NEW: Class to force the modal HIDDEN */
+#kofi-modal-overlay.hidden {
+    display: none !important;
 }
 
 #kofi-modal-overlay .modal-content {
-    /* CRITICAL SIZING FOR MOBILE CONTAINMENT */
+    /* CRITICAL CENTERING AND POSITIONING FIX */
+    position: absolute !important; 
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; 
+    
+    /* === CRITICAL SIZING FOR MOBILE CONTAINMENT (The perfect size) === */
     box-sizing: border-box !important;            
     padding: 0 !important;                        
-    overflow: hidden !important;               
-    
-    /* === THE CORRECT "SKINNY" SIZING (FOR PC & MOBILE) === */
-    width: 95vw !important;                      /* Takes 95% of screen width */
-    max-width: 420px !important;                 /* PC size cap (the "skinny" part) */
-    
+    overflow: hidden !important;                  
+    width: 95vw !important;                      
+    max-width: 420px !important;                 
     height: 600px !important;                    
-    max-height: 95vh !important;                 /* Vertical constraint */
+    max-height: 95vh !important;                 
 
-    /* CRITICAL CENTERING FIX */
-    position: relative; 
-    margin: auto;       
-    
     /* General appearance */
     background: #1f1f1f !important;
     border: 2px solid #ffc600 !important;
@@ -9055,12 +9055,11 @@ function openKofiModal() {
     
     if (!kofiModal || !kofiIframeContainer || !kofiModalContent) return;
 
-    // 1. Manually set a MINIMUM size on the modal-content to ensure the Ko-fi content is visible
-    // These sizes are reasonable for the Ko-fi embedded widget.
+    // 1. Set the correct Ko-fi dimensions
     kofiModalContent.style.minWidth = '400px'; 
     kofiModalContent.style.minHeight = '350px'; 
 
-    // 2. Inject the iframe
+    // 2. Inject the iframe 
     kofiIframeContainer.innerHTML = `
         <iframe 
             id='kofiframe' 
@@ -9070,20 +9069,26 @@ function openKofiModal() {
             allow='clipboard-write'>
         </iframe>`;
             
-    // 3. Display the modal
-    kofiModal.style.display = 'flex'; 
+    // 3. Display the modal by REMOVING the hidden class
+    kofiModal.classList.remove('hidden'); 
 }
-
-// ... You also need a function to close the modal ...
 
 function closeKofiModal() {
     const kofiModal = document.getElementById('kofi-modal-overlay');
     if (kofiModal) {
-        kofiModal.style.display = 'none';
+        // HIDE the modal by ADDING the hidden class
+        kofiModal.classList.add('hidden'); 
         // Optional: Remove iframe content to stop playback/save memory
         document.getElementById('kofi-iframe-container').innerHTML = '';
     }
 }
+
+// And ensure the aggressive closing logic on DOMContentLoaded uses the class:
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof closeKofiModal === 'function') {
+        closeKofiModal(); // This will add the 'hidden' class on load
+    }
+});
 
 
 // NEW, DEDICATED function to clear Black Market statuses
@@ -11717,7 +11722,7 @@ async function submitFeedback() {
     </script>
 
 <!-- START: New Ko-fi Modal -->
-<div id="kofi-modal-overlay" class="modal-overlay" style="display:none;">
+<div id="kofi-modal-overlay" class="modal-overlay hidden">
     <div class="modal-content">
         <button class="close-modal" onclick="closeKofiModal()">&times;</button>
         <div id="kofi-iframe-container">
