@@ -2977,24 +2977,24 @@ iframe#kofi-chat-widget { display: none !important; }
 /* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* START: Specific Ko-fi Modal Styles - Ensures proper sizing */
 #kofi-modal-overlay {
-    /* Ensure the full screen is covered */
-    position: fixed !important; 
-    top: 0 !important; 
-    left: 0 !important;
-    width: 100% !important; 
-    height: 100% !important;
-    z-index: 10006 !important;
-    display: flex !important;
-    justify-content: center !important; 
-    align-items: center !important; 
+    /* CRITICAL FIX: Modal must use default hiding and full-screen fixed positioning */
+    display: none; /* Hide by default - NO !important here */
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    z-index: 10006;
+    justify-content: center; 
+    align-items: center; 
 }
 
 #kofi-modal-overlay .modal-content {
     /* CRITICAL CENTERING AND POSITIONING FIX */
-    position: absolute !important; /* Use absolute to position relative to the centered overlay */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important; 
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
     
     /* === CRITICAL SIZING FOR MOBILE CONTAINMENT === */
     box-sizing: border-box !important;            
@@ -3002,53 +3002,51 @@ iframe#kofi-chat-widget { display: none !important; }
     overflow: hidden !important;                  
     
     /* Set max size based on viewport */
-    width: 95vw !important;                      /* MUST be 95% of screen width */
-    max-width: 420px !important;                 /* PC max width */
+    width: 95vw !important;                      
+    max-width: 420px !important;                 
     height: 600px !important;                    
-    max-height: 95vh !important;                 /* Vertical constraint */
+    max-height: 95vh !important;                 
 
     /* General appearance */
-    background: #1f1f1f !important;
-    border: 2px solid #ffc600 !important;
-    border-radius: 8px !important;
+    background: #1f1f1f;
+    border: 2px solid #ffc600;
+    border-radius: 8px;
 }
 
-/* Ensure the close button is correctly positioned */
+/* Close button and iframe styles remain unchanged and correct */
 #kofi-modal-overlay .close-modal {
-    position: absolute !important;
-    top: -15px !important; 
-    right: -15px !important; 
-    background: #ff4444 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 50% !important;
-    width: 30px !important;
-    height: 30px !important;
-    font-size: 20px !important;
-    cursor: pointer !important;
-    font-weight: bold !important;
-    line-height: 28px !important;
-    z-index: 10007 !important; 
+    position: absolute;
+    top: -15px; 
+    right: -15px; 
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 28px;
+    z-index: 10007; 
 }
 
 #kofi-iframe-container {
-    /* Container fills the content box */
-    width: 100% !important;
-    height: 100% !important; 
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+    width: 100%;
+    height: 100%; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
 }
 
 #kofi-iframe-container iframe {
-    /* Iframe fills the container */
-    width: 100% !important;  
-    height: 100% !important; 
-    border: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 3px solid #ffc600 !important; 
-    border-radius: 8px !important;
+    width: 100%;  
+    height: 100%; 
+    border: none;
+    margin: 0;
+    padding: 0;
+    border: 3px solid #ffc600; 
+    border-radius: 8px;
 }
 /* END: Styles for the new Ko-fi Modal */
 
@@ -5560,11 +5558,11 @@ hr.form-separator {
 <!-- DELETE your old action-buttons-container and REPLACE it with this one -->
 <div class="action-buttons-container">
 
-        <button class="action-btn kofi-button" onclick="openKofiModal()">
-        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi donations" class="kofi-icon"/>
-        Support This via Dono
-        <small>Means Alot If You Do</small>
-    </button>
+<button class="action-btn kofi-button" onclick="openKofiModal()">
+    <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi donations" class="kofi-icon"/>
+    Support This via Dono
+    <small>Means Alot If You Do</small>
+</button>
 
 <button class="action-btn floating-feedback-btn">
     Feedback<br>Forum<br><small>Updated 10/14/2025</small>
