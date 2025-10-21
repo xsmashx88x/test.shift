@@ -3043,8 +3043,13 @@ iframe#kofi-chat-widget { display: none !important; }
 
 /* Mobile */
 @media (max-width: 768px) {
+    #kofi-modal-overlay {
+        padding: 0 5% !important; /* Force padding on the overlay itself */
+        box-sizing: border-box !important;
+    }
+    
     #kofi-modal-overlay .modal-content {
-        width: 90vw !important;
+        width: 100% !important; /* Use full available width */
         max-width: 340px !important;
         margin: 0 auto !important;
     }
@@ -3054,7 +3059,6 @@ iframe#kofi-chat-widget { display: none !important; }
         max-height: 80vh !important;
     }
     
-    /* MOBILE CLOSE BUTTON FIX */
     #kofi-modal-overlay .close-modal {
         top: 65px !important;
         right: 10px !important;
