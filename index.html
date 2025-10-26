@@ -19,7 +19,9 @@
         <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
         <script>
       (function() {
-        const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/version.txt';
+        // --- THIS IS THE CRITICAL FIX ---
+        // Now points to the same file as your other notification scripts.
+        const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/code_version.txt';
         const LOCAL_STORAGE_KEY = 'siteVersion';
 
         // Use a cache-busting query parameter to ensure we always get the latest version file.
@@ -36,17 +38,14 @@
             const latestVersion = latestVersionText.trim();
             const currentVersion = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-            console.log(`Latest Version on Server: ${latestVersion}`);
-            console.log(`User's Current Version: ${currentVersion}`);
-
             // If there's no current version saved or if the latest version is different...
             if (!currentVersion || currentVersion !== latestVersion) {
-              console.log('Cache is outdated. Forcing a hard reload.');
+              console.log('Initial loader: Version mismatch. Updating local version and forcing reload.');
               
-              // 1. Update the user's local version to the new one to prevent an infinite reload loop.
+              // Update the user's local version to the new one.
               localStorage.setItem(LOCAL_STORAGE_KEY, latestVersion);
               
-              // 2. Force a hard reload of the page from the server.
+              // Force a hard reload of the page from the server.
               window.location.reload(true);
             }
           })
@@ -2866,7 +2865,52 @@ body.modal-open .floating-share-container { /* ...and the Share button container
 
 
 
+/* =================================================== */
+/*           START: PAST POLL RESULTS STYLES           */
+/* =================================================== */
 
+.poll-results-container {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+    border-left: 3px solid #f0ad4e;
+}
+
+.poll-result-item {
+    margin-bottom: 8px;
+}
+
+.poll-result-label {
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 4px;
+    color: #f0f0f0;
+}
+
+.poll-result-bar {
+    width: 100%;
+    background-color: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #555;
+}
+
+.poll-bar-fill {
+    background-color: #d9534f; /* Default Red color */
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+    text-shadow: 1px 1px 1px #000;
+    transition: width 0.6s ease-in-out;
+}
+
+/* =================================================== */
+/*            END: PAST POLL RESULTS STYLES            */
+/* =================================================== */
 
 
 
@@ -3226,15 +3270,6 @@ iframe#kofi-chat-widget { display: none !important; }
     }
 }
 /* END: Styles for the new Ko-fi Modal */
-
-
-
-
-
-
-
-
-
 
 
 
@@ -5372,11 +5407,6 @@ hr.form-separator {
 
 
 
-
-
-
-
-
 /* =================================================== */
 /* =================================================== */
 /* =================================================== */
@@ -5763,7 +5793,47 @@ flex-direction: row !important;
 /* =================================================== */
 /* =================================================== */
 /* =================================================== */
+/* START: Custom Buttons for Dropdowns */
+.custom-buttons-container {
+    text-align: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
 
+.event-custom-btn,
+.challenge-custom-btn {
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 #000;
+    transition: all 0.2s;
+    margin: 5px;
+    display: inline-block;
+}
+
+.event-custom-btn {
+    background: linear-gradient(to bottom, #f01a11, #fe9f17);
+    border: 1px solid #890608;
+}
+.event-custom-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(255, 204, 61, 0.6);
+}
+
+.challenge-custom-btn {
+    background: linear-gradient(to bottom, #f8278a, #ca114f);
+    border: 1px solid #ff54a5;
+}
+.challenge-custom-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+}
+/* END: Custom Buttons for Dropdowns */
 
     </style>
 </head>
@@ -5878,7 +5948,7 @@ flex-direction: row !important;
         Support This Project
         <small style="font-weight: 600; font-size: 0.8em; color: #ff2200;">Click Here</small>
     </button>
-
+<!---  // -forum --->
 <button class="action-btn floating-feedback-btn">
     Feedback<br>Forum<br><small>Updated 10/14/2025</small>
 </button>
@@ -5886,9 +5956,9 @@ flex-direction: row !important;
 <button class="action-btn" id="open-report-issues-btn">
     Report<br>Issue<br><small>🐞</small>
 </button>
-
+<!---  // |poll --->
 <button class="action-btn floating-poll-btn" id="openPollBtn" style="display: none;">
-    <span class="drops-pulse">EH! New Poll</span><br><small>Oct 20-27th</small>
+    <span class="drops-pulse">EH! New Poll</span><br><small>Oct26 - Nov2</small>
 </button>
 <!-- =================================================== -->
 <!--         START: SHIFT CODE TRACKER - COMMUNITY POLL (MULTI-PAGE) -->
@@ -5958,9 +6028,10 @@ flex-direction: row !important;
         <!-- This part is always visible -->
         <div style="font-size: 1em;" class="visible-reminder-text">
            • FAVOURITE & REFRESH EACH VISIT & CHECK DAILY •
-          <div style="font-size: 0.5em;" class="visible-version-text">V1.5            
+          <div style="font-size: 0.5em;" class="visible-version-text">V1.6            
             <!-- This is the smaller, clickable link that triggers the dropdown -->
             <a class="thank-you-link" style="color: #ffffff;" onclick="toggleThankYouPanel(this)">
+                <!---  // -dono --->
                 • Supporters & Special Thanks • <br> <small style="font-size: 0.8em; color: #00ffff;">Click To See | !Updated 10/18/2025</small>
             </a>
             </div>
@@ -6225,20 +6296,21 @@ flex-direction: row !important;
 <div class="site-options-container" id="site-options-container">
     <h4 class="site-options-title" onclick="toggleOptionsContainer(this)">
         Info/F.A.Q & Change Log & User Asked Things
-        <small class="updated-subtitle">UPDATED 10/21/2025</small>
+        <small class="updated-subtitle">UPDATED 10/25/2025</small>
     </h4>
         <div class="slide-down-content">
         <!-- CONTAINER 1: THE BUTTON GRID (This now ONLY contains buttons) -->
 
         <div class="options-button-grid">
             <div class="button-row">
-                                <button class="option-btn option-btn-faq" onclick="toggleOptionPanel('info-section')" id="infofaq-toggle-btn">❗INFO/FAQ❓<br><small>Updated 10/10/2025</small></button>    <button class="option-btn option-btn-user" onclick="toggleOptionPanel('user-asked-section')" id="user-asked-toggle-btn">💡 USER ASKED THINGS 🤔<br><small>Updated 10/21/2025</small></button>
-
+                <!---  // -info --->
+                                <button class="option-btn option-btn-faq" onclick="toggleOptionPanel('info-section')" id="infofaq-toggle-btn">❗INFO/FAQ❓<br><small>Updated 10/10/2025</small></button>    <button class="option-btn option-btn-user" onclick="toggleOptionPanel('user-asked-section')" id="user-asked-toggle-btn">💡 USER ASKED THINGS 🤔<br>📊 Old Poll Results 📤<br><small>Updated 10/25/2025</small></button>
+                          <!---  // -user --->
             </div>
-            <div class="button-row">
+            <div class="button-row"> <!---  // -log --->
                 <button class="option-btn option-btn-log" onclick="toggleOptionPanel('changelog-section')" id="changlog-toggle-btn">📋CHANGE LOG🛠️<br><small>Updated 10/21/2025</small></button>
                 <button class="option-btn option-btn-redeem" onclick="toggleOptionPanel('redeem-section')" id="redeem-toggle-btn">🖥️ HOW TO REDEEM ON CONSOLE 🎮</button>
-
+                                     
             </div>
         </div>
 
@@ -6337,7 +6409,54 @@ flex-direction: row !important;
                         <li><b>List of Legendaries an who they drop from? :</b> <i><span style="color: #d9be55;">Above is few sites, First one is a great tool, Search the boss and see all the loot that drops from that boss :)</i></li>
                         <li><b>Getting hate, Will you turn off feedbacks/Polls/Reports :</b> <i><span style="color: #d9be55;">I have been asked and even some said I should, I want input and to know when things break hence all the work with the feedback/poll and then the report/submit buttons.. Its not just a site for me its for US</span></i></li>
                     </ul>
-                
+                <!-- ADD THIS ENTIRE BLOCK INSIDE THE "user-asked-section" -->    <!---  // -oldpoll --->
+<p style="color:#FFDE59;"><strong>📊 Past Poll Results</strong></p>
+<ul style="color:#FFF3C4;">
+    <li>
+        <!-- Use <details> and <summary> for a clean, clickable dropdown -->
+        <details>
+            <summary style="cursor: pointer; font-weight: bold;">Poll: Mobile Layout Preference (Oct 20-25)</summary>
+            <div class="poll-results-container">
+                <!-- Result 1 -->
+                <div class="poll-result-item">
+                    <div class="poll-result-label">New Grid Layout</div>
+                    <div class="poll-result-bar">
+                        <div class="poll-bar-fill" style="width: 78%; background: #c9302c;">70%</div>
+                    </div>
+                </div>
+                <!-- Result 2 -->
+                <div class="poll-result-item">
+                    <div class="poll-result-label">Old Stacking Layout</div>
+                    <div class="poll-result-bar">
+                        <div class="poll-bar-fill" style="width: 22%; background: #c9302c;">42%</div>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </li>
+    <li>
+        <details>
+            <summary style="cursor: pointer; font-weight: bold;">Poll: Black Market Weapon View (Oct 10-17)</summary>
+            <div class="poll-results-container">
+                <!-- Result 1 -->
+                <div class="poll-result-item">
+                    <div class="poll-result-label">View Style A: Gun Info Only</div>
+                    <div class="poll-result-bar">
+                        <div class="poll-bar-fill" style="width: 22%; background: #c9302c;">45%</div>
+                    </div>
+                </div>
+                <!-- Result 2 -->
+                <div class="poll-result-item">
+                    <div class="poll-result-label">View Style B: Gun Info + Gun View</div>
+                    <div class="poll-result-bar">
+                        <div class="poll-bar-fill" style="width: 78%; background: #c9302c;">55%</div>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </li>
+</ul>
+<!-- END OF THE BLOCK TO ADD -->
             </div>
             </div>
         </div>
@@ -6359,6 +6478,7 @@ flex-direction: row !important;
         <img id="events-image" src="" alt="Events Image" style="width: 100%; cursor: pointer;">
     </a>
     <p id="events-description" style="margin-top: 15px; line-height: 1.5; text-align: left;"></p>
+    <div id="events-custom-buttons" class="custom-buttons-container"></div>
 </div>
                         <button class="challenge-button hidden" onclick="toggleInfo('challenge-section')" id="challenge-btn"></button>
         <div id="challenge-section" class="info-section">
@@ -6369,12 +6489,13 @@ flex-direction: row !important;
                 </a>
                 <!-- The description text -->
                 <p id="challenge-description" style="margin-top: 15px; color: #E6E6FA; line-height: 1.5;"></p>
+                <div id="challenge-custom-buttons" class="custom-buttons-container"></div>
             </div>
         </div>
         <!-- ADD THIS NEW DIV for the events dropdown -->
 
       <button class="collapse-btn-BlackMarket" onclick="toggleInfo('black-market-section')" id="maurices-toggle-btn">💵 Maurices Black Market/Boss + WildCard🫰<br> <small style="font-size: 0.7em; opacity: 0.9; ">After Reset, Give Me A Few To Update Images/Info Plz.</small><br><small style="font-size: 0.7em; color: #FF7979;" class="drops-pulse">!Updated 10/23/2025!</small> </button>
-        
+                                                                                                                                             <!---  // -bm --->
 <div id="black-market-section" class="info-section">
     <h2  style="font-size: 1.2em;">
         <button id="open-bm-submit-btn" class="bm-submit-info-btn">Submit BM Info</button>
@@ -6389,7 +6510,7 @@ flex-direction: row !important;
     🎁 [View] Drops/Skins + Limited Time Codes + More ⌛
     <br>
     <small style="font-size: 0.9em; color: #E6B3FF; opacity: 0.8;" class="drops-pulse">!Updated 10/23/2025!</small>
-</button>
+</button>                                                                  <!---  // -drops --->
         
 <div id="permanent-section" class="permanent-section">
     <h2 style="text-align: center;">
@@ -6406,8 +6527,8 @@ flex-direction: row !important;
 
 <h1>👍 Active BL4 SHiFT Codes (New At Top) 🗝️ <br> <small style="font-size: 0.6em; opacity: 0.9; "> ⬇ Gold Keys Only ⬇ | ⬆ Drops Button For Skins + Others ⬆</small> 
     <br>
-    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/24/2025!</small><br>
-    
+    <small style="font-size: 0.7em; opacity: 0.8; color: #FFD114;" class="drops-pulse">!Updated 10/26/2025!</small><br>
+                                                                                   <!---  // -active --->
     <!-- === NEW BUTTONS CONTAINER === -->
     <div class="key-info-buttons-container">
         <button class="key-info-btn" onclick="openImagePreview('https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/seekeysyouhave.png')">
@@ -6530,14 +6651,6 @@ flex-direction: row !important;
 <!-- END: COMBINED LAYOUT & COLOR MODE PANEL -->
 
 <button class="floating-notif-bell" id="notif-permission-btn" title="Enable Notifications"></button>
-
-<div id="custom-alert-modal" class="modal-overlay" style="display:none;">
-    <div class="modal-content">
-        <h2 id="modal-title">NEW CODE ALERT!</h2>
-        <p id="modal-message">New SHiFT codes are available! Click OK to see them.</p>
-        <button id="modal-ok-button" class="btn">OK</button>
-    </div>
-</div>
 
 <!-- === START: Code Share Modal === -->
 <div id="share-modal" class="image-preview-modal" style="display: none; z-index: 2001; background: rgba(0, 0, 0, 0.9);">
@@ -6823,7 +6936,43 @@ flex-direction: row !important;
     <script>
 /* =================================================== */
 /* =================================================== */    
+/**
+ * Formats an expiration date into a Discord-compatible Unix timestamp string.
+ * This format shows the full date and time, and is relative to the user's timezone.
+ * @param {object} codeData - The code data object containing the 'expires' property.
+ * @returns {string} The formatted Discord timestamp string or a plain text fallback.
+ */
+function formatExpiryForDiscordTimestamp(codeData) {
+  // Handle cases with no specific expiration date first
+  if (codeData.expires === "UED") {
+    return "Expires: Unknown";
+  }
+  if (!codeData.expires) {
+    return "Expires: Permanent (or very long time)";
+  }
 
+  let expiresDate;
+  try {
+    // Attempt to create a valid Date object
+    expiresDate = (codeData.expires instanceof Date) ? codeData.expires : new Date(codeData.expires);
+    
+    // Check if the date is valid
+    if (isNaN(expiresDate.getTime())) {
+      return "Expires: Invalid Date";
+    }
+
+    // Convert the date's time from milliseconds to seconds for the Unix timestamp
+    const unixTimestampInSeconds = Math.floor(expiresDate.getTime() / 1000);
+
+    // Return the special Discord timestamp format.
+    // The 'F' style stands for "Long Date/Time" (e.g., Saturday, October 25, 2025 9:35 PM)
+    return `Expires: <t:${unixTimestampInSeconds}:F>`;
+
+  } catch (e) {
+    // If anything goes wrong, return a safe fallback message
+    return "Expires: Error Reading Date";
+  }
+}
 
 
 
@@ -6851,7 +7000,7 @@ function parseYouTubeId(url) {
 //      END: YOUTUBE HELPER FUNCTION
 // ===================================================
 
-    
+
 /* =================================================== */
 /*   scroll lock SCRIPT, for modals           */
 /* =================================================== */
@@ -8261,12 +8410,13 @@ function formatExpiryForShare(codeData) {
 }
 
 // --- DISCORD (WEBHOOK POST METHOD - Uses Local Storage) ---
+// --- DISCORD (WEBHOOK POST METHOD - Uses Local Storage) ---
 function shareToDiscord(code, type) {
   const storedUrl = getWebhookUrl();
   let webhookUrl = storedUrl;
 
   if (!webhookUrl) {
-webhookUrl = prompt(
+    webhookUrl = prompt(
       "Enter your Discord Webhook URL to save it locally for future quick shares:\n\n" +
       "GUIDE:\n" +
       "1. Go to the channel you want to post in.\n" +
@@ -8297,7 +8447,10 @@ webhookUrl = prompt(
     return;
   }
  
-  const expiryText = formatExpiryForShare(codeData);
+  // ***** THIS IS THE MODIFIED LINE *****
+  const expiryText = formatExpiryForDiscordTimestamp(codeData); // Use the new function here
+  // *************************************
+
   const siteUrl = MAIN_URL;
 
   const discordMessage = `**SHiFT Code:** \`${code}\`\n${expiryText}\n\nPS: *You can click where code is on mobile and will stick it on clipboard*\n\nCheck out the full tracker here: ${siteUrl}`;
@@ -8332,6 +8485,7 @@ webhookUrl = prompt(
 }
 
 // --- DISCORD (TEXT COPY METHOD - FOR MANUAL SHARING) ---
+// --- DISCORD (TEXT COPY METHOD - FOR MANUAL SHARING) ---
 function copyForDiscord(code, type) {
   const codeData = getCodeDataByType(code, type);
   if (!codeData) {
@@ -8339,10 +8493,13 @@ function copyForDiscord(code, type) {
     return;
   }
  
-  const expiryText = formatExpiryForShare(codeData);
+  // ***** THIS IS THE MODIFIED LINE *****
+  const expiryText = formatExpiryForDiscordTimestamp(codeData); // Use the new function here
+  // *************************************
+
   const siteUrl = MAIN_URL;
  
-  const discordMessage = `**SHiFT Code:** \`${code}\`\n${expiryText}\n\nPS: <i>You can click where code is on mobile and will stick it on clipboard</i>\n\nCheck out the full tracker here: ${siteUrl}`;
+  const discordMessage = `**SHiFT Code:** \`${code}\`\n${expiryText}\n\nPS: *You can click where code is on mobile and will stick it on clipboard*\n\nCheck out the full tracker here: ${siteUrl}`;
  
   navigator.clipboard.writeText(discordMessage)
     .then(() => {
@@ -8467,21 +8624,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /* =================================================== */
 
 /* =================================================== */
-// --- NEW: AUTO-REFRESH TIMER FUNCTION ---
-/* =================================================== */
-const REFRESH_INTERVAL_MINUTES = 10; // Set the desired refresh interval in minutes
 
-function setupAutoRefresh() {
-    const refreshIntervalMs = REFRESH_INTERVAL_MINUTES * 60 * 1000; // Convert minutes to milliseconds
-    
-    console.log(`Auto-refresh timer set to ${REFRESH_INTERVAL_MINUTES} minutes (${refreshIntervalMs / 1000} seconds).`);
-    
-    setInterval(() => {
-        console.log("Auto-refresh triggered: Reloading page to fetch latest codes.");
-        location.reload();
-    }, refreshIntervalMs);
-}
-// --- END NEW: AUTO-REFRESH TIMER FUNCTION ---      
 /* =================================================== */
 /* =================================================== */
 /* =================================================== */
@@ -8492,7 +8635,7 @@ function setupAutoRefresh() {
 /* START: UNIFIED AND CORRECTED NOTIFICATION LOGIC (WITH CUSTOM MODAL) */
 /* =================================================== */
 // --- VITAL CONSTANTS ---
-const NOTIFICATION_STORAGE_KEY = 'shiftNotificationVersion';
+const NOTIFICATION_STORAGE_KEY = 'siteVersion'; // <-- CORRECTED: Now uses the same key as everything else.
 const MAIN_URL = 'https://xsmashx88x.github.io/Shift-Codes/';
 const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/code_version.txt';
 const POLLING_INTERVAL_MS = 60000; // 60 seconds (1 minute)
@@ -8560,42 +8703,31 @@ function isMobileDevice() {
 
 // -----------------------------------------------------------------------------
 // --- FUNCTION 3: Checks for new codes and shows the notification (CORE LOGIC) ---
+// ===================================================
+// START: FINALIZED "READ-ONLY" NOTIFICATION SCRIPT
+// ===================================================
+
 async function checkAndShowNotification() {
-    // REMOVED the mobile device block to re-enable the feature for all users.
+    // This script now ONLY READS the version and shows an alert. It NEVER writes to localStorage.
+    // The initial loader script in the <head> is the only "writer".
 
     try {
         const response = await fetch(VERSION_FILE_URL + '?nocache=' + new Date().getTime());
-        const latestVersionString = (await response.text()).trim();
-        const LATEST_VERSION = parseInt(latestVersionString);
+        const latestVersionFromServer = (await response.text()).trim();
 
-        if (isNaN(LATEST_VERSION) || LATEST_VERSION <= 0) {
-            console.warn("Version file contains invalid or zero value. Aborting check.");
-            return;
-        }
+        // Get the current version that the main page loader has already set.
+        const currentVersionOnPage = localStorage.getItem('siteVersion');
 
-        const lastNotifiedVersion = parseInt(localStorage.getItem(NOTIFICATION_STORAGE_KEY)) || 0;
-
-        // --- NEW LOGIC STARTS HERE ---
-        // This is the core fix.
-        
-        // 1. If lastNotifiedVersion is 0, it means it's the user's first visit
-        // or their storage was cleared. We should NOT show an alert.
-        // Instead, we silently set their current version as the baseline.
-        if (lastNotifiedVersion === 0) {
-            console.log('First time check. Setting baseline version to:', LATEST_VERSION);
-            localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
-            return; // Exit the function to prevent a false "new code" alert.
-        }
-
-        // 2. This part now only runs if a baseline version already exists.
-        // It correctly compares the new version to the user's last known version.
-        if (LATEST_VERSION > lastNotifiedVersion) {
+        // Simple, direct comparison. If they are not identical, an update is available.
+        if (currentVersionOnPage && latestVersionFromServer !== currentVersionOnPage) {
+            
+            // Set the flag that an update is pending.
             hasPendingAlert = true;
 
-            // Only attempt desktop notifications if not on mobile
+            // Show the native browser notification if permission is granted.
             if (!isMobileDevice() && Notification.permission === "granted") {
                 const newCodeNotif = new Notification('🚨 New SHiFT Codes Dropped! 🗝️', {
-                    body: 'Vault Hunter! New codes are here! Click to view (refresh page).',
+                    body: 'Vault Hunter! New codes are here! Click to view them.',
                     icon: 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/gh-pages/bl%20key.png',
                     requireInteraction: true
                 });
@@ -8605,30 +8737,36 @@ async function checkAndShowNotification() {
                 };
             }
             
-            // The tab title alert works on both mobile and desktop.
+            // Update the tab title.
             document.title = '🚨 NEW CODE ALERT! 🚨 - ' + ORIGINAL_TITLE;
-
-            // Update the stored version so the alert doesn't fire again for this version.
-            localStorage.setItem(NOTIFICATION_STORAGE_KEY, LATEST_VERSION);
         }
-        // --- NEW LOGIC ENDS HERE ---
 
     } catch (error) {
-        console.error("Error during version check:", error);
+        console.error("Error during background notification check:", error);
     }
 }
+// ===================================================
+// END: FINALIZED "READ-ONLY" NOTIFICATION SCRIPT
+// ===================================================
 // -----------------------------------------------------------------------------
 
-// --- FUNCTION 4: Handles tab focusing to show custom modal (UNCHANGED) ---
-function handleVisibilityChange() {
+// --- FUNCTION 4: Handles tab focusing to show custom modal (CORRECTED FOR MOBILE) ---
+async function handleVisibilityChange() {
+    // This function is now 'async' to allow waiting for the check to complete.
 
-        // ** ADD THIS LINE: Stop the function if on a mobile device **
-
-    // Only run if the tab is now visible AND a new code was detected while it was hidden.
-    if (!document.hidden && hasPendingAlert) {
+    // First, check if the tab has become visible again.
+    if (!document.hidden) {
         
-        // Show the custom HTML alert modal instead of the native alert()
-        showCustomAlert();
+        // **THIS IS THE FIX:**
+        // Immediately run a check for new codes. This is critical for mobile
+        // devices that pause scripts in background tabs.
+        await checkAndShowNotification();
+
+        // Now that the check has completed, we see if it found a new code.
+        // If it did, 'hasPendingAlert' will now be true.
+        if (hasPendingAlert) {
+             showUpdateNotification(); 
+        }
     }
 }
 // -----------------------------------------------------------------------------
@@ -9673,21 +9811,23 @@ function openPollImagePreview(event, url) {
 // --- NEW FUNCTION: Dynamically show/hide and set 'required' for text input ---
 function handleRadioWithTextChange(questionId) {
     const radios = document.querySelectorAll(`input[name="${questionId}"]`);
-    // Assuming the text input ID is constructed as: questionId + '_details'
     const textInputEl = document.getElementById(`${questionId}_details`); 
     
-    // Find the question config to check if it's requiredIfYes
     const questionConfig = POLL_QUESTIONS.find(q => q.id === questionId);
     
     if (textInputEl && questionConfig && questionConfig.textInput) {
-        let isYesSelected = false;
+        let shouldShowTextInput = false;
         radios.forEach(radio => {
-            if (radio.checked && radio.value === "Yes") { // Check if "Yes" is selected
-                isYesSelected = true;
+            if (radio.checked) {
+                // Find the selected option in the config to check if it triggers text input
+                const selectedOption = questionConfig.options.find(opt => opt.value === radio.value);
+                if (selectedOption && selectedOption.triggerstextInput) {
+                    shouldShowTextInput = true;
+                }
             }
         });
 
-        if (isYesSelected) {
+        if (shouldShowTextInput) {
             textInputEl.style.display = 'block';
             if (questionConfig.textInput.requiredIfYes) {
                 textInputEl.setAttribute('required', 'true');
@@ -10204,10 +10344,36 @@ document.addEventListener('DOMContentLoaded', function() {
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
-/* Active codes ||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 // ==================== CONFIGURATION ====================
-
+// active codes // gold key codes // activecodes
 const ALL_CODES_CONFIG = [
+                    {
+        code: "J9FBT-B55KT-56TJW-3TT3B-JZBSW", //🆕
+        expires: createDate(2025, 10, 28, 6, 8, 0, 0), // 
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1982328428029522358" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-26",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
+        showCopyButton: true
+    },
+                    {
+        code: "3H6BB-ZBKCJ-CFJT5-TBJJT-BFJHB", //🆕
+        expires: createDate(2025, 10, 28, 6, 8, 0, 0), // 
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1982328428029522358" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-26",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
+        showCopyButton: true
+    },
+                    {
+        code: "THR3J-XTKC3-WFBTW-3TT3T-W6B5R", //🆕
+        expires: createDate(2025, 10, 28, 6, 8, 0, 0), // 
+        title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1982328428029522358" target="_blank">Via Twit</a>',
+        dateAdded: "2025-10-26",
+        icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
+        showReportButton: true,
+        showCopyButton: true
+    },
     {
         code: "CHCBB-KWWH6-BSKZC-SJ3TT-39S5Z",
         expires: "UED", // 
@@ -10220,7 +10386,8 @@ const ALL_CODES_CONFIG = [
     },
                     {
         code: "JZFTT-SSTC3-5FTT5-J3TB3-JSB9S",
-        expires: createDate(2025, 10, 26, 6, 1, 0, 0), // 
+        expires: "UED", // createDate(2025, 10, 26, 6, 1, 0, 0),
+        description: '🚨key should be expired <br> ⚠️ Some Reported as Expired <br> ✅ Verified Working by Admin <br> ❗Tho SMASH Will Update This Soon <br> (He checks often, As it may now show expired when at testing time it didnt, this wont be up long if it truly shows expired on shift)',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1981601866753425823" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-24",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
@@ -10229,7 +10396,8 @@ const ALL_CODES_CONFIG = [
     },
                     {
         code: "BZ6TT-JBWKB-KX3BK-BJT3T-5FS63",
-        expires: createDate(2025, 10, 26, 6, 1, 0, 0), // 
+        expires: "UED", // 
+        description: '🚨key should be expired <br> ⚠️ Some Reported as Expired <br> ✅ Verified Working by Admin <br> ❗Tho SMASH Will Update This Soon <br> (He checks often, As it may now show expired when at testing time it didnt, this wont be up long if it truly shows expired on shift)',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-24",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
@@ -10238,7 +10406,8 @@ const ALL_CODES_CONFIG = [
     },
                     {
         code: "3Z6T3-CTWWB-KX3BW-3B3BT-SWBSB",
-        expires: createDate(2025, 10, 26, 6, 1, 0, 0), // 
+        expires: "UED", // 
+        description: '🚨key should be expired <br> ⚠️ Some Reported as Expired <br> ✅ Verified Working by Admin <br> ❗Tho SMASH Will Update This Soon <br> (He checks often, As it may now show expired when at testing time it didnt, this wont be up long if it truly shows expired on shift)',
         title: '1 Gold Key - <a href="https://x.com/DuvalMagic/status/1977228544901366119" target="_blank">Via Twit</a>',
         dateAdded: "2025-10-24",
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif",
@@ -10567,7 +10736,7 @@ description: '<b> Expired Now </b> <br> 🚨key should be expired <br> ⚠️ So
         icon: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/skullkey.gif"
     }       
 ];
-
+// -drop codes // -permanent codes // -skin codes // -permcodes
 const PERMANENT_CODES = [
 
     {
@@ -10698,6 +10867,7 @@ const PERMANENT_CODES = [
 
 
 // ==================== BLACK MARKET VENDOR SYSTEM ====================
+// Blackmarket info // -bmcodes
 const BLACK_MARKET_VENDORS = [
     {
         code: "Black Market Vendor (So sorry for late update)",
@@ -10740,7 +10910,7 @@ const BLACK_MARKET_VENDORS = [
             "💰Compleation (Armor Shield)": "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyweapons/Compleation_Armor-Shieldv1.png" // Replace with actual URL
         },
         description:'<b>Drops</b> : <i>Bugbear (AR), Finnity XXX-L (SNiper), Compleation (Armor Shield)</i> <br><br> <b>Location : </b>The Lowering March Ripper Drill Site<br><br>PS : No Info For Drops/Location Its Being Updated</i>', // <--- COMMA ADDED HERE
-        dateUpdated: "10/16/2025", // <-- will show updated on
+        dateUpdated: "10/23/2025", // <-- will show updated on
         showCopyButton: false,
         showPreviewButton: true,
         staticImageLocation: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/weeklyact/Battle-Wagon_Map-Location.png",
@@ -10751,9 +10921,10 @@ const BLACK_MARKET_VENDORS = [
 ];
 
 // 🚨 PLACE YOUR CONFIGURATION AND WEBHOOK URL HERE 🚨
+// Poll Enable // Poll Disable // |poll
 const POLL_CONFIG = {
     isEnabled: true, // Set to true to enable the poll button
-    DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/1429844983523053568/7gFdMgkH6t_eLPviW3jHQCfxLIIXnG0oDR9CAeb44vlauUJeFEt1l7Fs8eRRS-RU5Kn1' // <--- 🔑 ADD YOUR URL HERE
+    DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/1432010502208487547/WHx6KxBiEfWXXEX-qgf_M1dMPoyOrmjdyiqoZLXm1OoUpjO53UVtZSa5GSAjkSVXiJx9' // <--- 🔑 ADD YOUR URL HERE
 };
 /* =================================================== */
 /*             POLL QUESTION CONFIGURATION             */
@@ -10762,47 +10933,56 @@ const POLL_QUESTIONS = [
     {
         page: 1,
         active: true,
-        id: "q1_grid",
-        title: "Hide Ish Button Breaks : Mobile Default View/PC Grid View",
-        subtitle: "Leaves nasty/ugly gaps peeps hate.. if i cant have this be fixed where things slide into place and such should i remove the grid layout or keep it?",
-        type: "radio",
+        id: "q1_dis",
+        title: "If a discord server was made/ran by me would you join?",
+        subtitle: "there might or might not be chat channels",
+        type: "radio-with-text", // <--- NEW TYPE HERE
         required: true,
         options: [
-            { value: "Remove Grid (I Like To Hide Ish)", text: "Remove Grid (I Like To Hide Ish)" },
-            { value: "Keep it (I Don't Use Hide Ish Button)", text: "Keep it (I Don't Use Hide Ish Button)" }
-
-        ]
+            { value: "Yes : I Would Join A Discord", text: "Yes : I Would Join A Discord", triggerstextInput: true },
+            { value: "Nah : Coming Here Is Fine", text: "Nah : Coming Here Is Fine" },
+        ],
+                textInput: {
+            id: "q1_dis_details",
+            placeholder: "It would be only codes you would be fine with no text channel/chat?",
+            requiredIfYes: true // This will make it required only if "Yes" is selected
+        }
     },
     {
         page: 2,
         active: true,
-        id: "q2_view",
-        title: "I know the normal view works very very good with Hide Ish option",
-        subtitle: "Would you want me to do a diff layout thats not grid/stacking view?",
+        id: "q2_refresh",
+        title: "How often do you refresh the page?",
+        subtitle: "I know when gamers do and don't lol ",
         type: "radio-with-text", // <--- NEW TYPE HERE
         required: true,
         options: [
-            { value: "Yes", text: "Yes" },
-            { value: "No Diff Layout Needed", text: "No Diff Layout Needed" },
+            { value: "I Refresh", text: "I Refresh", triggerstextInput: true },
+            { value: "Never Refresh", text: "Never Refresh" },
         ],
                 textInput: {
-            id: "q2_view_details",
-            placeholder: "Please describe your preferred layout (e.g., more compact, different sections for specific codes, etc.)",
+            id: "q2_refresh_details",
+            placeholder: "How Often? Daily? Every Few Days? Every Few Weeks? ",
             requiredIfYes: true // This will make it required only if "Yes" is selected
         }
     },
         {
         page: 3,
-        active: false,
-        id: "q3_dark_wide",
-        title: "Do you like the Darkmode/Wide Mode Button/Hide ish?",
-        subtitle: "Haters/Bashers caused me to make the hide ish that fully allows all to be  hidden",
-        type: "radio",
+        active: true,
+        id: "q3_dono",
+        title: "Do you have a issue with the Dono button being there?",
+        subtitle: "Haters/Bashers caused this question.. cause ya hate/bs is happening",
+        type: "radio-with-text", // <--- NEW TYPE HERE
         required: true,
         options: [
-            { value: "Yes", text: "Yes" },
-            { value: "No", text: "No" }
-        ]
+            { value: "Yes : Your A Scum Bag Remove It", text: "Yes : Your A Scum Bag Remove It", triggerstextInput: true },
+            { value: "No : Leave It So Peeps Can Support", text: "No : Leave It So Peeps Can Support", triggerstextInput: true },
+        ],
+                        textInput: {
+            id: "q3_dono_details",
+            placeholder: "Give why you picked the anwser you did",
+            requiredIfYes: true // This will make it required only if "Yes" is selected
+            }
     },
             {
         page: 4,
@@ -10895,13 +11075,13 @@ const POLL_QUESTIONS = [
     }
 ];
 /* =================================================== */
-
+// roadmap image
 const ROADMAP_CONFIG = {
     imageUrl: "https://i.postimg.cc/PqwXK6rS/screenshot-35.png", // <--- CHANGE THIS TO YOUR ACTUAL ROADMAP IMAGE URL
 };
 
 // REPLACE your old EVENTS_CONFIG object with this one
-
+// events enabled // events disabled // -events
 const EVENTS_CONFIG = {
     isEnabled: false, // This makes the button visible
     buttonText: "🎉 Harlowes Boots To The Face 📅<br><small>CURRENT EVENT CHALLENGE | OCT 17 - OCT 19</small>",
@@ -10914,10 +11094,15 @@ const EVENTS_CONFIG = {
             <li>xxxx-shift-code-coming-soon-xxxx | Will be posted under drops after this event buttons goes away</li>
         <li><a href="https://x.com/Borderlands/status/1979243646580068577" target="_blank">Link To Tweet</a></li>
         </ul>
-    `
+        `,
+    // ADD THIS
+    customButtons: {
+        "View Skin Reward": "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/bm-images/bl4promoimages/Harlowes-Maliwannabee_Appeal-oct17_19th.png"
+    }
 };
 
-// --- ADD THIS NEW CONFIGURATION OBJECT ---
+// community challenge enabled //  community challenge
+// --- ADD THIS NEW CONFIGURATION OBJECT // -comchal // -chal ---
 const COMMUNITY_CHALLENGE_CONFIG = {
     isEnabled: true, // Set to true to show the button, false to hide it
     buttonText: "🏆 Horrors of Kairos 🏆<br><small>Seasonal Mini-Event | Oct 23 - Nov 6</small>",
@@ -10937,12 +11122,18 @@ const COMMUNITY_CHALLENGE_CONFIG = {
             <li>Gourd Your Loins <i>Pumpkin Head</i> + Hex Appeal <i>Weapon Skin</i>  | 3S6BB-ZXT93-KRT3W-BT3T3-JW6TZ</li>
             <li>Drops + Skins button has the code at the top you can copy it via that :)</li>
         </ul>
-    `
+        `,
+    // ADD THIS
+    customButtons: {
+        "View Murmur AR": "https://i.postimg.cc/NFY6RRG7/screenshot-35.png",
+        "View Skully Grenade": "https://i.postimg.cc/MHWBnxtr/screenshot-35.png",
+        "View Head & Skin": "https://i.postimg.cc/BvbCMGH8/screenshot-35.png"
+    }
 };
 
-const BLACK_MARKET_EXTRA_CONFIG = {
-    imageUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/BL4-Black-Market-Location-003-Grindstone-of-the-Worthysep25-oct2.jpg", // <--- !!! REPLACE THIS WITH THE ACTUAL IMAGE URL !!!
-};
+//  const BLACK_MARKET_EXTRA_CONFIG = {
+//     imageUrl: "https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/BL4-Black-Market-Location-003-Grindstone-of-the-Worthysep25-oct2.jpg", // <--- !!! REPLACE THIS WITH THE ACTUAL IMAGE URL !!!
+//      };
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 /* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
@@ -11135,65 +11326,55 @@ function updateVendorTimer() {
 
         // --- START: Panzoom Integration with Buttons ---
         // This variable will hold our active Panzoom instance.
-        let panzoomInstance = null;
+// --- Global variable to hold the Panzoom instance ---
+// --- Global variables ---
+let panzoomInstance = null;
+// THE FIX IS HERE: Using your globally scoped variable to store the scroll position.
+let currentScrollYPosition = 0;
 
-        // NEW button functions that control the Panzoom library
-        function zoomIn() {
-            if (panzoomInstance) {
-                panzoomInstance.zoomIn();
-            }
-        }
+// --- Control Functions ---
+function zoomIn() { if (panzoomInstance) panzoomInstance.zoomIn(); }
+function zoomOut() { if (panzoomInstance) panzoomInstance.zoomOut(); }
+function resetZoom() { if (panzoomInstance) panzoomInstance.reset(); }
 
-        function zoomOut() {
-            if (panzoomInstance) {
-                panzoomInstance.zoomOut();
-            }
-        }
-
-        function resetZoom() {
-            if (panzoomInstance) {
-                panzoomInstance.reset();
-            }
-        }
-
+// --- Corrected Modal Open Function ---
 function openImagePreview(url) {
-            const modal = document.getElementById('image-preview-modal');
-            const imageElement = document.getElementById('preview-image');
-            const container = document.getElementById('preview-container');
-
-            // Reset any previous instance
-            if (panzoomInstance) panzoomInstance.reset();
-            
-            imageElement.style.display = 'none';
-            container.style.display = 'none';
-
-            // Body scroll lock
-            scrollYPosition = window.scrollY;
-            document.body.style.top = `-${scrollYPosition}px`;
-            document.body.classList.add('modal-open');
-            
-            if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
-                imageElement.src = url;
-                imageElement.style.display = 'block';
-
-                panzoomInstance = Panzoom(imageElement, {
-                    maxScale: 4,
-                    minScale: 0.5,
-                    canvas: true,
-                    disableDblclick: true, // <-- ADD THIS LINE
-                });
-                modal.addEventListener('wheel', panzoomInstance.zoomWithWheel);
-
-            } else if (url.match(/\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv|m4v|3gp)$/i)) {
-                container.innerHTML = `<video controls autoplay style="width: 800px; height: auto; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;"><source src="${url}" type="video/mp4"></video>`;
-                container.style.display = 'block';
-            } else {
-                container.innerHTML = `<iframe src="${url}" style="width: 800px; height: 600px; max-width: 90vw; max-height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" onerror="showPreviewFallback('${url}')"></iframe>`;
-                container.style.display = 'block';
-            }
-            
-            modal.style.display = 'flex';
-        }
+    const modal = document.getElementById('image-preview-modal');
+    const imageElement = document.getElementById('preview-image');
+    const previewContainer = document.getElementById('preview-container');
+    
+    if (panzoomInstance) {
+        panzoomInstance.destroy();
+        panzoomInstance = null;
+    }
+    
+    imageElement.style.display = 'none';
+    previewContainer.style.display = 'none';
+    previewContainer.innerHTML = '';
+    
+    // --- SCROLL LOCK FIX (PART 1) ---
+    // 1. Store the scroll position using your working variable.
+    currentScrollYPosition = window.scrollY;
+    // 2. Apply locking styles.
+    document.body.style.top = `-${currentScrollYPosition}px`;
+    document.body.classList.add('modal-open');
+    
+    // Logic to display the correct content
+    if (url.match(/\.(jpeg|jpg|gif|png|svg|webp|bmp)$/i)) {
+        imageElement.src = url;
+        imageElement.style.display = 'block';
+        panzoomInstance = Panzoom(imageElement, { maxScale: 5, minScale: 0.4, canvas: true });
+        imageElement.parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
+    } else if (url.match(/\.(mp4|webm|ogg|mov)$/i)) {
+        previewContainer.innerHTML = `<video controls autoplay style="max-width: 90vw; max-height: 80vh; border-radius: 5px;"><source src="${url}" type="video/mp4"></video>`;
+        previewContainer.style.display = 'block';
+    } else {
+        previewContainer.innerHTML = `<iframe src="${url}" style="width: 80vw; height: 80vh; border: 2px solid #ffc600; border-radius: 5px;" frameborder="0"></iframe>`;
+        previewContainer.style.display = 'block';
+    }
+    
+    modal.style.display = 'flex';
+}
 
         // --- NEW: Function to open the Roadmap image ---
 function openRoadmapImage() {
@@ -11206,19 +11387,19 @@ function openEventsImage() {
 
 
 // REPLACE your entire setupOptionalButtons function with this one
+// REPLACE your entire setupOptionalButtons function with this one
 function setupOptionalButtons() {
     // --- Logic for the Community Challenge Button ---
     const challengeButton = document.getElementById('challenge-btn');
     const challengeSection = document.getElementById('challenge-section');
+    const challengeCustomButtonsContainer = document.getElementById('challenge-custom-buttons');
 
     if (challengeButton) {
         if (COMMUNITY_CHALLENGE_CONFIG.isEnabled) {
-            // If enabled, make sure it's visible and has the correct text
-            challengeButton.style.display = ''; // Clear any inline style to make it visible
+            challengeButton.style.display = '';
             challengeButton.innerHTML = COMMUNITY_CHALLENGE_CONFIG.buttonText;
             if (challengeSection) challengeSection.classList.remove('hidden');
         } else {
-            // If disabled, definitively hide it with an inline style
             challengeButton.style.display = 'none';
             if (challengeSection) challengeSection.classList.add('hidden');
         }
@@ -11228,21 +11409,28 @@ function setupOptionalButtons() {
         if (challengeImage) challengeImage.src = COMMUNITY_CHALLENGE_CONFIG.imageUrl;
         const challengeDescription = document.getElementById('challenge-description');
         if (challengeDescription) challengeDescription.innerHTML = COMMUNITY_CHALLENGE_CONFIG.descriptionText;
-    }
 
+        // NEW: Render custom buttons for challenges
+        if (challengeCustomButtonsContainer && COMMUNITY_CHALLENGE_CONFIG.customButtons) {
+            let buttonsHtml = '';
+            for (const [text, url] of Object.entries(COMMUNITY_CHALLENGE_CONFIG.customButtons)) {
+                buttonsHtml += `<button class="challenge-custom-btn" onclick="openImagePreview('${url}')">${text}</button>`;
+            }
+            challengeCustomButtonsContainer.innerHTML = buttonsHtml;
+        }
+    }
 
     // --- Logic for the Events Button ---
     const eventsButton = document.getElementById('events-btn');
     const eventsSection = document.getElementById('events-section');
+    const eventsCustomButtonsContainer = document.getElementById('events-custom-buttons');
     
     if (eventsButton) {
         if (EVENTS_CONFIG.isEnabled) {
-            // If enabled, make sure it's visible
-            eventsButton.style.display = ''; // Clear inline style
+            eventsButton.style.display = '';
             eventsButton.innerHTML = EVENTS_CONFIG.buttonText;
             if (eventsSection) eventsSection.classList.remove('hidden');
         } else {
-            // If disabled, definitively hide it
             eventsButton.style.display = 'none';
             if (eventsSection) eventsSection.classList.add('hidden');
         }
@@ -11252,6 +11440,15 @@ function setupOptionalButtons() {
         if (eventsImage) eventsImage.src = EVENTS_CONFIG.imageUrl;
         const eventsDescription = document.getElementById('events-description');
         if (eventsDescription) eventsDescription.innerHTML = EVENTS_CONFIG.descriptionText;
+
+        // NEW: Render custom buttons for events
+        if (eventsCustomButtonsContainer && EVENTS_CONFIG.customButtons) {
+            let buttonsHtml = '';
+            for (const [text, url] of Object.entries(EVENTS_CONFIG.customButtons)) {
+                buttonsHtml += `<button class="event-custom-btn" onclick="openImagePreview('${url}')">${text}</button>`;
+            }
+            eventsCustomButtonsContainer.innerHTML = buttonsHtml;
+        }
     }
 }
 
@@ -11273,27 +11470,56 @@ function setupOptionalButtons() {
             `;
         }
 
+// --- Main Modal Close Function ---
 function closeImagePreview() {
-            if (panzoomInstance) {
-                panzoomInstance.destroy();
-                panzoomInstance = null;
-            }
+    const modal = document.getElementById('image-preview-modal');
+    
+    if (panzoomInstance) {
+        panzoomInstance.destroy();
+        panzoomInstance = null;
+    }
+    
+    modal.style.display = 'none';
 
-            const modal = document.getElementById('image-preview-modal');
-            modal.style.display = 'none';
+    // --- SCROLL RESTORE FIX (PART 2) ---
+    // 1. Remove locking styles.
+    document.body.classList.remove('modal-open');
+    document.body.style.top = '';
+    // 2. Use your working variable to scroll back to the correct position.
+    window.scrollTo(0, currentScrollYPosition);
+}
 
-            document.body.classList.remove('modal-open');
-            document.body.style.top = '';
-            window.scrollTo(0, scrollYPosition);
+// --- Setup All Event Listeners on Page Load ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Listener for clicking the dark background to close
+    document.getElementById('image-preview-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'image-preview-modal') {
+            closeImagePreview();
         }
+    });
 
 
-        // Close when clicking outside
-        document.addEventListener('click', function(e) {
-            if (e.target.id === 'image-preview-modal') {
-                closeImagePreview();
-            }
-        });
+        // Control button clicks
+    document.getElementById('zoom-in-btn').addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop the click from closing the modal
+        zoomIn();
+    });
+    
+    document.getElementById('zoom-out-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        zoomOut();
+    });
+
+    document.getElementById('reset-zoom-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetZoom();
+    });
+
+    document.getElementById('close-preview-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeImagePreview();
+    });
+});
 
 function toggleInfo(sectionId) {
     const section = document.getElementById(sectionId);
@@ -11877,32 +12103,138 @@ function createActiveCodeBox(codeData, index) {
         }
 
         // ==================== AUTO CACHE DETECTION ====================
-function getCodesHash() {
-    // Include all code configs and the Black Market vendor's next refresh time
-    const allCodesData = [...ALL_CODES_CONFIG, ...PERMANENT_CODES]; 
-    const hashString = allCodesData.map(code => 
-code.code + (code.expires ? (new Date(code.expires).getTime() || '') : '') + (code.dateAdded || '')
-    ).join('|');
+/* =================================================== */
+/*           START: UNIFIED UPDATE POLLING SYSTEM        */
+/* =================================================== */
 
-    // Add the next vendor refresh time to the hash to ensure refresh on vendor change
-    const nextVendorRefreshTimestamp = getNextVendorRefresh().getTime();
-    return btoa(hashString + `|VendorRefresh:${nextVendorRefreshTimestamp}`).substring(0, 32); 
+// This function will be the single source of truth for updates.
+// It checks your version.txt file periodically.
+/* =================================================== */
+/*           START: UNIFIED UPDATE POLLING SYSTEM        */
+/* =================================================== */
+
+// This function will be the single source of truth for updates.
+// It checks your version.txt file periodically.
+function startUpdatePolling() {
+    const POLLING_INTERVAL = 60000; // Check for new updates every 60 seconds.
+    const VERSION_FILE_URL = 'https://raw.githubusercontent.com/xsmashx88x/Shift-Codes/refs/heads/gh-pages/code_version.txt';
+    const LOCAL_STORAGE_KEY = 'siteVersion';
+
+    console.log("Update polling system initiated.");
+
+    setInterval(() => {
+        // Use a cache-busting query to ensure we always get the latest version file.
+        const fetchUrl = `${VERSION_FILE_URL}?t=${new Date().getTime()}`;
+
+        fetch(fetchUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Could not fetch version file for polling.');
+                }
+                return response.text();
+            })
+            .then(latestVersionText => {
+                const latestVersion = latestVersionText.trim();
+                const currentVersion = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+                // If the latest version is different from what the user has...
+                if (currentVersion && currentVersion !== latestVersion) {
+                    console.log('New version detected! Showing update notification.');
+                    showUpdateNotification();
+                }
+            })
+            .catch(error => {
+                console.error('Polling for updates failed:', error);
+            });
+    }, POLLING_INTERVAL);
 }
 
-        function checkCodesVersion() {
-            const currentHash = getCodesHash();
-            const savedHash = localStorage.getItem('shiftCodesHash');
-            
-            if (savedHash !== currentHash) {
-                // Codes have changed - update and refresh
-                localStorage.setItem('shiftCodesHash', currentHash);
-                console.log('Codes updated, refreshing page...');
-                location.reload();
-                return true; // Page will refresh
-            }
-            
-            return false; // No changes, continue normally
-        }
+// This function creates and shows a non-intrusive "Update Available" button.
+function showUpdateNotification() {
+    // Check if the notification already exists
+    if (document.getElementById('update-notification-bar')) {
+        return;
+    }
+
+    const notificationBar = document.createElement('div');
+    notificationBar.id = 'update-notification-bar';
+    notificationBar.innerHTML = `
+        <span>A new version with updated SHiFT codes is available!</span>
+        <button onclick="localStorage.setItem('siteVersion', new Date().getTime()); window.location.reload(true);">Refresh Now</button>
+    `;
+    
+    // Some basic styling for the notification bar
+    const styles = {
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        backgroundColor: '#ffc600',
+        color: '#000',
+        padding: '15px 25px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+        zIndex: '10001',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '20px',
+        fontFamily: "'Oswald', sans-serif",
+        fontWeight: 'bold'
+    };
+    Object.assign(notificationBar.style, styles);
+    
+    const button = notificationBar.querySelector('button');
+    const buttonStyles = {
+        padding: '8px 15px',
+        backgroundColor: '#000',
+        color: '#ffc600',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontWeight: 'bold'
+    };
+    Object.assign(button.style, buttonStyles);
+
+    document.body.appendChild(notificationBar);
+}
+
+/* =================================================== */
+/*            END: UNIFIED UPDATE POLLING SYSTEM         */
+/* =================================================== */
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- THIS IS THE CRITICAL LINE THAT WAS MISSING ---
+    // This function draws all the shift codes and buttons on the page.
+    initializePage(); 
+    // ---------------------------------------------------
+
+    // This sets up the new background polling for updates.
+    startUpdatePolling();
+
+    // The rest of your existing listeners
+    const notifButton = document.getElementById('notif-permission-btn');
+    if ("Notification" in window && notifButton) {
+        updateButtonDisplay(Notification.permission);
+        notifButton.onclick = requestNotificationPermission;
+    }
+    
+    const modalOkButton = document.getElementById('modal-ok-button');
+    if (modalOkButton) {
+        modalOkButton.addEventListener('click', hideCustomAlertAndReload);
+    }
+    
+    setTimeout(checkAndShowNotification, 3000); 
+    setInterval(checkAndShowNotification, POLLING_INTERVAL_MS); 
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // ... and any other code you have inside this listener
+});
+
+/* =================================================== */
+/*            END: UNIFIED UPDATE POLLING SYSTEM         */
+/* =================================================== */
 
 function initializePage() {
         // === ADD THIS BLOCK AT THE TOP OF THE FUNCTION ===
@@ -12370,19 +12702,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
  /* =================================================== */
 /*             end  notifcation script                    */
-/* =================================================== */ 
-
- /* =================================================== */
-/*                     AUTO-REFRESH                    */
-/* =================================================== */ 
-// === NEW: ISOLATED DOMContentLoaded FOR AUTO-REFRESH ===
-document.addEventListener('DOMContentLoaded', () => {
-    // This listener ONLY starts the 10-minute periodic refresh.
-    // It does not interfere with version checking or other initializations.
-    setupAutoRefresh(); 
-});
- /* =================================================== */
-/*                END  AUTO-REFRESH                     */
 /* =================================================== */ 
 
 </script>
